@@ -1,28 +1,17 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-  state = {cities: []}
+// components
+import HomePage from './components/pages/Homepage';
+import LoginPage from './components/pages/LoginPage';
 
-  async componentDidMount() {
-    const response = await fetch('/cities')
-    const cities   = await response.json()
-
-    this.setState({cities: cities})
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>Big Ol Cities</h2>
-        <ul>
-          {this.state.cities.map( city => {
-            return <li key={city.name}> <b>{city.name}</b>: {city.population}</li>
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+const App = () => (
+	<div className="App">
+		<Switch>
+			<Route path="/" exact component={HomePage} />
+			<Route path="/login" exact component={LoginPage} />
+		</Switch>
+	</div>
+);
 
 export default App;

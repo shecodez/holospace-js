@@ -4,9 +4,17 @@
   "private": true,
   "proxy": "http://localhost:9001",
   "dependencies": {
-    "react-scripts": "0.8.5",
+    "axios": "^0.17.1",
+    "prop-types": "^15.6.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "0.8.5",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.77.1"
   },
   "scripts": {
     "start": "react-scripts start",

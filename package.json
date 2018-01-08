@@ -1,7 +1,7 @@
 {
   "name": "holospace",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "engines": {
     "node": "6.9.1"
   },

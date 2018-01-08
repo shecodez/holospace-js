@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "dependencies": {
     "body-parser": "^1.16.0",
     "express": "^4.14.1",
