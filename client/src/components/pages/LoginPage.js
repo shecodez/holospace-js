@@ -55,10 +55,10 @@ class LoginPage extends React.Component {
   								submit={this.submit}
   								resetPasswordRequest={this.submitResetPasswordRequest}
   							/>
-  							<p>
-  								{"Don't have an account? "}
-  								<Link to="/register">Register</Link>
-  							</p>
+								<Header as='h5' onClick={this.onSubmitResetPasswordRequest}>
+									{"Don't have an account? "}
+									<Link to="/register">Register</Link>
+				        </Header>
               </Segment>
 						</Grid.Column>
 					</Grid.Row>

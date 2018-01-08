@@ -1,0 +1,17 @@
+html{
+ height: 100%;
+}
+
+body > #root > .App {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.a-link {
+  cursor: pointer;
+}
+a {
+  color: #6435c9 !important;
+}
+
+@import "./components/pages/loginPage";

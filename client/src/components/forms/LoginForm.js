@@ -1,6 +1,5 @@
 import React from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Form, Button, Message, Header } from 'semantic-ui-react';
 import Validator from 'validator';
 import PropTypes from 'prop-types';
 
@@ -98,12 +97,10 @@ class LoginForm extends React.Component {
 					{errors.password && <InlineError text={errors.password} />}
 				</Form.Field>
 
-				<Link to="" onClick={this.onSubmitResetPasswordRequest}>
-					Forgot Password?
-				</Link>
+        <Header className='a-link' as='h5' color='violet' onClick={this.onSubmitResetPasswordRequest}>
+          Forgot Password?
+        </Header>
 
-				<br />
-				<br />
 				<Button fluid color='violet'>Login</Button>
 			</Form>
 		);
