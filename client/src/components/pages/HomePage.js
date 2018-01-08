@@ -8,7 +8,7 @@ class HomePage extends React.Component {
 		const response = await fetch('/cities');
 		const cities = await response.json();
 
-		this.setState({ cities: cities });
+		this.setState({ cities });
 	}
 
 	render() {
@@ -17,14 +17,12 @@ class HomePage extends React.Component {
 				<h2>HomePage Cities</h2>
         <Link to='/login'>Login</Link>
 				<ul>
-					{this.state.cities.map(city => {
-						return (
-							<li key={city.name}>
-								{' '}
-								<b>{city.name}</b>: {city.population}
-							</li>
-						);
-					})}
+					{this.state.cities.map(city =>
+						<li key={city.name}>
+							{' '}
+							<b>{city.name}</b>: {city.population}
+						</li>
+					)}
 				</ul>
 			</div>
 		);

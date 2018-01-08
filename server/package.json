@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "babel . --ignore node_modules,build --out-dir build",
-    "start": "nodemon -r babel-register index.js",
+    "start": "nodemon -r babel-register src/index.js",
     "start:prod": "node build/src/index.js"
   }
 }

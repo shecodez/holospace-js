@@ -1,20 +1,21 @@
-html {
+html, body {
   height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
-body>#root>.App {
-  min-height: 100%;
+#root>.App {
+  height: 100%;
   overflow: hidden;
 }
 
 .login-page {
   height: 100vh;
-  background: url("https://i.imgur.com/9WgJg0G.gif");
+  background-image: url("./../../assets/images/login_bg.gif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -26,6 +27,7 @@ body>#root>.App {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 0;
 }
 
 .login-page .logo-seg {
