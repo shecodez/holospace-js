@@ -1,5 +1,44 @@
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+}
+
+body>#root>.App {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.login-page {
+  height: 100vh;
+  background: url("https://i.imgur.com/9WgJg0G.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.login-page .grid {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page .logo-seg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.login-page .form-seg {
+  background-color: rgba(247, 206, 217, 0.4);
+}
+
+.login-page p {
+  margin-top: 10px;
 }
