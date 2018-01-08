@@ -2,7 +2,6 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": {},
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.16.0",
@@ -18,7 +17,7 @@
   },
   "scripts": {
     "build": "babel . --ignore node_modules,build --out-dir build",
-    "start": "nodemon -r babel-register server.js",
-    "start:prod": "node build/server.js"
+    "start": "nodemon -r babel-register index.js",
+    "start:prod": "node build/src/index.js"
   }
 }

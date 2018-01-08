@@ -1,8 +1,6 @@
 {
-  "name": "crae-simple",
+  "name": "holospace",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": {},
   "license": "MIT",
   "engines": {
     "node": "6.9.1"
@@ -16,7 +14,7 @@
     "clean": "concurrently \"rimraf node_modules\" \"cd client && rimraf node_modules build\" \"cd server && rimraf node_modules build\"",
     "heroku-postbuild": "yarn build",
     "install": "(cd client && yarn) && (cd server && yarn)",
-    "start": "concurrently \"cd client && PORT=3000 yarn start\" \"cd server && PORT=3001 yarn start\"",
+    "start": "concurrently \"cd client && PORT=3000 yarn start\" \"cd server && PORT=9001 yarn start\"",
     "start:prod": "cd server && yarn start:prod"
   }
 }
