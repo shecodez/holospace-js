@@ -1,14 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Grid, Image, Header, Segment, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import { login } from '../../actions/auth';
+import { connect } from 'react-redux';
+import { login } from '../../actions/auth';
 
 import logo from './../../assets/images/hs_logo1.png';
 
 // components
-// import LoginForm from './../forms/LoginForm';
+import LoginForm from './../forms/LoginForm';
 
 class LoginPage extends React.Component {
 	state = {
@@ -16,14 +16,14 @@ class LoginPage extends React.Component {
 		email: ''
 	};
 
-	/* submit = data =>
+	submit = data =>
 		this.props.login(data).then(() => this.props.history.push('/@me'));
 
 	submitResetPasswordRequest = email => {
 		this.setState({ email });
 		this.props.resetPasswordRequest(email);
 		this.toggleModal();
-	}; */
+	};
 
 	toggleModal = () => {
 		this.setState({
@@ -51,10 +51,10 @@ class LoginPage extends React.Component {
   							<Header as="h2" color="violet" textAlign="center">
   								Hey, Welcome back!
   							</Header>
-  							{/* <LoginForm
+  							<LoginForm
   								submit={this.submit}
   								resetPasswordRequest={this.submitResetPasswordRequest}
-  							/> */}
+  							/>
   							<p>
   								{"Don't have an account? "}
   								<Link to="/register">Register</Link>
@@ -77,13 +77,12 @@ class LoginPage extends React.Component {
 	}
 }
 
-/* LoginPage.propTypes = {
+LoginPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
   login: PropTypes.func.isRequired,
   resetPasswordRequest: PropTypes.func.isRequired
-}; */
+};
 
-// export default connect(null, {  } )(LoginPage)
-export default LoginPage
+export default connect(null, { login } )(LoginPage)
