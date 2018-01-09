@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 
-import dotenv from 'dotenv'; dotenv.config();
+import dotenv from 'dotenv';
 
 /**
  * Create Express app
@@ -16,6 +16,13 @@ import dotenv from 'dotenv'; dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 9001;
 app.set('port', PORT);
+
+/**
+ * config dotenv
+ **/
+if (app.get('env') === 'development') {
+	dotenv.config();
+}
 
 /**
  * Setup middleware
