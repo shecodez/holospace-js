@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
   								submit={this.submit}
   								resetPasswordRequest={this.submitResetPasswordRequest}
   							/>
-								<Header as='h5' onClick={this.onSubmitResetPasswordRequest}>
+								<Header as="h5">
 									{"Don't have an account? "}
 									<Link to="/register">Register</Link>
 				        </Header>

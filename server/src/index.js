@@ -25,7 +25,7 @@ if (app.get('env') === 'development') {
 }
 
 /**
- * Setup middleware
+ * Setup middleware --
  **/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -81,9 +81,6 @@ httpServer.listen(app.get('port'), () => {
 });
 
 //socket(io);
-/* httpServer.listen(app.get('port'), () => {
-	console.log(`Express server listening on ${app.get('port')}, in ${app.get('env')} mode.`);
-}); */
 
 //--------------------------------------------------------------------
 // Manage p2p connections
