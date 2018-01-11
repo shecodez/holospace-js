@@ -1,32 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
-class HomePage extends React.Component {
-	state = { cities: [] };
+// components
+// import Header from "../navigation/header";
+// import Footer from "../navigation/footer";
 
-	async componentDidMount() {
-		const response = await fetch('/cities');
-		const cities = await response.json();
+const HomePage = () => (
+	<div className="home-page">
+		<div className="some-stars" />
+		<div className="stars" />
+		<div className="moar-stars" />
 
-		this.setState({ cities });
-	}
+		<div className="title">
+			<h1>HoloSpace</h1>
+			<p>{"The final 'chat'eir"}</p>
+		</div>
 
-	render() {
-		return (
-			<div>
-				<h2>HomePage Cities</h2>
-        <Link to='/login'>Login</Link>
-				<ul>
-					{this.state.cities.map(city =>
-						<li key={city.name}>
-							{' '}
-							<b>{city.name}</b>: {city.population}
-						</li>
-					)}
-				</ul>
-			</div>
-		);
-	}
-}
+		<Button.Group vertical className="social-icons">
+			<Button color="facebook" icon="facebook f" />
+			<Button color="instagram" icon="instagram" />
+			<Button color="yellow" icon="snapchat ghost" />
+			<Button color="twitter" icon="twitter" />
+		</Button.Group>
+	</div>
+);
 
 export default HomePage;
