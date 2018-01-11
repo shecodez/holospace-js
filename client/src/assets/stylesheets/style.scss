@@ -6,12 +6,145 @@ body > #root > .App {
   min-height: 100%;
   overflow: hidden;
 }
-
+a {
+  color: #6435c9 !important;
+}
 .a-link {
   cursor: pointer;
 }
-a {
-  color: #6435c9 !important;
+
+
+.site-grid-r2 {
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  height: 100vh;
+  overflow: hidden;
+  .section {
+    padding: 1em 0;
+    color: white;
+    overflow: hidden;
+  }
+}
+
+.site-grid-r1 {
+  display: grid;
+  grid-template-columns: 16fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.banner {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+.one-r,
+.two-r {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  flex: 1;
+
+  .section {
+    padding: 1em 0;
+    color: white;
+    overflow: hidden;
+  }
+  .nested {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .stretch {
+    flex: 1;
+  }
+}
+
+/*
+___ _____ ____________
+|  |_c2t_|____c3t____|
+|  |     |           |
+|c1| c2m |    c3m    |
+|  |_____|           |
+|__|_c2b_|___________|
+
+*/
+.grid-3c {
+  grid-template-columns: 3fr 12fr;
+}
+
+/*
+______ ___________ ___
+|_c2t_|____c3t____|  |
+|     |           |  |
+| c2m |   c3m     |c4|
+|_____|           |  |
+|_c2b_|___________|__|
+
+*/
+.grid-3c-vr {
+  grid-template-columns: 3fr 12fr 1fr;
+}
+
+/*
+___ _____ _________ ___
+|  |_c2t_|___c3t___|  |
+|  |     |         |  |
+|c1| c2m |   c3m   |c4|
+|  |_____|         |  |
+|__|_c2b_|_________|__|
+
+*/
+.grid-4c {
+  grid-template-columns: 3fr 9fr 3fr;
+}
+
+.c1 {
+  background-color: #111;
+}
+
+.c2m,
+.c3m {
+  color: #ddd;
+}
+
+.c2m,
+.c2t {
+  background-color: #303030;
+}
+
+.c3m,
+.c3t {
+  background-color: #424242;
+}
+
+.c2b,
+.c4 {
+  background-color: #212121;
+}
+
+.c2b,
+.c3t,
+.c2t {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12))
+    drop-shadow(0 3px 1px rgba(0, 0, 0, 0.14))
+    drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
+    drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.c2t,
+.c2b,
+.c3t {
+  line-height: 28px;
+}
+
+.dmsg-btn,
+.user-btn {
+  text-align: center;
 }
 
 @import "./components/pages/homePage";
