@@ -11,14 +11,14 @@ export const userLoggedOut = () => ({
   type: USER_LOGGED_OUT
 });
 
-export const login = credentials => (dispatch) =>
+export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
     localStorage.holospaceJWT = user.token;
     // setAuthorizationHeader(user.token);
     dispatch(userLoggedIn(user));
   });
 
-export const logout = () => (dispatch) => {
+export const logout = () => dispatch => {
   localStorage.removeItem("holospaceJWT");
   // setAuthorizationHeader();
   dispatch(userLoggedOut());

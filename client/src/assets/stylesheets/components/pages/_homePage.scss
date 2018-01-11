@@ -14,6 +14,7 @@ $shadows-large: multiple-box-shadow(100);
 
 .home-page {
   height: 100vh;
+  width: 100vw;
   background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
   overflow: hidden;
 
@@ -72,10 +73,11 @@ $shadows-large: multiple-box-shadow(100);
   }
 
   .title {
+    margin-top: 0;
     text-align: center;
     position: absolute;
-    top: 50%;
     width: 100%;
+    top: 50%;
     transform: translateY(-50%);
     z-index: 9;
     color: white;
@@ -83,12 +85,6 @@ $shadows-large: multiple-box-shadow(100);
     background: -webkit-linear-gradient(white, #38495a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    h1 {
-      font-size: 5rem;
-    }
-    p {
-      font-size: 2rem;
-    }
   }
 
   .social-icons {
