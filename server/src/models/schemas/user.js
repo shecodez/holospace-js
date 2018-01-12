@@ -65,7 +65,12 @@ schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
 schema.methods.generateJWT = function generateJWT() {
   return jwt.sign(
     {
-      email: this.email,
+      avatar: this.avatar,
+      email: this.email,    
+      username: this.username,
+      pin: this.pin,
+      online: this.online,
+      status: this.status,
       confirmed: this.confirmed
     },
     process.env.JWT_SECRET

@@ -1,6 +1,6 @@
 import db from './../models';
 import parseErrors from './../utils/parseError';
-import { sendConfirmationEmail } from './../mailers/mailer';
+import { sendConfirmationEmail } from './../mailers';
 
 const userController = {};
 
@@ -22,7 +22,7 @@ userController.register = (req, res) => {
 	user
 		.save()
 		.then(newUser => {
-			//sendConfirmationEmail(newUser);
+			sendConfirmationEmail(newUser);
 
 			return res.status(200).json({
 				user: newUser.toAuthJSON()

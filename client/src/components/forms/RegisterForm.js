@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
-import Validator from 'validator';
 import PropTypes from 'prop-types';
+import { Form, Button, Message } from 'semantic-ui-react';
+import isEmail from 'validator/lib/isEmail';
 
 // components
 import InlineError from './../alerts/InlineError';
@@ -42,7 +42,7 @@ class RegisterForm extends React.Component {
 		if (!data.username) errors.username = 'Username cannot be blank';
 		if (data.username.length < 3) errors.username = 'Username too Short';
 
-		if (!Validator.isEmail(data.email)) errors.email = 'Invalid email';
+		if (!isEmail(data.email)) errors.email = 'Invalid email';
 
 		if (!data.password) errors.password = 'Password cannot be blank';
 		if (data.password.length < 6) errors.password = 'Password too Short';

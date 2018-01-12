@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
+import decode from 'jwt-decode';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -19,7 +20,18 @@ const store = createStore(
 );
 
 if (localStorage.holospaceJWT) {
-	const user = { token: localStorage.holospaceJWT };
+	const payload = decode(localStorage.holospaceJWT);
+	const user = {
+		token: localStorage.holospaceJWT,
+
+		avatar: payload.avatar,
+		email: payload.email,
+    username: payload.username,
+    pin: payload.pin,
+    online: payload.online,
+    status: payload.status,		
+		confirmed: payload.confirmed
+	};
 	store.dispatch(userLoggedIn(user));
 }
 

@@ -9,6 +9,7 @@ import HomePage from './components/pages/HomePage';
 
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
+import ConfirmationPage from './components/pages/ConfirmationPage';
 
 import ProfilePage from './components/pages/ProfilePage';
 
@@ -18,6 +19,7 @@ const App = () => (
 	<div className="App">
 		<Switch>
 			<Route path="/" exact component={HomePage} />
+			<Route path='/confirmation/:token' exact component={ConfirmationPage} />
 
 			<GuestRoute path="/login" exact component={LoginPage} />
 			<GuestRoute path="/register" exact component={RegisterPage} />

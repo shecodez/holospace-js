@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Image, Header, Segment } from 'semantic-ui-react';
+import { Grid, Image, Header, Responsive, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../../actions/users';
@@ -20,12 +20,12 @@ class Register extends React.Component {
         <Grid columns={2} centered>
           <Grid.Row stretched>
             <Grid.Column className="logo-col" mobile={16} tablet={4} computer={3}>
-              <Segment className="logo-seg">
+              <Responsive as={Segment} className="logo-seg">
               <Image src={logo} />
               <Header as="h2" color="violet" textAlign="center">
                 HoloSpace
               </Header>
-              </Segment>
+              </Responsive>
             </Grid.Column>
             <Grid.Column className="form-col" mobile={16} tablet={8} computer={4}>
               <Segment className="form-seg">

@@ -10,7 +10,11 @@ router.post('/auth', Auth.login);
 
 // POST holospace.com/api/auth/confirmation
 // Confirm user email
-//router.post('/auth/confirmation', Auth.confirm);
+router.post('/auth/confirmation', Auth.confirm);
+
+// POST holospace.com/api/auth/resend_confirmation
+// Re-send email confirm request
+router.post('/auth/resend_confirmation', Auth.resendConfirmation);
 
 // POST holospace.com/api/auth/reset_password_request
 // Request password reset

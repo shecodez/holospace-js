@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
 
+// TODO: seperate this in different files & folders
+
 const from = '"HoloSpace" <no-replay@holospace-app.com>';
 
 function setup() {

@@ -16,7 +16,7 @@ export function removeUser(user) {
   }
 }
 
-export const register = data => (dispatch) =>
+export const register = data => dispatch =>
   api.user.register(data).then(user => {
     localStorage.holospaceJWT = user.token;
     dispatch(userLoggedIn(user));

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!--[if !mso]><!-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <style type="text/css">
+    .card {
+      width: 50%;
+      background-color: #f1f1f1;
+      margin: 50px auto;
+      text-align: center;
+      padding: 35px 15px;
+      border-radius: 4px;
+    }
+
+    .message {
+      padding-bottom: 30px;
+    }
+
+    .button {
+      color: #fff;
+      background-color: #6435c9;
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 4px;
+    }
+
+    .link-text {
+      margin-top: 30px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    @media only screen and (max-device-width: 480px) {
+      .card {
+        width: 80%;
+      }
+    }
+  </style>
+
+  <body style="margin:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;min-width:100%;background-color:#ccc;">
+    <div class="card">
+      <h1 class="h1-font">Email Confirmation</h1>
+      <p class="message">
+        Welcome ${user.username}, thank you for signing up for <b>HoloSpace</b>. Please click the button below to verify your email address.
+      </p>
+      <a class="button" href={user.generateConfirmationUrl()}>Verify your email</a>
+      <p class="link-text">
+        or copy and paste this link into your browser:<br /> ${user.generateConfirmationUrl()}
+      </p>
+    </div>
+    <p class="footer">
+      Email sent by HoloSpace <br /> Copyright © 2018 HoloSpace. All rights reserved
+    </p>
+  </body>

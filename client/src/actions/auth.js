@@ -23,3 +23,12 @@ export const logout = () => dispatch => {
   // setAuthorizationHeader();
   dispatch(userLoggedOut());
 };
+
+export const confirm = token => dispatch =>
+  api.user.confirm(token).then(user => {
+    localStorage.holospaceJWT = user.token;
+    dispatch(userLoggedIn(user));
+  });
+
+export const resendConfirmation = email => () =>
+  api.user.resendConfirmation(email);
