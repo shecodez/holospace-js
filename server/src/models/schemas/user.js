@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import uniqueValidator from 'mongoose-unique-validator';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const schema = new mongoose.Schema({
   avatar: {
@@ -91,13 +91,17 @@ schema.methods.generatePin = function generatePin() {
 
 schema.methods.toAuthJSON = function toAuthJSON() {
   return {
+    email: this.email,
     avatar: this.avatar,
     username: this.username,
     pin: this.pin,
     online: this.online,
     status: this.status,
+    confirmed: this.confirmed,
     token: this.generateJWT()
   }
 };
+
+schema.plugin(uniqueValidator, { message: '{PATH} already in use' });
 
 export default mongoose.model('User', schema);
