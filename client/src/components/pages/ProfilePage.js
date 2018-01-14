@@ -45,7 +45,6 @@ class ProfilePage extends React.Component {
 
 ProfilePage.propTypes = {
 	user: PropTypes.shape({
-		// confirmed: PropTypes.bool.isRequired
 	}).isRequired
 };
 

@@ -12,6 +12,16 @@ a {
 .a-link {
   cursor: pointer;
 }
+@import "./components/navigation/topNav";
+@import "./components/pages/homePage";
+
+@import "./components/pages/loginPage";
+@import "./components/pages/registerPage";
+@import "./components/pages/passwordResetPage";
+
+@import "./components/pages/profilePage";
+
+@import "./components/pages/errorPage";
 
 
 .site-grid-r2 {
@@ -146,13 +156,3 @@ ___ _____ _________ ___
 .user-btn {
   text-align: center;
 }
-
-@import "./components/pages/homePage";
-
-@import "./components/pages/loginPage";
-@import "./components/pages/registerPage";
-@import "./components/pages/passwordResetPage";
-
-@import "./components/pages/profilePage";
-
-@import "./components/pages/errorPage";

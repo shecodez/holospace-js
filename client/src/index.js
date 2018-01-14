@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import rootReducer from './rootReducer';
+import rootReducer from './reducers/rootReducer';
 import { userLoggedIn } from './actions/auth';
 
 import App from './App';
@@ -29,7 +29,7 @@ if (localStorage.holospaceJWT) {
     username: payload.username,
     pin: payload.pin,
     online: payload.online,
-    status: payload.status,		
+    status: payload.status,
 		confirmed: payload.confirmed
 	};
 	store.dispatch(userLoggedIn(user));

@@ -1,10 +1,20 @@
 import React from 'react';
 import { Popup, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const DMsgButton = () => (
 	<div className="dmsg-btn">
 		<Popup
-			trigger={<Button primary circular size="huge" icon="envelope" />}
+			trigger={
+				<Button
+					color="violet"
+					circular
+					size="huge"
+					icon="envelope"
+					as={Link}
+					to="/direct/channels"
+				/>
+			}
 			inverted
 			content={'Direct Message'}
 			position="right center"

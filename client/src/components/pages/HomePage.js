@@ -1,31 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Header as Title, Button } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import * as actions from './../../actions/auth';
+import { Header, Button } from 'semantic-ui-react';
 
 // components
-// import Header from '../navigation/header';
-// import Footer from '../navigation/footer';
+import TopNav from '../navigation/TopNav';
+// import Footer from '../navigation/Footer';
 
-const HomePage = ({ isAuthenticated, logout }) => (
+const HomePage = () => (
 	<div className="home-page">
+		<TopNav />
+
 		<div className="some-stars" />
 		<div className="stars" />
 		<div className="moar-stars" />
 
-		<Title as="h1" className="title" size='huge'>
+		<Header as="h1" className="title" size='huge'>
 	    HoloSpace
-
-			{isAuthenticated ?
-				<Button onClick={() => logout()}>logout</Button>
-				: <Link to="/login">Login</Link>}
-
-			<Title.Subheader>
+			<Header.Subheader>
 	      The final chat teir
-	    </Title.Subheader>
-	  </Title>
+	    </Header.Subheader>
+	  </Header>
 
 
 		<Button.Group vertical className="social-icons">
@@ -37,15 +30,4 @@ const HomePage = ({ isAuthenticated, logout }) => (
 	</div>
 );
 
-HomePage.propTypes = {
-	isAuthenticated: PropTypes.bool.isRequired,
-	logout: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-	return {
-		isAuthenticated: !!state.user.token
-	};
-}
-
-export default connect(mapStateToProps, { logout: actions.logout })(HomePage);
+export default HomePage;
