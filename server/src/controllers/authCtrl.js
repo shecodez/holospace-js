@@ -1,6 +1,7 @@
 import db from './../models';
 import jwt from 'jsonwebtoken';
-import { sendConfirmationEmail } from './../mailers';
+import parseErrors from './../utils/parseError';
+import { sendConfirmationEmail, sendResetPasswordEmail } from './../mailers';
 
 const authController = {};
 
@@ -73,14 +74,79 @@ authController.resendConfirmation = (req, res) => {
 		});
 };
 
+// TODO: add reset-timer so users cant spam reset request
 authController.resetPasswordRequest = (req, res) => {
-	db.User.findOne({ email: req.body.email }).then(user => {
-		if (user) {
-			// user.createPasswordResetToken();
-			sendResetPasswordEmail(user);
+	db.User.findOne({ email: req.body.email })
+		.then(user => {
+			user.createPasswordResetToken();
+			user.save().then(user => {
+				sendResetPasswordEmail(user);
+				return res.status(200).json({});
+			});
+
+		})
+		.catch(err => {
+			// dont alert email is not valid
 			return res.status(200).json({});
-		}
-	});
+		});
 };
+
+authController.validateToken = (req, res) => {
+  jwt.verify(req.body.token, process.env.JWT_SECRET, err => {
+    if (err) {
+      return res.status(401).json({
+        errors: { global: "Invalid token" }
+      });
+    } else {
+      return res.status(200).json({});
+    }
+  });
+};
+
+authController.resetPassword = (req, res) => {
+	const { password, token } = req.body.data;
+
+  db.User.findOneAndUpdate(
+    { passwordResetToken: token },
+    { passwordResetToken: '' },
+    { new: true }
+  ).then(resetRequester => {
+      if (resetRequester) {
+        jwt.verify(req.body.data.token, process.env.JWT_SECRET, (err, decoded) => {
+          if (err) {
+            return res.status(401).json({
+              errors: { global: 'Invalid token' }
+            });
+          } else {
+            const user = db.User.findOne({ _id: decoded._id })
+              .then(user => {
+                if (user && user.email === resetRequester.email) {
+									user.hashPassword(password);
+          				user.save().then(() => res.json({}));
+									// sendPasswordUpdatedEmail(user);
+								}
+                else {
+                  return res.status(404).json({
+                    errors: { global: 'Invalid token' }
+                  });
+                }
+              })
+              .catch(err => {
+                return res.status(500).json(err);
+              });
+          }
+        });
+      } else {
+				return res.status(404).json({
+					errors: { global: 'Invalid token' }
+				});
+			}
+    })
+		.catch(err => {
+			return res.status(500).json(err);
+		});
+};
+
+
 
 export default authController;

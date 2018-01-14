@@ -18,14 +18,14 @@ router.post('/auth/resend_confirmation', Auth.resendConfirmation);
 
 // POST holospace.com/api/auth/reset_password_request
 // Request password reset
-//router.post('/auth/reset_password_request', Auth.resetPasswordRequest);
+router.post('/auth/reset_password_request', Auth.resetPasswordRequest);
 
 // POST holospace.com/api/auth/validate_token/:validateToken
 // Validate password reset validateToken
-//router.post('/auth/validate_token', Auth.validateToken);
+router.post('/auth/validate_token', Auth.validateToken);
 
 // POST holospace.com/api/auth/reset_password
 // Reset user password
-//router.post('/auth/reset_password', Auth.resetPassword);
+router.post('/auth/reset_password', Auth.resetPassword);
 
 module.exports = router;

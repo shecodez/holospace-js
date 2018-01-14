@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Image, Header, Responsive, Segment, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../../actions/auth';
+import { login, resetPasswordRequest } from '../../actions/auth';
 
 import logo from './../../assets/images/hs_logo1.png';
 
@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
 			<div className="login-page">
 				<Grid columns={2} centered>
 					<Grid.Row stretched>
-						<Grid.Column className="logo-col" mobile={16} tablet={4} computer={3}>
+						<Grid.Column className="logo-col" mobile={14} tablet={6} computer={3}>
               <Responsive as={Segment} minWidth={768} className="logo-seg">
 								<Image src={logo} />
 	              <Header as="h2" color="violet" textAlign="center">
@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
 	              </Header>
               </Responsive>
 						</Grid.Column>
-						<Grid.Column className="form-col" mobile={16} tablet={8} computer={4}>
+						<Grid.Column className="form-col" mobile={14} tablet={8} computer={4}>
               <Segment className="form-seg">
   							<Header as="h2" color="violet" textAlign="center">
   								Hey, Welcome back!
@@ -85,4 +85,4 @@ LoginPage.propTypes = {
   resetPasswordRequest: PropTypes.func.isRequired
 };
 
-export default connect(null, { login } )(LoginPage)
+export default connect(null, { login, resetPasswordRequest } )(LoginPage)

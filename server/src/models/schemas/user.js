@@ -55,18 +55,38 @@ schema.methods.hashPassword = function hashPassword(password) {
 };
 
 schema.methods.setConfirmationToken = function setConfirmationToken() {
-  this.confirmationToken = this.generateJWT();
+  // this.confirmationToken = this.generateJWT();
+  this.confirmationToken = this.generateToken(); // = bcrypt.hashSync(this.generateToken(), 10);
 };
+
+schema.methods.createPasswordResetToken = function createPasswordResetToken() {
+  this.passwordResetToken = this.generateToken(); // = bcrypt.hashSync(this.generateToken(), 10);
+};
+
+schema.methods.isValidToken = function isValidToken(token, type) {
+  switch (type) {
+    case confirm:
+      return bcrypt.compareSync(token, this.confirmationToken);
+      break;
+    default:
+      return bcrypt.compareSync(token, this.passwordResetToken);
+  }
+}
 
 schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
   return `${process.env.HOST}/confirmation/${this.confirmationToken}`
+};
+
+schema.methods.generatePasswordResetUrl = function generatePasswordResetUrl() {
+  return `${process.env.HOST}/reset_password/${this.passwordResetToken}`
+  // return `${process.env.HOST}/reset_password/${this.generateToken()}`
 };
 
 schema.methods.generateJWT = function generateJWT() {
   return jwt.sign(
     {
       avatar: this.avatar,
-      email: this.email,    
+      email: this.email,
       username: this.username,
       pin: this.pin,
       online: this.online,
@@ -80,10 +100,11 @@ schema.methods.generateJWT = function generateJWT() {
 schema.methods.generateToken = function generateToken() {
   return jwt.sign(
     {
-      _id: this._id
+      _id: this._id,
+      email: this.email
     },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "2h" }
   );
 };
 

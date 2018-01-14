@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Message, Header } from 'semantic-ui-react';
-import isEmail from 'validator/lib/isEmail';
+import { Form, Button, Message } from 'semantic-ui-react';
 
 // components
-import InlineError from './../alerts/InlineError';
+import InlineError from '../alerts/InlineError';
 
-class LoginForm extends React.Component {
+class ResetPasswordForm extends React.Component {
 	state = {
 		data: {
-			email: '',
-			password: ''
+			token: this.props.token,
+			password: '',
+			confirmation: ''
 		},
 		loading: false,
 		errors: {}
@@ -35,21 +35,15 @@ class LoginForm extends React.Component {
 		}
 	};
 
-	onSubmitResetPasswordRequest = () => {
-		const errors = {};
-		if (!isEmail(this.state.data.email))
-			errors.email = 'Invalid email';
-
-		this.setState({ errors });
-		if (Object.keys(errors).length === 0) {
-			this.props.resetPasswordRequest(this.state.data.email);
-		}
-	};
-
 	validate = data => {
 		const errors = {};
-		if (!isEmail(data.email)) errors.email = 'Invalid email';
+
 		if (!data.password) errors.password = 'Password cannot be blank';
+		if (data.password.length < 6) errors.password = 'Password too Short';
+
+		if (data.confirmation !== data.password)
+			errors.confirmation = 'Passwords must match';
+
 		return errors;
 	};
 
@@ -58,7 +52,7 @@ class LoginForm extends React.Component {
 
 		return (
 			<Form
-				className="form login-form"
+				className="form reset-password-form"
 				onSubmit={this.onSubmit}
 				loading={loading}
 			>
@@ -69,21 +63,8 @@ class LoginForm extends React.Component {
 					</Message>
 				)}
 
-				<Form.Field error={!!errors.email}>
-					<label htmlFor="email">Email</label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						placeholder=" "
-						value={data.email}
-						onChange={this.onChange}
-					/>
-					{errors.email && <InlineError text={errors.email} />}
-				</Form.Field>
-
 				<Form.Field error={!!errors.password}>
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">New Password</label>
 					<input
 						type="password"
 						id="password"
@@ -95,19 +76,30 @@ class LoginForm extends React.Component {
 					{errors.password && <InlineError text={errors.password} />}
 				</Form.Field>
 
-        <Header className='a-link' as='h5' color='violet' onClick={this.onSubmitResetPasswordRequest}>
-          Forgot Password?
-        </Header>
+				<Form.Field error={!!errors.confirmation}>
+					<label htmlFor="confirmation">Confirmation</label>
+					<input
+						type="password"
+						id="confirmation"
+						name="confirmation"
+						placeholder=" "
+						value={data.confirmation}
+						onChange={this.onChange}
+					/>
+					{errors.confirmation && <InlineError text={errors.confirmation} />}
+				</Form.Field>
 
-				<Button fluid color='violet'>Login</Button>
+				<Button fluid color="violet">
+					Reset
+				</Button>
 			</Form>
 		);
 	}
 }
 
-LoginForm.propTypes = {
-	submit: PropTypes.func.isRequired,
-	resetPasswordRequest: PropTypes.func.isRequired
+ResetPasswordForm.propTypes = {
+	token: PropTypes.string.isRequired,
+	submit: PropTypes.func.isRequired
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

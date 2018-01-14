@@ -47,7 +47,7 @@ export function sendResetPasswordEmail(user) {
 
       Please ignore this email if you did not request a password reset.\n
 
-      ${user.generatePasswordResetRequestUrl()}
+      ${user.generatePasswordResetUrl()}
     `
   };
   transport.sendMail(email);

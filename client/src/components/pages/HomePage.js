@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import * as actions from './../../actions/auth';
 
 // components
-// import Header from "../navigation/header";
-// import Footer from "../navigation/footer";
+// import Header from '../navigation/header';
+// import Footer from '../navigation/footer';
 
 const HomePage = ({ isAuthenticated, logout }) => (
 	<div className="home-page">

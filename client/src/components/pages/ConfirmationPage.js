@@ -46,7 +46,6 @@ class Confirmation extends React.Component {
               :
               <Message.Header>Validating...</Message.Header>
             }
-
 					</Message>
 				)}
 
@@ -60,7 +59,7 @@ class Confirmation extends React.Component {
 					          Your request has been processed. Please check your inbox.
                   </Message.Header>
 				        </Message.Content>
-              :
+              	:
                 <Message.Content>
   								<Message.Header>
   									Thank you! Your email has been validated.

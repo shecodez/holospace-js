@@ -19,15 +19,15 @@ class Register extends React.Component {
       <div className="register-page">
         <Grid columns={2} centered>
           <Grid.Row stretched>
-            <Grid.Column className="logo-col" mobile={16} tablet={4} computer={3}>
-              <Responsive as={Segment} className="logo-seg">
+            <Grid.Column className="logo-col" mobile={14} tablet={6} computer={3}>
+              <Responsive as={Segment} minWidth={768} className="logo-seg">
               <Image src={logo} />
               <Header as="h2" color="violet" textAlign="center">
                 HoloSpace
               </Header>
               </Responsive>
             </Grid.Column>
-            <Grid.Column className="form-col" mobile={16} tablet={8} computer={4}>
+            <Grid.Column className="form-col" mobile={14} tablet={8} computer={4}>
               <Segment className="form-seg">
                 <Header as="h2" color="violet" textAlign="center">
                   Create an account

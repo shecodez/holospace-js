@@ -10,6 +10,7 @@ import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
 import ConfirmationPage from './components/pages/ConfirmationPage';
+import ResetPasswordPage from './components/pages/ResetPasswordPage';
 
 import ProfilePage from './components/pages/ProfilePage';
 
@@ -23,6 +24,7 @@ const App = () => (
 
 			<GuestRoute path="/login" exact component={LoginPage} />
 			<GuestRoute path="/register" exact component={RegisterPage} />
+			<GuestRoute path="/reset_password/:token" exact component={ResetPasswordPage} />
 
 			<UserRoute path="/@me" exact component={ProfilePage} />
 
