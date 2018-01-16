@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-const TopNav = ({ isUser }) => (
+const TopNavigation = ({ isUser }) => (
 	<Menu secondary className="top-nav">
 		<Menu.Item as={Link} to="/">
 			<div className="menu-btn icon">
@@ -32,7 +32,7 @@ const TopNav = ({ isUser }) => (
 	</Menu>
 );
 
-TopNav.propTypes = {
+TopNavigation.propTypes = {
 	isUser: PropTypes.bool.isRequired
 };
 
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(TopNav);
+export default connect(mapStateToProps)(TopNavigation);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Image, Header, Responsive, Segment, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login, resetPasswordRequest } from '../../actions/auth';
+import { login, resetPasswordRequest } from './../../actions/auth';
 
 import logo from './../../assets/images/hs_logo1.png';
 

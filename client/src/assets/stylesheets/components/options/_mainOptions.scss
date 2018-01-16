@@ -1,0 +1,21 @@
+.main-options {
+  .button {
+    color: #eee;
+    background-color: transparent;
+
+    &:hover {
+      color: #eee;
+      background-color: #111;
+
+      img:hover {
+        -webkit-filter: brightness(70%);
+      }
+    }
+
+    &:active,
+    &:focus {
+      color: #eee;
+      background-color: transparent;
+    }
+  }
+}

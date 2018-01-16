@@ -1,29 +1,21 @@
 import api from './../api/api';
-import { userLoggedIn } from "./auth";
-import { USER_CONNECTED, USER_DISCONNECTED } from './../actionTypes';
+import { userLoggedIn } from './auth';
+import { USER_UPDATED } from './../actionTypes';
 
-export function addUser(user) {
-  return {
-    type: USER_CONNECTED,
-    user
-  }
-}
-
-export function removeUser(user) {
-  return {
-    type: USER_DISCONNECTED,
-    user
-  }
+export function userUpdated(user) {
+	return {
+		type: USER_UPDATED,
+		user
+	};
 }
 
 export const register = data => dispatch =>
-  api.user.register(data).then(user => {
-    localStorage.holospaceJWT = user.token;
-    dispatch(userLoggedIn(user));
-  });
+	api.user.register(data).then(user => {
+		localStorage.holospaceJWT = user.token;
+		dispatch(userLoggedIn(user));
+	});
 
-export const userConnected = data => (dispatch) =>
-  dispatch(addUser(data));
-
-export const userDisconnected = data => (dispatch) =>
-  dispatch(removeUser(data));
+export const updateOnlineStatus = data => dispatch =>
+	api.user.update(data).then(user => {
+		dispatch(userUpdated(user));
+	});

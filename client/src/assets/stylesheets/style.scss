@@ -6,13 +6,19 @@ body > #root > .App {
   min-height: 100%;
   overflow: hidden;
 }
-a {
-  color: #6435c9 !important;
-}
+
 .a-link {
   cursor: pointer;
 }
-@import "./components/navigation/topNav";
+
+.centered {
+  text-align: center;
+}
+
+//-- Headers ------------------------------------------
+@import "./components/headers/topnav";
+@import "./components/headers/profileHeader";
+//-- Pages -------------------------------------------
 @import "./components/pages/homePage";
 
 @import "./components/pages/loginPage";
@@ -22,6 +28,17 @@ a {
 @import "./components/pages/profilePage";
 
 @import "./components/pages/errorPage";
+
+//-- Users -------------------------------------------
+@import "./components/users/currentUser";
+@import "./components/users/user";
+@import "./components/users/customization";
+//-- Options -----------------------------------------
+@import "./components/options/mainOptions";
+//-- Layouts -----------------------------------------
+@import "./components/layouts/tabs";
+//----------------------------------------------------
+//----------------------------------------------------
 
 
 .site-grid-r2 {

@@ -1,0 +1,33 @@
+.current-user {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em;
+
+  .button {
+    padding: 0;
+    color: #eee;
+    background-color: transparent;
+  
+    &:hover {
+      color: #eee;
+      background-color: transparent;
+
+      img:hover {
+        -webkit-filter: brightness(70%);
+      }
+    }
+    &:active,
+    &:focus  {
+      color: #eee;
+      background-color: transparent;
+    }
+  }
+
+  .user-options {
+    .icon.button {
+      &:hover {
+        background-color: #111;
+      }
+    }
+  }
+}

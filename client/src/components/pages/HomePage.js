@@ -2,8 +2,8 @@ import React from 'react';
 import { Header, Button } from 'semantic-ui-react';
 
 // components
-import TopNav from '../navigation/TopNav';
-// import Footer from '../navigation/Footer';
+import TopNav from '../headers/TopNavigation';
+// import Footer from '../footers/Footer';
 
 const HomePage = () => (
 	<div className="home-page">

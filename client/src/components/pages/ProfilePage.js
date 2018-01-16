@@ -10,6 +10,9 @@ import FlexSection from './../layouts/FlexSection';
 
 import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
 import DMsgButton from './../buttons/DMsgButton';
+import CurrentUser from './../users/CurrentUser';
+import Customization from './../users/Customization';
+import ProfileHeader from './../headers/ProfileHeader';
 
 class ProfilePage extends React.Component {
 	state = {};
@@ -28,13 +31,15 @@ class ProfilePage extends React.Component {
 					{!user.confirmed && <ConfirmEmailReminder />}
 					<Grid className="profile grid-3c">
 						<Nested>
-							<Section className="c2t">Preview</Section>
-							<FlexSection className="c2m">userModel</FlexSection>
-							<Section className="c2b">user</Section>
+							<Section className="c2t centered">Preview</Section>
+							<FlexSection className="c2m centered">(User 3D Model)</FlexSection>
+							<Section className="c2b">
+								<CurrentUser user={user} profile />
+							</Section>
 						</Nested>
 						<Nested>
-							<Section className="c3t">Options</Section>
-							<FlexSection className="c3m">UserModelCustomization</FlexSection>
+							<Section className="c3t"><ProfileHeader /></Section>
+							<FlexSection className="c3m"><Customization /></FlexSection>
 						</Nested>
 					</Grid>
 				</div>
@@ -44,8 +49,7 @@ class ProfilePage extends React.Component {
 }
 
 ProfilePage.propTypes = {
-	user: PropTypes.shape({
-	}).isRequired
+	user: PropTypes.shape({}).isRequired
 };
 
 function mapStateToProps(state) {
