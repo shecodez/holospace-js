@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers/rootReducer';
 import { userLoggedIn } from './actions/auth';
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
 
 import App from './App';
 
@@ -32,6 +33,7 @@ if (localStorage.holospaceJWT) {
     status: payload.status,
 		confirmed: payload.confirmed
 	};
+	setAuthorizationHeader(localStorage.holospaceJWT);
 	store.dispatch(userLoggedIn(user));
 }
 

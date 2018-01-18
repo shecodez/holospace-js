@@ -1,0 +1,10 @@
+.servers {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  ::-webkit-scrollbar {
+    width: 0; // remove scrollbar space
+    background: transparent; // optional: make scrollbar invisible
+  }
+}

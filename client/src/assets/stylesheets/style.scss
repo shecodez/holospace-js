@@ -20,15 +20,11 @@ body > #root > .App {
 @import "./components/headers/profileHeader";
 //-- Pages -------------------------------------------
 @import "./components/pages/homePage";
-
 @import "./components/pages/loginPage";
 @import "./components/pages/registerPage";
 @import "./components/pages/passwordResetPage";
-
 @import "./components/pages/profilePage";
-
 @import "./components/pages/errorPage";
-
 //-- Users -------------------------------------------
 @import "./components/users/currentUser";
 @import "./components/users/user";
@@ -37,7 +33,10 @@ body > #root > .App {
 @import "./components/options/mainOptions";
 //-- Layouts -----------------------------------------
 @import "./components/layouts/tabs";
-//----------------------------------------------------
+//-- Servers -----------------------------------------
+@import "./components/servers/server";
+@import "./components/servers/serverList";
+@import "./components/servers/servers";
 //----------------------------------------------------
 
 
@@ -132,6 +131,8 @@ ___ _____ _________ ___
 
 .c1 {
   background-color: #111;
+  display: flex;
+  flex-direction: column;
 }
 
 .c2m,

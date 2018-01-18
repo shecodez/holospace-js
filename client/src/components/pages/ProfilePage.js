@@ -8,6 +8,7 @@ import Nested from './../layouts/Nested';
 import Section from './../layouts/Section';
 import FlexSection from './../layouts/FlexSection';
 
+import Servers from './../servers/Servers';
 import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
 import DMsgButton from './../buttons/DMsgButton';
 import CurrentUser from './../users/CurrentUser';
@@ -22,9 +23,9 @@ class ProfilePage extends React.Component {
 
 		return (
 			<div className="site-grid-r2 profile-page">
-				<Section className="c1">
+				<Section className="c1 centered">
 					<DMsgButton />
-					Servers
+					<Servers />
 				</Section>
 
 				<div className="two-r">

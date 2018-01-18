@@ -3,7 +3,7 @@ import { Popup, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const DMsgButton = () => (
-	<div className="dmsg-btn">
+	<div className="dmsg-btn" style={{marginBottom: '1.5rem'}}>
 		<Popup
 			trigger={
 				<Button

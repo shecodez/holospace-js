@@ -7,7 +7,7 @@ import Pane from './../layouts/Pane';
 
 class Customization extends React.Component {
 	state = {
-		bodyOpts: ['builds', 'skin', 'arms', 'legs', 'hands', 'feet', 'measurments'],
+		bodyOpts: ['Types', 'skin', 'arms', 'legs', 'hands', 'feet', 'measurments'],
 		headOpts: [
 			'face',
 			'ears',
@@ -18,7 +18,7 @@ class Customization extends React.Component {
 			'lips',
 			'adjustments'
 		],
-		wearOpts: ['head', 'neck', 'chest', 'back', 'legs', 'hands', 'feet', 'dyes']
+		wearOpts: ['head', 'shoulders', 'chest', 'back', 'legs', 'hands', 'feet']
 	};
 
 	render() {

@@ -66,7 +66,7 @@ export default {
 			axios
 				.post('/api/memberships', { membership })
 				.then(res => res.data.membership),
-		fetchMemberServers: () => axios.get('/api/memberships/servers'),
+		fetchMemberServers: () => axios.get('/api/memberships/member/servers'),
 		fetchServerMembers: serverId =>
 			axios.get(`/api/memberships/${serverId}/members`)
 	}

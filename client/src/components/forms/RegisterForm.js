@@ -17,10 +17,20 @@ class RegisterForm extends React.Component {
 		errors: {}
 	};
 
-	onChange = e =>
-		this.setState({
-			data: { ...this.state.data, [e.target.name]: e.target.value }
-		});
+	onChange = e => {
+		if (this.state.errors[e.target.name]) {
+			const errors = Object.assign({}, this.state.errors);
+			delete errors[e.target.name];
+			this.setState({
+				data: { ...this.state.data, [e.target.name]: e.target.value },
+				errors
+			});
+		} else {
+			this.setState({
+				data: { ...this.state.data, [e.target.name]: e.target.value }
+			});
+		}
+	};
 
 	onSubmit = e => {
 		e.preventDefault();

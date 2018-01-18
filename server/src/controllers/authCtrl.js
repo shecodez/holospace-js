@@ -1,6 +1,6 @@
 import db from './../models';
 import jwt from 'jsonwebtoken';
-import parseErrors from './../utils/parseError';
+import parseErrors from './../utils/parseErrors';
 import { sendConfirmationEmail, sendResetPasswordEmail } from './../mailers';
 
 const authController = {};

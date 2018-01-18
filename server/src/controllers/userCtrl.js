@@ -1,5 +1,5 @@
 import db from './../models';
-import parseErrors from './../utils/parseError';
+import parseErrors from './../utils/parseErrors';
 import { sendConfirmationEmail } from './../mailers';
 
 const userController = {};
