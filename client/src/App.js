@@ -13,6 +13,7 @@ import ConfirmationPage from './components/pages/ConfirmationPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
 
 import ProfilePage from './components/pages/ProfilePage';
+import MainPage from "./components/pages/MainPage";
 
 import NotFoundPage from './components/pages/NotFoundPage';
 
@@ -27,6 +28,7 @@ const App = () => (
 			<GuestRoute path="/reset_password/:token" exact component={ResetPasswordPage} />
 
 			<UserRoute path="/@me" exact component={ProfilePage} />
+			<UserRoute path="/channels/:serverId/:channelId" exact component={MainPage} />
 
 			<Route component={NotFoundPage} />
 		</Switch>

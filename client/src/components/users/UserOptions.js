@@ -83,7 +83,7 @@ class UserOptions extends React.Component {
 
 		return (
 			<div className="user-options">
-				<Button.Group>
+				<Button.Group size='mini'>
 					{!this.props.profile &&
 						options.map((option, i) => (
 							<Popup

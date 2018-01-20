@@ -82,7 +82,7 @@ membershipController.getServerMembers = (req, res) => {
 		});
 };
 
-membershipController.getOne = (req, res) => {
+/* membershipController.getOne = (req, res) => {
 	db.Membership.findById(req.params.id)
 		.then(membership => {
 			return res.status(200).json(membership);
@@ -90,7 +90,7 @@ membershipController.getOne = (req, res) => {
 		.catch(err => {
 			return res.status(500).json(err);
 		});
-};
+}; */
 
 membershipController.create = (req, res) => {
 	const { member_id, server_id } = req.body.membership;
@@ -113,7 +113,7 @@ membershipController.create = (req, res) => {
 		});
 };
 
-membershipController.delete = (req, res) => {
+/* membershipController.delete = (req, res) => {
 	db.Membership.findByIdAndUpdate(
 		req.params.id,
 		{isDeleted: true},
@@ -125,6 +125,6 @@ membershipController.delete = (req, res) => {
 		.catch(err => {
 			res.status(500).json(err);
 		});
-};
+}; */
 
 export default membershipController;

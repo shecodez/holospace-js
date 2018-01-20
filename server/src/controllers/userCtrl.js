@@ -35,4 +35,28 @@ userController.register = (req, res) => {
 		});
 };
 
+// TODO: handle change password and
+// only allow username to change once
+userController.update = (req, res) => {
+	const { avatar, email, status } = req.body.user;
+	db.Server.findByIdAndUpdate(
+		req.currentUser._id,
+		// Validations
+    {
+      $set: {
+        avatar: avatar,
+        email: email,
+				status: status
+      }
+    },
+		{ new: true }
+	)
+		.then(updatedUser => {
+			res.status(200).json({ user: updatedUser });
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+};
+
 export default userController;

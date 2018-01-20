@@ -3,7 +3,7 @@ import parseErrors from './../utils/parseErrors';
 
 const channelController = {};
 
-channelController.getAll = (req, res) => {
+/* channelController.getAll = (req, res) => {
 	db.Channel.find({})
 		.then(channels => {
 			return res.status(200).json({ channels });
@@ -11,7 +11,7 @@ channelController.getAll = (req, res) => {
 		.catch(err => {
 			return res.status(500).json(err);
 		});
-};
+}; */
 
 channelController.getOne = (req, res) => {
 	db.Channel.findById(req.params.id)
@@ -48,6 +48,8 @@ channelController.getServerChannels = (req, res) => {
 channelController.create = (req, res) => {
 	const { avatar, name, topic, type, direct, server_id } = req.body.channel;
 
+	// authentication
+	// if (server_id.owner_id !== req.currentUser._id) // return Unauthorized
 	// Validations
 
 	const channel = new db.Channel({
@@ -71,12 +73,18 @@ channelController.create = (req, res) => {
 };
 
 channelController.update = (req, res) => {
+	const { avatar, name, topic, direct } = req.body.channel;
 	db.Channel.findByIdAndUpdate(
 		req.params.id,
-
 		// Validations
-		req.body.channel,
-
+		{
+      $set: {
+        avatar: avatar,
+        name: name,
+				topic: topic,
+				direct: direct
+      }
+    },
 		{ new: true }
 	)
 		.then(updatedChannel => {
@@ -87,12 +95,10 @@ channelController.update = (req, res) => {
 		});
 };
 
-channelController.delete = (req, res) => {
+/* channelController.delete = (req, res) => {
 	db.Channel.findByIdAndUpdate(
 		req.params.id,
-
 		{ isDeleted: true },
-
 		{ new: true }
 	)
 		.then(updatedChannel => {
@@ -101,6 +107,6 @@ channelController.delete = (req, res) => {
 		.catch(err => {
 			res.status(500).json(err);
 		});
-};
+}; */
 
 export default channelController;

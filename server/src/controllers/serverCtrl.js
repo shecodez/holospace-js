@@ -52,9 +52,7 @@ serverController.update = (req, res) => {
 	const { name, icon } = req.body.server;
 	db.Server.findByIdAndUpdate(
 		req.params.id,
-
 		// Validations
-
     {
       $set: {
         name: name,
@@ -71,7 +69,7 @@ serverController.update = (req, res) => {
 		});
 };
 
-serverController.delete = (req, res) => {
+/* serverController.delete = (req, res) => {
 	// if req.currentUser._id === server.owner_id
 	db.Server.findByIdAndUpdate(
 		req.params.id,
@@ -105,6 +103,6 @@ serverController.delete = (req, res) => {
 		.catch(err => {
 			res.status(500).json(err);
 		});
-};
+}; */
 
 export default serverController;

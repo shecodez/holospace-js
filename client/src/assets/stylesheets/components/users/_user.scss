@@ -10,6 +10,10 @@ $hide: #767676!important;
     flex: 1;
     margin-left: 6px;
     font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     .pin {
       color: #646464;
       font-size: 10px;
@@ -20,6 +24,14 @@ $hide: #767676!important;
 
   .avatar {
     position: relative;
+    height: 28px;
+    
+    img {
+      min-width: 28px;
+      max-width: 28px;
+      min-height: 28px;
+      max-height: 28px;
+    }
 
     .online-status {
       width: 13px;

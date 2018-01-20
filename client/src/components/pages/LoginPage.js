@@ -17,7 +17,10 @@ class LoginPage extends React.Component {
 	};
 
 	submit = data =>
-		this.props.login(data).then(() => this.props.history.push('/@me'));
+		this.props.login(data).then(() =>{
+			const { from } = this.props.location.state || { from: { pathname: '/@me' }};
+			this.props.history.push(from)
+		});
 
 	submitResetPasswordRequest = email => {
 		this.setState({ email });

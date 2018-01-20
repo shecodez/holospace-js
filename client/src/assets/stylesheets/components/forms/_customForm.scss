@@ -1,0 +1,90 @@
+$primary: #6435c9;
+
+.custom-form {
+  transition: all 0.5s ease-out;
+
+  .group {
+    position: relative;
+  }
+
+  input {
+    font-size: 1.2em;
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background-color: transparent;
+    padding-right: 50px !important;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid $primary;
+    }
+
+    &:not(:placeholder-shown):invalid {
+      color: red;
+      border-bottom: 1px solid red;
+    }
+  }
+
+  input:placeholder-shown ~ label,
+  label {
+    color: #999;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  /* active state */
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label {
+    transform: translateY(-25px);
+    font-size: 1em;
+    color: $primary;
+  }
+
+  input:not(:placeholder-shown):invalid ~ label {
+    transform: translateY(-25px);
+    font-size: 1em;
+    color: red;
+  }
+
+  /* styling required tags */
+  /* input:required ~ label::after {
+    content: ' *';
+    color: red;
+  } */
+
+  /* styling no-required tags */
+  input:not([required]) ~ label::after,
+  textarea:not([required]) ~ label::after {
+    content: ' (optional)';
+  }
+
+  .emoji-btn,
+  .search-form-btns {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: $primary;
+    opacity: 0.75;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.dark {
+    input {
+      caret-color: white;
+      color: white;
+    }
+  }
+}
