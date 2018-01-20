@@ -35,6 +35,7 @@ body > #root > .App {
 //-- Layouts -----------------------------------------
 @import "./components/layouts/tabs";
 //-- Servers -----------------------------------------
+@import "./components/servers/currentServer";
 @import "./components/servers/server";
 @import "./components/servers/serverList";
 @import "./components/servers/servers";

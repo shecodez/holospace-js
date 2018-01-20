@@ -12,7 +12,7 @@ import FlexSection from './../layouts/FlexSection';
 import DMsgButton from './../buttons/DMsgButton';
 import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
 import Servers from './../servers/Servers';
-// import CurrentServer from './../servers/CurrentServer';
+import CurrentServer from './../servers/CurrentServer';
 // import Channels from './../channels/Channels';
 import CurrentUser from './../users/CurrentUser';
 // import CurrentChannel from '../channels/CurrentChannel';
@@ -40,7 +40,7 @@ class MainPage extends React.Component {
 					{!user.confirmed && <ConfirmEmailReminder />}
 					<Grid className="main grid-4c">
 						<Nested>
-							<Section className="c2t">CurrentServer</Section>
+							<Section className="c2t"><CurrentServer /></Section>
 							<FlexSection className="c2m">Channels</FlexSection>
 							<Section className="c2b">
 								<CurrentUser user={user} />

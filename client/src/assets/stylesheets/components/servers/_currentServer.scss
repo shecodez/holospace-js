@@ -1,0 +1,29 @@
+.current-server {
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .header {
+    margin: 0;
+    line-height: 28px;
+    height: 28px;
+  }
+
+  .icon.button {
+    color: #eee;
+    padding: 0.515em;
+    background-color: transparent;
+
+    &:hover {
+      color: #eee;
+      background-color: #111;
+    }
+
+    &:active,
+    &:focus {
+      color: #eee;
+      background-color: transparent;
+    }
+  }
+}

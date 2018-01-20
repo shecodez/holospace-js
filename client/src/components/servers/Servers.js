@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Header } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
 import { fetchMemberServers } from './../../actions/memberships';
@@ -14,7 +15,7 @@ class Servers extends React.Component {
 	}
 
 	render() {
-		const { servers } = this.props;
+		const { servers, currentServerId } = this.props;
 
 		return (
 			<div className="servers">
@@ -22,7 +23,7 @@ class Servers extends React.Component {
 					Servers
 				</Header>
 
-				<ServerList servers={servers} />
+				<ServerList servers={servers} currentServerId={currentServerId} />
 
 				<AddServer />
 			</div>
@@ -30,19 +31,26 @@ class Servers extends React.Component {
 	}
 }
 
+Servers.defaultProps = {
+	currentServerId: ''
+};
+
 Servers.propTypes = {
 	servers: PropTypes.arrayOf(
 		PropTypes.shape({
 			server: PropTypes.object
 		})
 	).isRequired,
-	fetchMemberServers: PropTypes.func.isRequired
+	fetchMemberServers: PropTypes.func.isRequired,
+	currentServerId: PropTypes.string
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
+	// console.log(props.match.params.serverId);
 	return {
-		servers: state.servers
+		servers: state.servers,
+		currentServerId: props.match.params.serverId
 	};
 }
 
-export default connect(mapStateToProps, { fetchMemberServers })(Servers);
+export default withRouter(connect(mapStateToProps, { fetchMemberServers })(Servers));
