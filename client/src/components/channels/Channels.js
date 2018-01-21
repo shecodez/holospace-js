@@ -8,6 +8,7 @@ import { fetchServerChannels } from './../../actions/channels';
 
 // components
 import ChannelList from './ChannelList';
+import AccordionChannelList from './AccordionChannelList';
 import AddChannel from './AddChannel';
 // import Tabs from './../layouts/Tabs';
 // import Pane from './../layouts/Pane';
@@ -15,7 +16,6 @@ import AddChannel from './AddChannel';
 class Channels extends React.Component {
 	state = {
 		serverId: this.props.match.params.serverId
-		// channelId: this.props.match.params.channelId
 	};
 
 	componentDidMount() {
@@ -60,10 +60,10 @@ class Channels extends React.Component {
   				<ChannelList channels={textChannels} />
 
   				<AddChannel type="Voice" />
-  				<ChannelList channels={voiceChannels} />
+  				<AccordionChannelList channels={voiceChannels} />
 
   				<AddChannel type="VR" />
-  				<ChannelList channels={vrChannels} />
+  				<AccordionChannelList channels={vrChannels} />
         </div>
 			</div>
 		);

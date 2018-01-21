@@ -1,15 +1,12 @@
 .main-options {
-  .button {
+  .icon.button {
     color: #eee;
+    padding: 0.515em;
     background-color: transparent;
 
     &:hover {
       color: #eee;
       background-color: #111;
-
-      img:hover {
-        -webkit-filter: brightness(70%);
-      }
     }
 
     &:active,

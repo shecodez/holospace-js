@@ -45,11 +45,12 @@ body > #root > .App {
 //-- forms -------------------------------------------
 @import "./components/forms/customForm";
 //-- channels ----------------------------------------
+@import "./components/channels/accordionChannelList";
 @import "./components/channels/addChannel";
 @import "./components/channels/channel";
 @import "./components/channels/channelList";
 @import "./components/channels/channels";
-//@import "./components/channels/currentChannel";
+@import "./components/channels/currentChannel";
 //----------------------------------------------------
 //----------------------------------------------------
 //----------------------------------------------------

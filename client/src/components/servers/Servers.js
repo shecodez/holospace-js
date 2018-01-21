@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Header } from 'semantic-ui-react';
-import { withRouter } from 'react-router';
-
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { fetchMemberServers } from './../../actions/memberships';
 
 // components

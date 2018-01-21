@@ -2,6 +2,7 @@
   display: flex !important;
   justify-content: space-between;
   margin-left: 4px;
+  flex: 1;
 
   &.is-current-channel,
   &:hover {
@@ -16,6 +17,11 @@
     button {
       visibility: visible !important;
     }
+  }
+
+  .prepend {
+    font-size: 13px !important;
+    margin-right: 10px;
   }
 
   .channel-link {
@@ -34,7 +40,7 @@
     border: none !important;
     color: #999 !important;
     margin-right: 1em !important;
-    //visibility: hidden !important;
+    visibility: hidden !important;
     &:hover {
       color: #f1f1f1 !important;
     }

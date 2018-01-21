@@ -15,7 +15,7 @@ import Servers from './../servers/Servers';
 import CurrentServer from './../servers/CurrentServer';
 import Channels from './../channels/Channels';
 import CurrentUser from './../users/CurrentUser';
-// import CurrentChannel from '../channels/CurrentChannel';
+import CurrentChannel from '../channels/CurrentChannel';
 // import Chat from './../chat/Chat';
 import Members from './../members/Members';
 
@@ -47,7 +47,7 @@ class MainPage extends React.Component {
 							</Section>
 						</Nested>
 						<Nested>
-							<Section className="c3t">CurrentChannel</Section>
+							<Section className="c3t"><CurrentChannel /></Section>
 							<FlexSection className="c3m">Chat</FlexSection>
 						</Nested>
 						<Section className="c4"><Members /></Section>
