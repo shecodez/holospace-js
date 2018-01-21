@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchMemberServers } from './../../actions/memberships';
 
+// components
 import ServerList from './ServerList';
 import AddServer from './AddServer';
 

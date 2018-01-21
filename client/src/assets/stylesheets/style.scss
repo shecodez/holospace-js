@@ -1,5 +1,5 @@
-html{
- height: 100%;
+html {
+  height: 100%;
 }
 
 body > #root > .App {
@@ -14,7 +14,6 @@ body > #root > .App {
 .centered {
   text-align: center;
 }
-
 //-- Headers ------------------------------------------
 @import "./components/headers/topnav";
 @import "./components/headers/profileHeader";
@@ -45,15 +44,22 @@ body > #root > .App {
 @import "./components/members/members";
 //-- forms -------------------------------------------
 @import "./components/forms/customForm";
+//-- channels ----------------------------------------
+@import "./components/channels/addChannel";
+@import "./components/channels/channel";
+@import "./components/channels/channelList";
+@import "./components/channels/channels";
+//@import "./components/channels/currentChannel";
 //----------------------------------------------------
 //----------------------------------------------------
-
+//----------------------------------------------------
 
 .site-grid-r2 {
   display: grid;
   grid-template-columns: 1fr 15fr;
   height: 100vh;
   overflow: hidden;
+
   .section {
     padding: 1em 0;
     color: white;
@@ -89,16 +95,17 @@ body > #root > .App {
     color: white;
     overflow: hidden;
   }
+
   .nested {
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
+
   .stretch {
     flex: 1;
   }
 }
-
 /*
 ___ _____ ____________
 |  |_c2t_|____c3t____|
@@ -111,7 +118,6 @@ ___ _____ ____________
 .grid-3c {
   grid-template-columns: 3fr 12fr;
 }
-
 /*
 ______ ___________ ___
 |_c2t_|____c3t____|  |
@@ -124,7 +130,6 @@ ______ ___________ ___
 .grid-3c-vr {
   grid-template-columns: 3fr 12fr 1fr;
 }
-
 /*
 ___ _____ _________ ___
 |  |_c2t_|___c3t___|  |
@@ -163,16 +168,13 @@ ___ _____ _________ ___
 }
 
 .c2b,
-.c3t,
-.c2t {
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12))
-    drop-shadow(0 3px 1px rgba(0, 0, 0, 0.14))
-    drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
-    drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.1));
+.c2t,
+.c3t {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12)) drop-shadow(0 3px 1px rgba(0, 0, 0, 0.14)) drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12)) drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.1));
 }
 
-.c2t,
 .c2b,
+.c2t,
 .c3t {
   line-height: 28px;
 }

@@ -1,4 +1,4 @@
-.current-server {
+.add-channel {
   padding: 0 1em;
   display: flex;
   justify-content: space-between;
@@ -6,11 +6,6 @@
 
   .header {
     margin: 0;
-    line-height: 28px;
-    height: 28px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .icon.button {

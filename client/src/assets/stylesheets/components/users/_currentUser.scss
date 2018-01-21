@@ -7,7 +7,7 @@
     padding: 0;
     color: #eee;
     background-color: transparent;
-  
+
     &:hover {
       color: #eee;
       background-color: transparent;
@@ -16,15 +16,19 @@
         -webkit-filter: brightness(70%);
       }
     }
+
     &:active,
-    &:focus  {
+    &:focus {
       color: #eee;
       background-color: transparent;
     }
   }
 
   .user-options {
+
+
     .icon.button {
+      padding: 0.515em;
       &:hover {
         background-color: #111;
       }
