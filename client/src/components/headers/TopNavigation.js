@@ -38,7 +38,7 @@ TopNavigation.propTypes = {
 
 function mapStateToProps(state) {
 	return {
-		isUser: !!state.user.token
+		isUser: !!state.user.email
 	};
 }
 

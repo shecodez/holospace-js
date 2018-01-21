@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
-import decode from 'jwt-decode';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers/rootReducer';
-import { userLoggedIn } from './actions/auth';
+import { currentUserFetched, fetchCurrentUser } from './actions/users';
 import setAuthorizationHeader from './utils/setAuthorizationHeader';
 
 import App from './App';
@@ -21,20 +20,10 @@ const store = createStore(
 );
 
 if (localStorage.holospaceJWT) {
-	const payload = decode(localStorage.holospaceJWT);
-	const user = {
-		token: localStorage.holospaceJWT,
-
-		avatar: payload.avatar,
-		email: payload.email,
-    username: payload.username,
-    pin: payload.pin,
-    online: payload.online,
-    status: payload.status,
-		confirmed: payload.confirmed
-	};
 	setAuthorizationHeader(localStorage.holospaceJWT);
-	store.dispatch(userLoggedIn(user));
+	store.dispatch(fetchCurrentUser());
+} else {
+	store.dispatch(currentUserFetched({}));
 }
 
 ReactDOM.render(

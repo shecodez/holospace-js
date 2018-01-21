@@ -35,6 +35,20 @@ userController.register = (req, res) => {
 		});
 };
 
+userController.current = (req, res) => {
+	return res.status(200).json({
+		user: {
+			avatar: req.currentUser.avatar,
+			email: req.currentUser.email,
+			username: req.currentUser.username,
+			pin: req.currentUser.pin,
+			online: req.currentUser.online,
+			status: req.currentUser.status,
+			confirmed: req.currentUser.confirmed
+		}
+	});
+};
+
 // TODO: handle change password and
 // only allow username to change once
 userController.update = (req, res) => {
@@ -42,13 +56,13 @@ userController.update = (req, res) => {
 	db.Server.findByIdAndUpdate(
 		req.currentUser._id,
 		// Validations
-    {
-      $set: {
-        avatar: avatar,
-        email: email,
+		{
+			$set: {
+				avatar: avatar,
+				email: email,
 				status: status
-      }
-    },
+			}
+		},
 		{ new: true }
 	)
 		.then(updatedUser => {
