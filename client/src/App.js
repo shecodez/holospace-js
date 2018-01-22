@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
+import { IntlProvider } from 'react-intl';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from './actions/users';
+
+import translations from "./translations/translations";
 
 // components
 import UserRoute from './components/routes/UserRoute';
@@ -28,9 +31,12 @@ class App extends React.Component {
 	}
 
 	render() {
+		const { loaded, lang } = this.props;
+
 		return (
+			<IntlProvider locale={lang} messages={translations[lang]}>
 			<div className="App">
-				<Loader loaded={this.props.loaded}>
+				<Loader loaded={loaded}>
 				<Switch>
 
 					<Route path="/" exact component={HomePage} />
@@ -48,6 +54,7 @@ class App extends React.Component {
 				</Switch>
 				</Loader>
 			</div>
+			</IntlProvider>
 		);
 	}
 }
@@ -55,13 +62,15 @@ class App extends React.Component {
 App.propTypes = {
 	isAuthenticated: PropTypes.bool.isRequired,
 	fetchCurrentUser: PropTypes.func.isRequired,
-	loaded: PropTypes.bool.isRequired
+	loaded: PropTypes.bool.isRequired,
+	lang: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
 		isAuthenticated: !!state.user.email,
-		loaded: state.user.loaded
+		loaded: state.user.loaded,
+		lang: state.locale.lang
 	};
 }
 
