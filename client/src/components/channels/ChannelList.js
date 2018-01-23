@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { List } from 'semantic-ui-react';
 
 // components
-import Channel from './Channel';
+import ChannelListItem from './ChannelListItem';
 
 const ChannelList = ({ channels }) => (
 	<List className="channel-list">
-		{channels.map(channel => <Channel channel={channel} key={channel._id} />)}
+		{channels.map(channel => <ChannelListItem channel={channel} key={channel._id} />)}
 	</List>
 );
 

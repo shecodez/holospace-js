@@ -52,7 +52,7 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 				</span>
 			</Menu.Item>
 			<Menu.Item>
-				<Header as="h5" inverted>
+				<Header as="h4" inverted>
 					<Icon name="translate" />
 					<Header.Content>
 						<Dropdown

@@ -1,0 +1,42 @@
+.chats-history {
+  flex: 1 1 auto;
+  height: 0;
+  overflow-y: auto;
+  position: relative;
+
+  .comments {
+    max-width: 100%;
+  }
+
+  .comment {
+    background-color: rgba(155,155,155,0.2) !important;
+    padding: 7px 10px !important;
+
+    &:hover {
+      .actions {
+        visibility: visible;
+      }
+    }
+
+    .author,
+    .text {
+      color: #ddd;
+
+      .edited {
+        font-size: 10px;
+        color: #999;
+      }
+    }
+
+    .metadata {
+      color: #666;
+    }
+
+    .actions {
+      position: absolute;
+      right: 10px;
+      bottom: 7px;
+      visibility: hidden;
+    }
+  }
+}

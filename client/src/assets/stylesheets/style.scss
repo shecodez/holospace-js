@@ -51,7 +51,11 @@ body > #root > .App {
 @import "./components/channels/channelList";
 @import "./components/channels/channels";
 @import "./components/channels/currentChannel";
-//----------------------------------------------------
+//-- ChatRoom ----------------------------------------
+@import "./components/chat/chatMessage";
+@import "./components/chat/chatMsgInput";
+@import "./components/chat/chatRoom";
+@import "./components/chat/chatsHistory";
 //----------------------------------------------------
 //----------------------------------------------------
 

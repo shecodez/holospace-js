@@ -9,7 +9,7 @@ import { updateChannel } from './../../actions/channels';
 // components
 import ChannelForm from './../forms/ChannelForm';
 
-class Channel extends React.Component {
+class ChannelListItem extends React.Component {
 	state = {
 		isOpen: false
 	};
@@ -36,7 +36,9 @@ class Channel extends React.Component {
 				key={channel._id}
 			>
 				<Link
-					to={`/channels/${currentServerId}/${channel._id}`}
+					to={`/channels/${currentServerId}${
+						channel.type === 'VR' ? '/vr/' : '/'
+					}${channel._id}`}
 					className="channel-link"
 				>
 					{channel.type === 'Text' && <span className="prepend">#</span>}
@@ -60,12 +62,12 @@ class Channel extends React.Component {
 	}
 }
 
-Channel.defaultProps = {
+ChannelListItem.defaultProps = {
 	currentServerId: '',
 	currentChannelId: ''
 };
 
-Channel.propTypes = {
+ChannelListItem.propTypes = {
 	channel: PropTypes.shape({}).isRequired,
 	currentServerId: PropTypes.string,
 	currentChannelId: PropTypes.string,
@@ -79,4 +81,6 @@ function mapStateToProps(state, props) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { updateChannel })(Channel));
+export default withRouter(
+	connect(mapStateToProps, { updateChannel })(ChannelListItem)
+);

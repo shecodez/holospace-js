@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 // components
-import Channel from './Channel';
+import ChannelListItem from './ChannelListItem';
 
 class AccordionChannelList extends React.Component {
 	state = {
@@ -34,7 +34,7 @@ class AccordionChannelList extends React.Component {
 							onClick={this.handleClick}
 						>
 							<Icon name="dropdown" />
-							<Channel channel={channel} key={channel._id} />
+							<ChannelListItem channel={channel} key={channel._id} />
 						</Accordion.Title>
 						<Accordion.Content active={activeIndex === i}>
 							Online Users
