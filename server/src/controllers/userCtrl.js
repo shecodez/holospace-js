@@ -53,7 +53,7 @@ userController.current = (req, res) => {
 // only allow username to change once
 userController.update = (req, res) => {
 	const { avatar, email, status } = req.body.user;
-	db.Server.findByIdAndUpdate(
+	db.User.findByIdAndUpdate(
 		req.currentUser._id,
 		// Validations
 		{

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popup } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
 // components
 import User from './User';
@@ -28,8 +29,18 @@ CurrentUser.defaultProps = {
 }
 
 CurrentUser.propTypes = {
-	user: PropTypes.shape({}).isRequired,
+	user: PropTypes.shape({
+		avatar: PropTypes.string.isRequired,
+		username: PropTypes.string.isRequired,
+		confirmed: PropTypes.bool.isRequired
+	}).isRequired,
   profile: PropTypes.bool
 };
 
-export default CurrentUser;
+function mapStateToProps(state) {
+	return {
+		user: state.user
+	};
+}
+
+export default connect(mapStateToProps)(CurrentUser);

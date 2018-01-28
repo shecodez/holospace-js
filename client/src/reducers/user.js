@@ -1,7 +1,8 @@
 import {
 	USER_LOGGED_IN,
 	USER_LOGGED_OUT,
-	CURRENT_USER_FETCHED
+	CURRENT_USER_FETCHED,
+	USER_UPDATED,
 } from './../actionTypes';
 
 export default function user(state = { loaded: false }, action = {}) {
@@ -14,6 +15,9 @@ export default function user(state = { loaded: false }, action = {}) {
 
 		case USER_LOGGED_OUT:
 			return { loaded: true };
+
+		case USER_UPDATED:
+			return { ...state, ...action.user, loaded: true };
 
 		default:
 			return state;

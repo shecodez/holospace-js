@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import { Header, Button, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { updateServer } from './../../actions/servers';
+import { updateServer, fetchServer } from './../../actions/servers';
 
 // components
 import ServerForm from './../forms/ServerForm';
 
 class CurrentServer extends React.Component {
 	state = {
-		isOpen: false,
-		serverId: this.props.match.params.serverId
+		isOpen: false
 	};
 
-	/* componentDidMount() {
-		if (!this.props.server) {
-			this.props.fetchServer(this.state.serverId);
+	componentDidMount() {
+		if (this.props.server.name === '') {
+			this.props.fetchServer(this.props.match.params.serverId);
 		}
-	} */
+	}
 
 	submit = data => {
 		this.props.updateServer(data).then(this.toggleModal());
@@ -32,7 +31,11 @@ class CurrentServer extends React.Component {
 
 	render() {
 		const { isOpen } = this.state;
-		const { server } = this.props;
+		const { user, server } = this.props;
+
+		let serverOwner = false;
+		if (user.username === server.owner_id.username && user.pin === server.owner_id.pin)
+			serverOwner = true;
 
 		return (
 			<div className="current-server">
@@ -41,7 +44,7 @@ class CurrentServer extends React.Component {
 						{server.name}
 					</Header>
 				)}
-				<Button icon="content" onClick={this.toggleModal} />
+				{serverOwner && <Button icon="content" onClick={this.toggleModal} />}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
 					<Modal.Header>Update Server</Modal.Header>
@@ -55,7 +58,7 @@ class CurrentServer extends React.Component {
 }
 
 CurrentServer.defaultProps = {
-	server: null
+	server: { name: '', owner_id: { username: '', pin: 0 } },
 };
 
 CurrentServer.propTypes = {
@@ -64,18 +67,20 @@ CurrentServer.propTypes = {
 			serverId: PropTypes.string.isRequired
 		})
 	}).isRequired,
+	user: PropTypes.shape({
+		username: PropTypes.string.isRequired,
+		pin: PropTypes.number.isRequired
+	}).isRequired,
 	server: PropTypes.shape({
-		owner_id: PropTypes.shape({
-			username: PropTypes.string,
-			pin: PropTypes.number
-		})
+		name: PropTypes.string
 	}),
-	// fetchServer: PropTypes.func.isRequired,
+	fetchServer: PropTypes.func.isRequired,
 	updateServer: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
 	return {
+		user: state.user,
 		server: state.servers.find(
 			server => server._id === props.match.params.serverId
 		)
@@ -83,5 +88,5 @@ function mapStateToProps(state, props) {
 }
 
 export default withRouter(
-	connect(mapStateToProps, { updateServer })(CurrentServer)
+	connect(mapStateToProps, { updateServer, fetchServer })(CurrentServer)
 );

@@ -5,14 +5,15 @@ import { List } from 'semantic-ui-react';
 // components
 import ChannelListItem from './ChannelListItem';
 
-const ChannelList = ({ channels }) => (
+const ChannelList = ({ channels, socket }) => (
 	<List className="channel-list">
-		{channels.map(channel => <ChannelListItem channel={channel} key={channel._id} />)}
+		{channels.map(channel => <ChannelListItem channel={channel} key={channel._id} socket={socket} />)}
 	</List>
 );
 
 ChannelList.propTypes = {
-	channels: PropTypes.arrayOf(PropTypes.object).isRequired
+	channels: PropTypes.arrayOf(PropTypes.object).isRequired,
+	socket: PropTypes.shape({}).isRequired
 };
 
 export default ChannelList;

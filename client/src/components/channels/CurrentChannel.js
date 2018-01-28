@@ -3,20 +3,18 @@ import PropTypes from 'prop-types';
 import { Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { fetchChannel } from "../../actions/channels";
 
 // components
 import MainOptions from './../options/MainOptions';
 
 class CurrentChannel extends React.Component {
-	state = {
-		channelId: this.props.match.params.channelId
-	};
 
-	/* componentDidMount() {
-		if (!this.props.channel) {
-			this.props.fetchChannel(this.state.channelId);
-		}
-	} */
+	componentDidMount() {
+    if (this.props.channel.name === '') {
+      this.props.fetchChannel(this.props.match.params.channelId);
+    }
+  }
 
 	render() {
 		const { channel } = this.props;
@@ -39,7 +37,7 @@ class CurrentChannel extends React.Component {
 }
 
 CurrentChannel.defaultProps = {
-	channel: null
+	channel: { name: '', topic: '', type: ''}
 };
 
 CurrentChannel.propTypes = {
@@ -49,9 +47,11 @@ CurrentChannel.propTypes = {
 		})
 	}).isRequired,
 	channel: PropTypes.shape({
-		name: PropTypes.string.isRequired
-	})
-	// fetchChannel: PropTypes.func.isRequired,
+		name: PropTypes.string,
+		topic: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired
+	}),
+	fetchChannel: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, props) {
@@ -62,4 +62,4 @@ function mapStateToProps(state, props) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps)(CurrentChannel));
+export default withRouter(connect(mapStateToProps, { fetchChannel })(CurrentChannel));

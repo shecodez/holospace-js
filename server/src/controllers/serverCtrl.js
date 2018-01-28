@@ -3,6 +3,21 @@ import parseErrors from './../utils/parseErrors';
 
 const serverController = {};
 
+serverController.getOne = (req, res) => {
+  db.Server.findById(req.params.id)
+    .populate({
+      path: "owner_id",
+      select: "username pin -_id"
+    })
+    .then(server => {
+      return res.status(200).json({ server });
+    })
+    .catch(err => {
+      return res.status(500).json(err);
+    });
+};
+
+
 // create new server,
 // create new membership between user and server
 // create new channel (named general) belonging to server,

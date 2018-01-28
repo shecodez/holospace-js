@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Accordion, List, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
@@ -30,7 +29,7 @@ class Channels extends React.Component {
 	}
 
 	render() {
-		const { channels } = this.props;
+		const { channels, socket } = this.props;
 
 		const textChannels = [];
 		const voiceChannels = [];
@@ -51,19 +50,19 @@ class Channels extends React.Component {
 						textChannels.push(channel);
 				}
 			});
-		}
+		}	
 
 		return (
 			<div className="channels">
         <div className="channels-list">
   				<AddChannel type="Text" />
-  				<ChannelList channels={textChannels} />
+  				<ChannelList channels={textChannels} socket={socket} />
 
   				<AddChannel type="Voice" />
-  				<AccordionChannelList channels={voiceChannels} />
+  				<AccordionChannelList channels={voiceChannels} socket={socket} />
 
   				<AddChannel type="VR" />
-  				<AccordionChannelList channels={vrChannels} />
+  				<AccordionChannelList channels={vrChannels} socket={socket} />
         </div>
 			</div>
 		);
@@ -86,7 +85,11 @@ Channels.propTypes = {
 		params: PropTypes.shape({
 			serverId: PropTypes.string.isRequired
 		})
-	}).isRequired
+	}).isRequired,
+	socket: PropTypes.shape({
+    on: PropTypes.func,
+    emit: PropTypes.func
+  }).isRequired
 	// currentChannelId: PropTypes.string,
 	// currentServerId: PropTypes.string
 };
@@ -94,7 +97,7 @@ Channels.propTypes = {
 function mapStateToProps(state, props) {
 	return {
 		channels: state.channels,
-		currentChannelId: props.match.params.currentChannelId,
+		currentChannelId: props.match.params.channelId,
 		currentServerId: props.match.params.serverId
 	};
 }

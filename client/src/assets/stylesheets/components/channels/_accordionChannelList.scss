@@ -1,4 +1,6 @@
 .accordion-channel-list {
+  // overflow-x: hidden;
+
   .channel-link {
     margin-left: 1.25rem;
   }
@@ -20,5 +22,19 @@
     margin-left: 4px;
     padding-left: 2.25rem !important;
     color: #999;
+  }
+
+  .list.channel-presence {
+    white-space: nowrap;
+
+    .content {
+      padding-left: 0.5rem !important;
+    }
+
+    .header {
+      font-size: 0.95rem !important;
+    }
+
+    .status-icons {}
   }
 }

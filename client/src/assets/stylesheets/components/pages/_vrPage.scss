@@ -1,0 +1,44 @@
+.vr-page {
+  background-color: #000;
+
+  .c2m {
+    background-color: rgba(155,155,155,0.2);
+  }
+
+  .chat-room {
+    .header {
+      text-align: center;
+    }
+
+    .avatar {
+      display: none !important;
+    }
+
+    .content {
+      margin: 0 !important;
+    }
+  }
+
+  .chat-msg-input {
+    .custom-form {
+      margin-bottom: 1em;
+
+      label {
+        font-size: inherit;
+      }
+    }
+  }
+
+  .members {
+    text-align: center;
+    margin-top: 0.5em;
+
+    h3 {
+      display: none;
+    }
+
+    .content {
+      display: none;
+    }
+  }
+}

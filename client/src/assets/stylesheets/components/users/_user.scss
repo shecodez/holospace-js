@@ -33,7 +33,7 @@ $hide: #767676!important;
       max-height: 28px;
     }
 
-    .online-status {
+    .online--true {
       width: 13px;
       height: 13px;
       border-radius: 100%;
@@ -53,6 +53,23 @@ $hide: #767676!important;
 
       &.Busy {
         background-color: $busy;
+      }
+    }
+
+    .online--false {
+      width: 13px;
+      height: 13px;
+      border-radius: 100%;
+      position: absolute;
+      background-color: $hide;
+      border: 2px solid #222;
+      bottom: 0;
+      right: 0;
+      
+      &.Away,
+      &.Busy,
+      &.Show {
+        background-color: $hide;
       }
     }
   }

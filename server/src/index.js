@@ -1,10 +1,11 @@
 import express from 'express';
-// import socket from './socket';
+import socket from './socket';
 
 import fs from 'fs';
 import path from 'path';
 
 import bodyParser from 'body-parser';
+
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 
@@ -39,19 +40,6 @@ app.use(staticFiles);
  * Routes/Routing
  **/
 require('./routes')(app);
-//------------------------------------------------------------------------------
-const router = express.Router();
-router.get('/cities', (req, res) => {
-	const cities = [
-		{ name: 'NYC', population: 8175133 },
-		{ name: 'LA', population: 3792621 },
-		{ name: 'Chicago', population: 2695598 },
-		{ name: 'Tokyo', population: 9262046 }
-	];
-	res.json(cities);
-});
-app.use(router);
-//------------------------------------------------------------------------------
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.use('/*', staticFiles);
@@ -60,7 +48,7 @@ app.use('/*', staticFiles);
  * Start Server, Connect to DB, && socket.io w/ peerServer
  **/
 const httpServer = require('http').createServer(app);
-// const io = require('socket.io').listen(httpServer);
+const io = require('socket.io').listen(httpServer);
 
 // const peerServer = require('peer').ExpressPeerServer(httpServer);
 // app.use('/api', peerServer);
@@ -80,10 +68,10 @@ httpServer.listen(app.get('port'), () => {
 	});
 });
 
-//socket(io);
+socket(io);
 
 //--------------------------------------------------------------------
-// Manage p2p connections
+// Manage p2p VoIP
 //--------------------------------------------------------------------
 /* const peers = [];
 

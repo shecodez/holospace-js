@@ -11,7 +11,7 @@ var router = express.Router();
 
 // GET holospace.com/api/servers/:id
 // get one server by id
-// router.get('/servers/:id', Server.getOne);
+router.get('/servers/:id', Server.getOne);
 
 // POST holospace.com/api/servers/:params
 // create new server

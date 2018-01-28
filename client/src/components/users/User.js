@@ -6,7 +6,7 @@ const User = ({ user }) => (
 	<div className="user">
 		<div className="avatar">
 			<Image avatar src={user.avatar} />
-			<div className={`online-status ${user.status}`} />
+			<div className={`online--${user.online} ${user.status}`} />
 		</div>
 		<span className="content">
 			{user.username}
@@ -19,7 +19,8 @@ User.propTypes = {
 	user: PropTypes.shape({
 		avatar: PropTypes.string.isRequired,
 		username: PropTypes.string.isRequired,
-		status: PropTypes.string.isRequired
+		status: PropTypes.string.isRequired,
+		online: PropTypes.bool.isRequired
 	}).isRequired
 };
 

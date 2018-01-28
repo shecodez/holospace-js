@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
+import { updateUser } from './../../actions/users';
+import { updateMember } from './../../actions/memberships';
 
 // conponents
 import Grid from './../layouts/Grid';
@@ -17,17 +19,47 @@ import Channels from './../channels/Channels';
 import CurrentUser from './../users/CurrentUser';
 import CurrentChannel from '../channels/CurrentChannel';
 import ChatRoom from './../chat/ChatRoom';
-import Members from './../members/Members';
+import ServerMembers from './../members/Members';
 
 class MainPage extends React.Component {
-	state = {};
+	state = {
+		socket: null
+	};
 
-	/* componentWillMount() {
-		this.socket = io();
-	} */
+	componentWillMount() {
+		this.initSocket();
+	}
+
+	componentDidMount() {
+		this.state.socket.on('user:update', this.updateUser);
+	}
+
+	initSocket = () => {
+		const { user } = this.props;
+
+		const socket = io();
+		this.setState({ socket });
+
+		socket.emit('user:init', {
+			iconURL: user.avatar,
+			userTag: `${user.username}#${user.pin}`
+		});
+	}
+
+	updateUser = data => {
+		if (this.props.user.email === data.user.email){
+			this.props.updateUser(data.user);
+			this.props.updateMember(data.user);
+		}
+		else {
+			this.props.updateMember(data.user);
+		}
+
+		// console.log(data.user);
+	}
 
 	render() {
-		const { user } = this.props;
+		const { socket } = this.state;
 
 		return (
 			<div className="site-grid-r2 main-page">
@@ -37,20 +69,24 @@ class MainPage extends React.Component {
 				</Section>
 
 				<div className="two-r">
-					{!user.confirmed && <ConfirmEmailReminder />}
+					{!this.props.user.confirmed && <ConfirmEmailReminder />}
 					<Grid className="main grid-4c">
 						<Nested>
 							<Section className="c2t"><CurrentServer /></Section>
-							<FlexSection className="c2m"><Channels /></FlexSection>
+							<FlexSection className="c2m">
+								<Channels socket={socket} />
+							</FlexSection>
 							<Section className="c2b">
-								<CurrentUser user={user} />
+								<CurrentUser />
 							</Section>
 						</Nested>
 						<Nested>
 							<Section className="c3t"><CurrentChannel /></Section>
-							<FlexSection className="c3m"><ChatRoom /></FlexSection>
+							<FlexSection className="c3m">
+								<ChatRoom socket={socket} />
+							</FlexSection>
 						</Nested>
-						<Section className="c4"><Members /></Section>
+						<Section className="c4"><ServerMembers /></Section>
 					</Grid>
 				</div>
 			</div>
@@ -60,10 +96,11 @@ class MainPage extends React.Component {
 
 MainPage.propTypes = {
 	user: PropTypes.shape({
-		avatar: PropTypes.string.isRequired,
-		username: PropTypes.string.isRequired,
+		email: PropTypes.string.isRequired,
 		confirmed: PropTypes.bool.isRequired
-	}).isRequired
+	}).isRequired,
+	updateUser: PropTypes.func.isRequired,
+	updateMember: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -72,4 +109,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps, { updateUser, updateMember })(MainPage);
