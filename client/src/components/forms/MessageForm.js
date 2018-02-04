@@ -11,8 +11,13 @@ class MessageForm extends React.Component {
 			body: this.props.message ? this.props.message.body : ''
 		},
 		loading: false,
-		errors: {}
+		errors: {},
+		isTyping: false
 	};
+
+	componentWillUnmount() {
+		this.clearIsTypingInterval();
+	}
 
 	onChange = e => {
 		if (this.state.errors[e.target.name]) {
@@ -27,10 +32,6 @@ class MessageForm extends React.Component {
 				data: { ...this.state.data, [e.target.name]: e.target.value }
 			});
 		}
-		/* socket.emit('user:typing', {
-      channel: this.props.match.params.channelId,
-      user: `${this.props.username}#${this.props.pin}`
-    }); */
 	};
 
 	onSubmit = e => {
@@ -44,19 +45,38 @@ class MessageForm extends React.Component {
 		this.setState({ data: { body: '' } });
 	};
 
+	sendTyping = () => {
+		this.lastUpdateTime = Date.now();
+		if (!this.state.isTyping) {
+			this.setState({ isTyping: true });
+			this.props.sendTyping(true);
+			// console.log('current user typing...');
+			this.startIsTypingInterval();
+		}
+	};
+
+	startIsTypingInterval = () => {
+		this.typingInterval = setInterval(() => {
+			if (Date.now() - this.lastUpdateTime > 500) {
+				this.setState({ isTyping: false });
+				this.clearIsTypingInterval();
+			}
+		}, 500);
+	};
+
+	clearIsTypingInterval = () => {
+		if (this.typingInterval) {
+			clearInterval(this.typingInterval);
+			this.props.sendTyping(false);
+			// console.log('current user !typing.');
+		}
+	};
+
 	validate = data => {
 		const errors = {};
 		if (!data.body) errors.body = 'Cannot be blank';
 		return errors;
 	};
-
-	/* socket.on('user:typing', (payload) => {
-    this.renderWhoTyping(payload);
-  });
-
-	renderWhoTyping = payload => {
-		this.setState({ typing: payload.username });
-	}; */
 
 	render() {
 		const { data, errors } = this.state;
@@ -71,6 +91,10 @@ class MessageForm extends React.Component {
 						placeholder=" "
 						value={data.body}
 						onChange={this.onChange}
+						autoComplete={'off'}
+						onKeyUp={e => {
+							e.keyCode !== 13 && this.sendTyping();
+						}}
 						required
 					/>
 					<label htmlFor="body">{this.props.message_label}</label>
@@ -83,7 +107,8 @@ class MessageForm extends React.Component {
 }
 
 MessageForm.defaultProps = {
-	message: null
+	message: null,
+	sendTyping: null
 };
 
 MessageForm.propTypes = {
@@ -92,7 +117,8 @@ MessageForm.propTypes = {
 	message: PropTypes.shape({
 		_id: PropTypes.string,
 		body: PropTypes.string
-	})
+	}),
+	sendTyping: PropTypes.func
 };
 
 export default MessageForm;

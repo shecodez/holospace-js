@@ -68,8 +68,18 @@ export default {
 			axios
 				.post('/api/memberships', { membership })
 				.then(res => res.data.membership),
-		fetchMemberServers: () => axios.get('/api/memberships/member/servers'),
+		fetchMemberServers: () => axios.get('/api/memberships/@me/servers'),
 		fetchServerMembers: serverId =>
 			axios.get(`/api/memberships/${serverId}/members`)
+	},
+	subscription: {
+		fetchDirectChannels: () =>
+			axios
+				.get(`/api/subscriptions/@me/channels`)
+				.then(res => res.data.channels),
+		fetchChannelSubscribers: channelId =>
+			axios
+				.get(`/api/subscriptions/${channelId}/subscribers`)
+				.then(res => res.data.subscribers)
 	}
 };

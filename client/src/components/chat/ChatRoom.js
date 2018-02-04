@@ -21,13 +21,12 @@ class ChatRoom extends React.Component {
 	}
 }
 ChatRoom.defaultProps = {
-  direct: false,
-  socket: null
+  direct: false
 };
 
 ChatRoom.propTypes = {
   direct: PropTypes.bool,
-	socket: PropTypes.shape({})
+	socket: PropTypes.shape({}).isRequired
 };
 
 export default ChatRoom;

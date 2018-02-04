@@ -2,7 +2,8 @@ import {
 	SET_SERVER_CHANNELS,
 	CHANNEL_CREATED,
 	CHANNEL_FETCHED,
-	CHANNEL_UPDATED
+	CHANNEL_UPDATED,
+	SET_DIRECT_CHANNELS
 } from './../actionTypes';
 
 export default function channels(state = [], action = {}) {
@@ -29,6 +30,9 @@ export default function channels(state = [], action = {}) {
 				if (item._id === action.channel._id) return action.channel;
 				return item;
 			});
+
+		case SET_DIRECT_CHANNELS:
+			return action.directChannels;
 
 		default:
 			return state;

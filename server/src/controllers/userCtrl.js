@@ -4,6 +4,29 @@ import { sendConfirmationEmail } from './../mailers';
 
 const userController = {};
 
+userController.getAll = (req, res) => {
+	let users = [];
+	let promise = db.User.find({})
+		.where('isDeleted')
+		.equals(false)
+		.exec((err, foundUsers) => {
+			if (err) console.log(err);
+			foundUsers.filter(function(user) {
+				users.push({
+					title: `${user.username}#${user.pin}`,
+					image: user.avatar
+				});
+			});
+		});
+	promise
+		.then(() => {
+			return res.status(200).json({ users });
+		})
+		.catch(err => {
+			return res.status(400).json(err);
+		});
+};
+
 userController.register = (req, res) => {
 	const { username, email, password } = req.body.user;
 

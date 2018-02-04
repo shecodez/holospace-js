@@ -80,19 +80,17 @@ exports = module.exports = function(io) {
 			}
 		});
 
-		//socket.on('message:send', (message) => {});
+		//socket.on('resource:send', (resource) => {});
 
-		//socket.on('message:update', (message) => {});
+		//socket.on('resource:update', (resource) => {});
 
-		/* socket.on('user:typing', (data) => {
-      socket.broadcast.to(data.channel).emit('user:typing', {
-        username: data.username
-      });
+		socket.on('user:typing', (data) => {
+      socket.broadcast.to(data.channel).emit('user:typing', data);
     });
 
-    socket.on('user:typing', (data) => {
-      socket.broadcast.to(data.channel).emit('user:typing', data);
-    });*/
+    socket.on('stop:typing', (data) => {
+      socket.broadcast.to(data.channel).emit('stop:typing', data);
+    });
 	});
 
 	//  this is an array of sockets connected to each

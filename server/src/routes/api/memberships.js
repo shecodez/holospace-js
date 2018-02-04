@@ -17,10 +17,18 @@ router.get(
 	Membership.getServerMembers
 );
 
-// GET holospace.com/api/memberships/member/servers (member from req.currentUser)
-// get list of member servers
+// GET holospace.com/api/memberships/@me/mutual/members
+// get list of mutual members from currentUser' servers
 router.get(
-	'/memberships/member/servers',
+	'/memberships/@me/mutual/members',
+	authenticate,
+	Membership.getMutualMembers
+);
+
+// GET holospace.com/api/memberships/@me/servers (@me from req.currentUser)
+// get list of currentUser servers
+router.get(
+	'/memberships/@me/servers',
 	authenticate,
 	Membership.getMemberServers
 );
@@ -31,7 +39,7 @@ router.get(
 
 // POST holospace.com/api/memberships/:params
 // create new membership
-router.post('/memberships', Membership.create);
+//router.post('/memberships', authenticate, Membership.create);
 
 // PUT holospace.com/api/memberships/:params
 // update a membership

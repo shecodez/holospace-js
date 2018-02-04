@@ -3,7 +3,8 @@ import {
 	CHANNEL_CREATED,
 	CHANNEL_FETCHED,
 	CHANNEL_UPDATED,
-	SET_SERVER_CHANNELS
+	SET_SERVER_CHANNELS,
+	SET_DIRECT_CHANNELS
 } from './../actionTypes';
 
 export function channelCreated(channel) {
@@ -34,6 +35,13 @@ export function setServerChannels(serverChannels) {
 	};
 }
 
+export function setDirectChannels(directChannels) {
+	return {
+		type: SET_DIRECT_CHANNELS,
+		directChannels
+	};
+}
+
 export const createChannel = data => dispatch =>
 	api.channel.create(data).then(channel => {
 		dispatch(channelCreated(channel));
@@ -52,4 +60,9 @@ export const updateChannel = data => dispatch =>
 export const fetchServerChannels = serverId => dispatch =>
 	api.channel.fetchServerChannels(serverId).then(data => {
 		dispatch(setServerChannels(data));
+	});
+
+export const fetchDirectChannels = () => dispatch =>
+	api.subscription.fetchDirectChannels().then(channels => {
+		dispatch(setDirectChannels(channels));
 	});

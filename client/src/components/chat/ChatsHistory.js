@@ -8,6 +8,7 @@ import { fetchChannelMessages } from './../../actions/messages';
 
 // components
 import ChatMessage from './ChatMessage';
+import FlexImgBG from './../layouts/FlexImgBG';
 
 // TODO: make message blocks
 
@@ -62,7 +63,8 @@ class ChatsHistory extends React.Component {
 		));
 
 		return (
-			<div className="chats-history"
+			<div
+				className="chats-history"
 				ref={element => {
 					this.messageContainer = element;
 				}}
@@ -71,15 +73,21 @@ class ChatsHistory extends React.Component {
 					<Loader content="Loading" />
 				</Dimmer>
 
-				{messages.length === 0  ? (
-					<p>No messages</p>
+				{!this.props.match.params.channelId ? (
+					<FlexImgBG />
 				) : (
-					<Comment.Group size="large">
-						<Header as="h3" inverted dividing>
-							{`Welcome to the genesis of the '${channel.name}' channel`}
-						</Header>
-						{history}
-					</Comment.Group>
+					<div style={{ width: '100%' }}>
+						{messages.length === 0 ? (
+							<p>No messages</p>
+						) : (
+							<Comment.Group size="large">
+								<Header as="h3" inverted dividing>
+									{`Welcome to the genesis of the '${channel.name}' channel`}
+								</Header>
+								{history}
+							</Comment.Group>
+						)}{' '}
+					</div>
 				)}
 			</div>
 		);
@@ -87,7 +95,7 @@ class ChatsHistory extends React.Component {
 }
 
 ChatsHistory.defaultProps = {
-	channel: { name:'' }
+	channel: { name: '' }
 };
 
 ChatsHistory.propTypes = {

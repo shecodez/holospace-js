@@ -3,11 +3,13 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import uniqueValidator from 'mongoose-unique-validator';
 
+// TODO: avatar will be a ref to the avatar model
 const schema = new mongoose.Schema({
   avatar: {
     type: String,
     default: 'http://res.cloudinary.com/shecodez/image/upload/c_scale,w_250/v1509243733/default_pmmlaf.png'
   },
+  //iconURL : {},
   email: {
     type: String,
     lowercase: true,

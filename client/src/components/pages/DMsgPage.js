@@ -11,17 +11,15 @@ import Nested from './../layouts/Nested';
 import Section from './../layouts/Section';
 import FlexSection from './../layouts/FlexSection';
 
-import DMsgButton from './../buttons/DMsgButton';
-import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
 import Servers from './../servers/Servers';
-import CurrentServer from './../servers/CurrentServer';
-import Channels from './../channels/Channels';
+import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
+import ProfileButton from './../buttons/ProfileButton';
 import CurrentUser from './../users/CurrentUser';
 import CurrentChannel from '../channels/CurrentChannel';
 import ChatRoom from './../chat/ChatRoom';
-import ServerMembers from './../members/Members';
+import DirectChannels from './../channels/DirectChannels';
 
-class MainPage extends React.Component {
+class DMsgPage extends React.Component {
 	state = {
 		socket: null
 	};
@@ -33,7 +31,7 @@ class MainPage extends React.Component {
 	componentDidMount() {
 		this.state.socket.on('user:update', this.updateUser);
 	}
-	
+
 	componentWillUnmount() {
 		this.setState({ socket: null });
 	}
@@ -41,7 +39,7 @@ class MainPage extends React.Component {
 	initSocket = () => {
 		const { user } = this.props;
 
-		const socket = io(); // url : ~/channels/
+		const socket = io(); // url : ~/direct/channels/
 		this.setState({ socket });
 
 		socket.emit('user:init', {
@@ -65,31 +63,26 @@ class MainPage extends React.Component {
 		const { socket } = this.state;
 
 		return (
-			<div className="site-grid-r2 main-page">
+			<div className="site-grid-r2 dmsg-page">
 				<Section className="c1 centered">
-					<DMsgButton />
+					<ProfileButton />
 					<Servers />
 				</Section>
 
 				<div className="two-r">
 					{!this.props.user.confirmed && <ConfirmEmailReminder />}
-					<Grid className="main grid-4c">
+					<Grid className="dmsg grid-3c">
 						<Nested>
-							<Section className="c2t"><CurrentServer /></Section>
-							<FlexSection className="c2m">
-								<Channels socket={socket} />
-							</FlexSection>
+							<Section className="c2t centered">Direct Messages</Section>
+							<FlexSection className="c2m"><DirectChannels socket={socket} /></FlexSection>
 							<Section className="c2b">
 								<CurrentUser />
 							</Section>
 						</Nested>
 						<Nested>
 							<Section className="c3t"><CurrentChannel /></Section>
-							<FlexSection className="c3m">
-								<ChatRoom socket={socket} />
-							</FlexSection>
+							<FlexSection className="c3m"><ChatRoom socket={socket} direct /></FlexSection>
 						</Nested>
-						<Section className="c4"><ServerMembers /></Section>
 					</Grid>
 				</div>
 			</div>
@@ -97,11 +90,11 @@ class MainPage extends React.Component {
 	}
 }
 
-MainPage.propTypes = {
+DMsgPage.propTypes = {
 	user: PropTypes.shape({
 		email: PropTypes.string.isRequired,
-		confirmed: PropTypes.bool.isRequired
-	}).isRequired,
+    confirmed: PropTypes.bool.isRequired
+  }).isRequired,
 	updateUser: PropTypes.func.isRequired,
 	updateMember: PropTypes.func.isRequired
 };
@@ -112,4 +105,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { updateUser, updateMember })(MainPage);
+export default connect(mapStateToProps, { updateUser, updateMember })(DMsgPage);

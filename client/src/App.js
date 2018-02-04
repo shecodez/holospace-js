@@ -20,8 +20,9 @@ import ConfirmationPage from './components/pages/ConfirmationPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
 
 import ProfilePage from './components/pages/ProfilePage';
-import MainPage from "./components/pages/MainPage";
+import MainPage from './components/pages/MainPage';
 import VRPage from './components/pages/VRPage';
+import DMsgPage from './components/pages/DMsgPage';
 
 import NotFoundPage from './components/pages/NotFoundPage';
 
@@ -50,6 +51,8 @@ class App extends React.Component {
 					<UserRoute path="/@me" exact component={ProfilePage} />
 					<UserRoute path="/channels/:serverId/:channelId" exact component={MainPage} />
 					<UserRoute path="/channels/:serverId/vr/:channelId" exact component={VRPage} />
+					<UserRoute path="/direct/channels" exact component={DMsgPage} />
+					<UserRoute path="/direct/channels/:channelId" exact component={DMsgPage} />
 
 					<Route component={NotFoundPage} />
 

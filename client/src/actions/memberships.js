@@ -1,5 +1,5 @@
 import api from './../api/api';
-import { SET_MEMBER_SERVERS, SET_SERVER_MEMBERS, MEMBER_UPDATED } from '../actionTypes';
+import { SET_MEMBER_SERVERS, SET_SERVER_MEMBERS, MEMBER_UPDATED } from './../actionTypes';
 
 export function setMemberServers(memberServers) {
 	return {
@@ -32,7 +32,7 @@ export const fetchServerMembers = serverId => dispatch =>
 		dispatch(setServerMembers(data.data.members));
 	});
 
-	export const updateMember = data => dispatch => 
+	export const updateMember = data => dispatch =>
 		dispatch(memberUpdated(data));
 
 /* export const joinServer = data => () =>

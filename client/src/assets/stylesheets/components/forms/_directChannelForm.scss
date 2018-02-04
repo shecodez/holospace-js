@@ -1,0 +1,16 @@
+.direct-channel-form {
+  .ui.image.label {
+    margin: 4px !important;
+  }
+
+  .server-members {
+    .delete.icon {
+      transform: rotate(45deg);
+    }
+  }
+
+  .segment {
+    max-height: 99px;
+    overflow-y: auto;
+  }
+}

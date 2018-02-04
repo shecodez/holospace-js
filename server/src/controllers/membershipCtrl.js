@@ -1,5 +1,6 @@
 import db from './../models';
 import parseErrors from './../utils/parseErrors';
+import mongoose from 'mongoose';
 
 const membershipController = {};
 
@@ -27,7 +28,7 @@ membershipController.getMemberServers = (req, res) => {
 			});
 		});
 	promise
-		.then(memberships => {
+		.then(() => {
 			return res.status(200).json({ servers });
 		})
 		.catch(err => {
@@ -81,6 +82,66 @@ membershipController.getServerMembers = (req, res) => {
 			});
 		});
 };
+
+membershipController.getMutualMembers = (req, res) => {
+	let members = [];
+	// const serverIds = [ '5a0f4bcb1c35354aa41d95bd','5a0f4be41c35354aa41d95c0','5a29aa0cbaddde4dfcc8af8b'];
+	// const objectIds = serverIds.map(function(el) { return mongoose.Types.ObjectId(el) })
+	getCurrentUserServerIds(req.currentUser._id)
+	.then(serverIds => {
+		let promise = db.Membership.find({
+		  'server_id': { $in: serverIds }})
+		  .where('isDeleted')
+		  .equals(false)
+		  .populate({
+		    path: 'member_id',
+		    select: 'avatar username pin -_id',
+		    match: {
+		      isDeleted: false
+		    }
+		  })
+			.exec((err, memberships) => {
+				if (err)
+					return console.log(err);
+
+				memberships.filter(function(membership) {
+					const member = {
+						title: `${membership.member_id.username}#${ membership.member_id.pin}`,
+						image: membership.member_id.avatar
+					};
+					if (!members.some(e => (e.title === member.title)))
+						members.push(member);
+				});
+			});
+		promise
+			.then(() => {
+				// console.log(members);
+				return res.status(200).json({ members });
+			})
+			.catch(err => {
+				return res.status(400).json({
+					errors: parseErrors(err.errors)
+				});
+			});
+	})
+	.catch(err => { console.log(err);});
+};
+
+const getCurrentUserServerIds = (userId) => {
+	console.log('getCurrentUserServerIds' +userId);
+	return new Promise(function(resolve, reject) {
+		db.Membership.find({ member_id: userId })
+		.distinct('server_id')
+		.where('isDeleted')
+		.equals(false)
+		.exec((err, serverIds) => {
+			if (err)
+				reject(err);
+
+			resolve(serverIds)
+		});
+	});
+}
 
 /* membershipController.getOne = (req, res) => {
 	db.Membership.findById(req.params.id)

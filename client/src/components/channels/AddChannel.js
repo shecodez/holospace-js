@@ -7,6 +7,7 @@ import { createChannel } from './../../actions/channels';
 
 // components
 import ChannelForm from './../forms/ChannelForm';
+import DirectChannelForm from './../forms/DirectChannelForm';
 
 class AddChannel extends React.Component {
 	state = {
@@ -14,9 +15,15 @@ class AddChannel extends React.Component {
 	};
 
 	submit = data => {
-		this.props
-			.createChannel(this.addServerIdToChannel(data))
-			.then(() => this.toggleModal());
+		if (this.props.direct) {
+			this.props
+				.createChannel(this.cleanupChannelUsers(data))
+				.then(() => this.toggleModal());
+		} else {
+			this.props
+				.createChannel(this.addServerIdToChannel(data))
+				.then(() => this.toggleModal());
+		}
 	};
 
 	addServerIdToChannel = data => {
@@ -29,6 +36,22 @@ class AddChannel extends React.Component {
 		return channel;
 	};
 
+	cleanupChannelUsers = data => {
+		const users = [];
+		data.selectedUsers.forEach(user => {
+			users.push(user.title)
+		});
+		const channel = {
+			name: data.name,
+			topic: data.topic,
+			type: data.type,
+			direct: data.direct,
+			selectedUsers: users
+		};
+
+		return channel;
+	}
+
 	toggleModal = () => {
 		this.setState({
 			isOpen: !this.state.isOpen
@@ -38,20 +61,33 @@ class AddChannel extends React.Component {
 	render() {
 		const { isOpen } = this.state;
 
-		const { user, server } = this.props;
+		const { user, server, direct } = this.props;
 		let serverOwner = false;
-		if (user.username === server.owner_id.username && user.pin === server.owner_id.pin)
+		if (
+			user.username === server.owner_id.username &&
+			user.pin === server.owner_id.pin
+		)
 			serverOwner = true;
 
 		return (
 			<div className="add-channel">
-				<Header as="h4" inverted>{`${this.props.type} channels`}</Header>
-				{serverOwner && <Button icon="plus" onClick={this.toggleModal} />}
+				<Header as="h4" inverted>{`${this.props.type} Channels`}</Header>
+				{(serverOwner || direct) && (
+					<Button icon="plus" onClick={this.toggleModal} />
+				)}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>{`Create new ${this.props.type} channel`}</Modal.Header>
+					<Modal.Header>{`Create new ${this.props.type} Channel`}</Modal.Header>
 					<Modal.Content>
-						<ChannelForm submit={this.submit} type={this.props.type} />
+						{direct ? (
+							<DirectChannelForm
+								submit={this.submit}
+								type={this.props.type}
+								user={user}
+							/>
+						) : (
+							<ChannelForm submit={this.submit} type={this.props.type} />
+						)}
 					</Modal.Content>
 				</Modal>
 			</div>
@@ -61,7 +97,8 @@ class AddChannel extends React.Component {
 
 AddChannel.defaultProps = {
 	currentServerId: null,
-	server: { owner_id: { username: '', pin: 0 }}
+	server: { owner_id: { username: '', pin: 0 } },
+	direct: false
 };
 
 AddChannel.propTypes = {
@@ -77,7 +114,8 @@ AddChannel.propTypes = {
 			username: PropTypes.string,
 			pin: PropTypes.number
 		})
-	})
+	}),
+	direct: PropTypes.bool
 };
 
 function mapStateToProps(state, props) {
@@ -90,4 +128,6 @@ function mapStateToProps(state, props) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { createChannel })(AddChannel));
+export default withRouter(
+	connect(mapStateToProps, { createChannel })(AddChannel)
+);

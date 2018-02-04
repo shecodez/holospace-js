@@ -4,10 +4,14 @@ import { List } from 'semantic-ui-react';
 
 // components
 import ChannelListItem from './ChannelListItem';
+import DirectChannelListItem from './DirectChannelListItem';
 
 const ChannelList = ({ channels, socket }) => (
 	<List className="channel-list">
-		{channels.map(channel => <ChannelListItem channel={channel} key={channel._id} socket={socket} />)}
+		{channels.map(channel => (
+			channel.direct ? <DirectChannelListItem channel={channel} key={channel._id} socket={socket} />
+			: <ChannelListItem channel={channel} key={channel._id} socket={socket} />
+		))}
 	</List>
 );
 

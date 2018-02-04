@@ -14,7 +14,12 @@ class AccordionChannelList extends React.Component {
 	};
 
 	componentDidMount() {
+		this.componentIsMounted = true;
 		this.props.socket.on('connections:update', this.updateConnections);
+	}
+
+	componentWillUnmount() {
+		this.componentIsMounted = false;
 	}
 
 	handleClick = (e, titleProps) => {
@@ -26,7 +31,8 @@ class AccordionChannelList extends React.Component {
 	};
 
 	updateConnections = data => {
-		this.setState({ connections: data });
+		if (this.componentIsMounted)
+			this.setState({ connections: data });
 	};
 
 	renderUserPresence = connections => {

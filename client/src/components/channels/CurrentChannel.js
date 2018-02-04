@@ -16,6 +16,17 @@ class CurrentChannel extends React.Component {
     }
   }
 
+	listChannelSubscribers = () => {
+		const { subscribers } = this.props.channel;
+
+    const usernames = subscribers.map(subscriber =>
+      subscriber.username
+    );
+
+    const text = usernames.join(', ').slice(0, 37);
+    return usernames.join(', ').length < 38 ? text : `${text}...`;
+	};
+
 	render() {
 		const { channel } = this.props;
 
@@ -24,7 +35,7 @@ class CurrentChannel extends React.Component {
 				<div className="name-topic">
 					{channel && (
 						<Header as="h3" inverted>
-							<span>{channel.type === 'Text' ? '#' : ''}</span> {channel.name}
+							<span>{channel.type === 'Text' ? '#' : ''}</span> {channel.name === 'direct' ? this.listChannelSubscribers() : channel.name }
 						</Header>
 					)}
 					{channel &&
@@ -37,19 +48,22 @@ class CurrentChannel extends React.Component {
 }
 
 CurrentChannel.defaultProps = {
-	channel: { name: '', topic: '', type: ''}
+	channelId: '',
+	channel: { name: `Hey there!`, topic: `Let's get this convo started`, type: ''}
 };
 
 CurrentChannel.propTypes = {
 	match: PropTypes.shape({
 		params: PropTypes.shape({
-			channelId: PropTypes.string.isRequired
+			channelId: PropTypes.string
 		})
 	}).isRequired,
 	channel: PropTypes.shape({
 		name: PropTypes.string,
-		topic: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired
+		topic: PropTypes.string,
+		type: PropTypes.string,
+		direct: PropTypes.bool,
+		subscribers: PropTypes.arrayOf(PropTypes.shape({}))
 	}),
 	fetchChannel: PropTypes.func.isRequired,
 };

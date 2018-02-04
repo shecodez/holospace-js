@@ -6,7 +6,7 @@ var router = express.Router();
 
 // GET holospace.com/api/users
 // get list of users
-// router.get('/users', User.getAll);
+router.get('/users/search', authenticate, User.getAll);
 
 // GET holospace.com/api/users/:id
 // get one user by id
@@ -14,7 +14,7 @@ var router = express.Router();
 
 // GET holospace.com/api/users/@me
 // get current user from req header
-router.get('/users/@me', authenticate, User.current); 
+router.get('/users/@me', authenticate, User.current);
 
 // POST holospace.com/api/users
 // create new user (register)
