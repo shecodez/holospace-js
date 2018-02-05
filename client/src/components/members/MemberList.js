@@ -13,7 +13,7 @@ const MemberList = ({ members, server, online }) => (
 				<Popup
 					trigger={
 						<Button>
-							<User user={member} />
+							<User user={member} owner={server.owner_id} />
 						</Button>
 					}
 					content={

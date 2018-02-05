@@ -7,11 +7,8 @@ import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
 
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import rootReducer from './reducers/rootReducer';
+import configureStore from './store/configureStore';
 
 import { localeSet } from './actions/locale';
 import { currentUserFetched, fetchCurrentUser } from './actions/users';
@@ -25,10 +22,7 @@ import './assets/stylesheets/style.css';
 addLocaleData(en);
 addLocaleData(ja);
 
-const store = createStore(
-	rootReducer,
-	composeWithDevTools(applyMiddleware(thunk))
-);
+const store = configureStore();
 
 if (localStorage.holospaceJWT) {
 	setAuthorizationHeader(localStorage.holospaceJWT);

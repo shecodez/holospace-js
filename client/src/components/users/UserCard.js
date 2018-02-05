@@ -42,7 +42,7 @@ const main = (role, isOwner) => (
 class UserCard extends React.Component {
 	submit = data => {
 		console.log(data);
-		// this.props.createDirectMessage(data);
+		// this.props.createPrivateMessage(data);
 	};
 
 	render() {

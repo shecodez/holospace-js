@@ -128,7 +128,7 @@ membershipController.getMutualMembers = (req, res) => {
 };
 
 const getCurrentUserServerIds = (userId) => {
-	console.log('getCurrentUserServerIds' +userId);
+	// console.log('getCurrentUserServerIds' +userId);
 	return new Promise(function(resolve, reject) {
 		db.Membership.find({ member_id: userId })
 		.distinct('server_id')

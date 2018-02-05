@@ -64,7 +64,9 @@ httpServer.listen(app.get('port'), () => {
 		process.exit(1);
 	});
 	db.once('open', () => {
-		console.log(`Express server listening on ${app.get('port')}, in ${app.get('env')} mode.`);
+		console.log(
+			`Express server listening on ${app.get('port')}, in ${app.get('env')} mode.`
+		);
 	});
 });
 
