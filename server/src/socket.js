@@ -24,6 +24,11 @@ exports = module.exports = function(io) {
 			socket.userTag = data.userTag;
 		});
 
+		socket.on('voip:init', data => {
+			console.log(`${socket.userTag} init p2p connection for channel ${socket.channel}`);
+			// socket.broadcast.to(socket.channel).emit('voip:init', data);
+		});
+
 		socket.on('channel:join', data => {
 			console.log(`${socket.userTag} joined ${data.channel}`);
 
@@ -80,9 +85,9 @@ exports = module.exports = function(io) {
 			}
 		});
 
-		//socket.on('resource:send', (resource) => {});
-
-		//socket.on('resource:update', (resource) => {});
+		socket.on('message:send', (message) => {
+			socket.broadcast.to(message.channel_id).emit('message:recv', message);
+		});
 
 		socket.on('user:typing', (data) => {
       socket.broadcast.to(data.channel).emit('user:typing', data);

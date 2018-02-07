@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { fetchServerMembers } from './../../actions/memberships';
 
 import MemberList from './MemberList';
@@ -46,15 +47,31 @@ class Members extends React.Component {
 		return (
 			<div className="members">
 				<Header as="h3" inverted className="main-header">
-          {`Members (${members.length})`}
-        </Header>
+					<FormattedMessage
+						id="members.Members.members"
+						defaultMessage="Members"
+					/>
+					{` (${members.length})`}
+				</Header>
 
 				{server && (
 					<div className="members-list">
-						<Header as="h4" inverted>{`Online (${online.length})`}</Header>
+						<Header as="h4" inverted>
+							<FormattedMessage
+								id="members.Members.online"
+								defaultMessage="Online"
+							/>
+							{` (${online.length})`}
+						</Header>
 						<MemberList server={server} online={'online'} members={online} />
 
-						<Header as="h4" inverted>{`Offline (${offline.length})`}</Header>
+						<Header as="h4" inverted>							
+							<FormattedMessage
+								id="members.Members.offline"
+								defaultMessage="Offline"
+							/>
+							{` (${offline.length})`}
+						</Header>
 						<MemberList server={server} online={'offline'} members={offline} />
 					</div>
 				)}
@@ -75,16 +92,16 @@ Members.propTypes = {
 	).isRequired,
 	fetchServerMembers: PropTypes.func.isRequired,
 	match: PropTypes.shape({
-    params: PropTypes.shape({
-      serverId: PropTypes.string.isRequired
-    })
-  }).isRequired,
+		params: PropTypes.shape({
+			serverId: PropTypes.string.isRequired
+		})
+	}).isRequired,
 	server: PropTypes.shape({
-    owner_id: PropTypes.shape({
-      username: PropTypes.string,
-      pin: PropTypes.number
-    })
-  })
+		owner_id: PropTypes.shape({
+			username: PropTypes.string,
+			pin: PropTypes.number
+		})
+	})
 };
 
 function mapStateToProps(state, props) {

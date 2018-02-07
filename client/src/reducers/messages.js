@@ -1,7 +1,8 @@
 import {
 	SET_CHANNEL_MESSAGES,
 	MESSAGE_CREATED,
-	MESSAGE_UPDATED
+	MESSAGE_UPDATED,
+	MESSAGE_RECEIVED
 } from '../actionTypes';
 
 export default function messages(state = [], action = {}) {
@@ -10,6 +11,7 @@ export default function messages(state = [], action = {}) {
 			return action.channelMessages;
 
 		case MESSAGE_CREATED:
+		case MESSAGE_RECEIVED:
 			return [...state, action.message];
 
 		case MESSAGE_UPDATED:

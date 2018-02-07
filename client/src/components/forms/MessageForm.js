@@ -113,7 +113,10 @@ MessageForm.defaultProps = {
 
 MessageForm.propTypes = {
 	submit: PropTypes.func.isRequired,
-	message_label: PropTypes.string.isRequired,
+	message_label: PropTypes.oneOfType([
+  	PropTypes.string,
+  	PropTypes.object
+	]).isRequired,
 	message: PropTypes.shape({
 		_id: PropTypes.string,
 		body: PropTypes.string

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Comment, Header, Dimmer, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
-import { fetchChannelMessages } from './../../actions/messages';
+import { FormattedMessage } from 'react-intl';
+import { fetchChannelMessages, updateChatsHistory } from './../../actions/messages';
 
 // components
 import ChatMessage from './ChatMessage';
@@ -14,12 +14,18 @@ import FlexImgBG from './../layouts/FlexImgBG';
 
 class ChatsHistory extends React.Component {
 	state = {
+		history: [],
 		channelId: this.props.match.params.channelId,
 		loading: false
 	};
 
 	componentDidMount() {
 		this.fetchChatsHistory(this.state.channelId);
+
+		const { socket } = this.props;
+		if (socket) {
+			socket.on('message:recv', this.addMessage);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -27,15 +33,22 @@ class ChatsHistory extends React.Component {
 			this.fetchChatsHistory(nextProps.match.params.channelId);
 
 		this.setState({ channelId: nextProps.match.params.channelId });
+	}
+
+	addMessage = message => {
+		this.props.updateChatsHistory(message);
 
 		// Smart scrolling - when the user scrolls up we don't want auto scroll to bottom
-		/* const container = this.messageContainer;
-    if (container.scrollHeight - (container.scrollTop + container.offsetHeight) >= 50) {
-      this.scrolled = true;
-    } else {
-      this.scrolled = false;
-    } */
-	}
+		const container = this.messageContainer;
+		if (
+			container.scrollHeight - (container.scrollTop + container.offsetHeight) >=
+			50
+		) {
+			this.scrolled = true;
+		} else {
+			this.scrolled = false;
+		}
+	};
 
 	componentDidUpdate() {
 		if (this.scrolled) {
@@ -56,10 +69,10 @@ class ChatsHistory extends React.Component {
 	};
 
 	render() {
-		const { messages, channel } = this.props;
+		const { messages, channel, socket } = this.props;
 
 		const history = messages.map(message => (
-			<ChatMessage key={message._id} message={message} />
+			<ChatMessage key={message._id} message={message} socket={socket} />
 		));
 
 		return (
@@ -78,7 +91,12 @@ class ChatsHistory extends React.Component {
 				) : (
 					<div style={{ width: '100%' }}>
 						{messages.length === 0 ? (
-							<p>No messages</p>
+							<p>
+								<FormattedMessage
+									id="chat.ChatsHistory.noMessages"
+									defaultMessage="No messages"
+								/>
+							</p>
 						) : (
 							<Comment.Group size="large">
 								<Header as="h3" inverted dividing>
@@ -95,7 +113,8 @@ class ChatsHistory extends React.Component {
 }
 
 ChatsHistory.defaultProps = {
-	channel: { name: '' }
+	channel: { name: '' },
+	socket: null
 };
 
 ChatsHistory.propTypes = {
@@ -112,7 +131,11 @@ ChatsHistory.propTypes = {
 	fetchChannelMessages: PropTypes.func.isRequired,
 	channel: PropTypes.shape({
 		name: PropTypes.string.isRequired
-	})
+	}),
+	socket: PropTypes.shape({
+		on: PropTypes.func
+	}),
+	updateChatsHistory: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -125,5 +148,5 @@ function mapStateToProps(state, props) {
 }
 
 export default withRouter(
-	connect(mapStateToProps, { fetchChannelMessages })(ChatsHistory)
+	connect(mapStateToProps, { fetchChannelMessages, updateChatsHistory })(ChatsHistory)
 );

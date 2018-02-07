@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 import * as actions from '../../actions/auth';
 
 class UserSettings extends React.Component {
@@ -13,7 +14,10 @@ class UserSettings extends React.Component {
 			<div className="user-settings">
 				{`${user.username}#${user.pin}`}
 				<Button color="red" inverted onClick={() => logout()}>
-					Logout
+					<FormattedMessage
+						id="users.UserSettings.logout"
+						defaultMessage="Logout"
+					/>
 				</Button>
 			</div>
 		);

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Popup, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 const ProfileButton = () => (
-	<div className="user-btn" style={{marginBottom: '1.5rem'}}>
+	<div className="user-btn" style={{ marginBottom: '1.5rem' }}>
 		<Popup
 			trigger={
 				<Button
@@ -16,7 +17,12 @@ const ProfileButton = () => (
 				/>
 			}
 			inverted
-			content={'User Profile'}
+			content={
+				<FormattedMessage
+					id="buttons.ProfileButton.userProfile"
+					defaultMessage="User Profile"
+				/>
+			}
 			position="right center"
 		/>
 	</div>

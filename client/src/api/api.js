@@ -49,7 +49,7 @@ export default {
 				.then(res => res.data.channels)
 	},
 	message: {
-		create: message =>
+		create: (message) =>
 			axios.post('/api/messages', { message }).then(res => res.data.message),
 		update: message =>
 			axios

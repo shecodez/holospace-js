@@ -1,9 +1,10 @@
 import React from 'react';
 import { Popup, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 const DMsgButton = () => (
-	<div className="dmsg-btn" style={{marginBottom: '1.5rem'}}>
+	<div className="dmsg-btn" style={{ marginBottom: '1.5rem' }}>
 		<Popup
 			trigger={
 				<Button
@@ -16,7 +17,12 @@ const DMsgButton = () => (
 				/>
 			}
 			inverted
-			content={'Direct Message'}
+			content={
+				<FormattedMessage
+					id="buttons.DMsgButton.directMessage"
+					defaultMessage="Direct Message"
+				/>
+			}
 			position="right center"
 		/>
 	</div>

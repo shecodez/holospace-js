@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Modal } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 import { createServer } from './../../actions/servers';
 
 // components
@@ -37,7 +38,12 @@ class AddServer extends React.Component {
 				/>
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>Create New Server</Modal.Header>
+					<Modal.Header>
+						<FormattedMessage
+							id="servers.AddServer.createServer"
+							defaultMessage="Create New Server"
+						/>
+					</Modal.Header>
 					<Modal.Content>
 						<ServerForm server={this.props.server} submit={this.submit} />
 					</Modal.Content>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { List, Button, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { updateChannel } from './../../actions/channels';
 import { fetchChannelSubscribers } from './../../actions/subscriptions';
 
@@ -96,7 +97,12 @@ class ChannelListItem extends React.Component {
 				{serverOwner && <Button icon="setting" onClick={this.toggleModal} />}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>Update Channel</Modal.Header>
+					<Modal.Header>
+						<FormattedMessage
+							id="channels.ChannelListItem.updateChannel"
+							defaultMessage="Update Channel"
+						/>
+					</Modal.Header>
 					<Modal.Content>
 						<ChannelForm
 							channel={channel}
@@ -152,5 +158,7 @@ function mapStateToProps(state, props) {
 }
 
 export default withRouter(
-	connect(mapStateToProps, { updateChannel, fetchChannelSubscribers })(ChannelListItem)
+	connect(mapStateToProps, { updateChannel, fetchChannelSubscribers })(
+		ChannelListItem
+	)
 );

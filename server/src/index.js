@@ -79,9 +79,7 @@ socket(io);
 
 peerServer.on('connection', (id) => {
   peers.push(id);
-
-  console.log('connected', peers);
-
+  console.log('peer connection', peers);
   io.emit('peers', peers);
 });
 
@@ -90,8 +88,7 @@ peerServer.on('disconnect', (id) => {
   if (index > -1) {
     peers.splice(index, 1);
   }
-  console.log('disconnect', peers);
-
+  console.log('peer disconnect', peers);
   io.emit('peers', peers);
 }); */
 //--------------------------------------------------------------------

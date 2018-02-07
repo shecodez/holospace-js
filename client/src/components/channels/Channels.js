@@ -8,12 +8,14 @@ import { fetchServerChannels } from './../../actions/channels';
 import ChannelList from './ChannelList';
 import AccordionChannelList from './AccordionChannelList';
 import AddChannel from './AddChannel';
+import VoIPActionBar from './VoIPActionBar';
 // import Tabs from './../layouts/Tabs';
 // import Pane from './../layouts/Pane';
 
 class Channels extends React.Component {
 	state = {
-		serverId: this.props.match.params.serverId
+		serverId: this.props.match.params.serverId,
+		useMic: false // this.props.permissions.useMic
 	};
 
 	componentDidMount() {
@@ -51,6 +53,8 @@ class Channels extends React.Component {
 			});
 		}
 
+		const { useMic } = this.state;
+
 		return (
 			<div className="channels">
         <div className="channels-list">
@@ -63,6 +67,7 @@ class Channels extends React.Component {
   				<AddChannel type="VR" />
   				<AccordionChannelList channels={vrChannels} socket={socket} />
         </div>
+				{ useMic && <VoIPActionBar socket={socket} /> }
 			</div>
 		);
 	}
@@ -89,8 +94,6 @@ Channels.propTypes = {
     on: PropTypes.func,
     emit: PropTypes.func
   }).isRequired
-	// currentChannelId: PropTypes.string,
-	// currentServerId: PropTypes.string
 };
 
 function mapStateToProps(state, props) {

@@ -10,11 +10,11 @@ class ChatRoom extends React.Component {
 	state: {};
 
 	render() {
-		const { socket, direct } = this.props;
+		const { socket } = this.props;
 
 		return (
 			<div className="chat-room">
-				<ChatsHistory direct={direct} />
+				<ChatsHistory socket={socket} />
 				<ChatMsgInput socket={socket} />
 			</div>
 		);
@@ -25,7 +25,7 @@ ChatRoom.defaultProps = {
 };
 
 ChatRoom.propTypes = {
-  direct: PropTypes.bool,
+  // direct: PropTypes.bool,
 	socket: PropTypes.shape({}).isRequired
 };
 

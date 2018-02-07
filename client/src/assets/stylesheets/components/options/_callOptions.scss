@@ -1,0 +1,18 @@
+.call-options {
+  .icon.button {
+    color: #eee;
+    padding: 0.515em;
+    background-color: transparent;
+
+    &:hover {
+      color: #eee;
+      background-color: #111;
+    }
+
+    &:active,
+    &:focus {
+      color: #eee;
+      background-color: transparent;
+    }
+  }
+}

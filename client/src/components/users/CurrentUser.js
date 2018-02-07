@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // components
 import User from './User';
 import OnlineStatus from './OnlineStatus';
-import UserOptions from './UserOptions';
+import UserOptions from './../options/UserOptions';
 
 const CurrentUser = ({ user, profile }) => (
 	<div className="current-user">

@@ -23,7 +23,8 @@ class ChatMsgInput extends React.Component {
 	}
 
 	submit = data => {
-		this.props.createMessage(this.addChannelIdToMessage(data));
+		const { socket } = this.props;
+		this.props.createMessage(this.addChannelIdToMessage(data), socket);
 	};
 
 	addChannelIdToMessage = data => {
@@ -82,6 +83,7 @@ class ChatMsgInput extends React.Component {
 					<MessageForm
 						submit={this.submit}
 						sendTyping={this.sendTyping}
+						channelId={channel._id}
 						message_label={
 							channel.direct
 								? `Direct Message ${channel.type === 'Text' ? '# ' : ''}${
@@ -112,6 +114,7 @@ ChatMsgInput.propTypes = {
 	}).isRequired,
 	createMessage: PropTypes.func.isRequired,
 	channel: PropTypes.shape({
+		_id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired
 	}),

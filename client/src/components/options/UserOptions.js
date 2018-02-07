@@ -7,7 +7,7 @@ import { Button, Popup, Modal, Icon } from 'semantic-ui-react';
 // TODO: import icons for : no sound, no mic and no VR
 // [hear no evil], [speak no evil], [see no evil]
 
-import UserSettings from './UserSettings';
+import UserSettings from './../users/UserSettings';
 
 class UserOptions extends React.Component {
 	state = {

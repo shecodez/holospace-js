@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, Button, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { updateServer, fetchServer } from './../../actions/servers';
 
 // components
@@ -34,7 +35,10 @@ class CurrentServer extends React.Component {
 		const { user, server } = this.props;
 
 		let serverOwner = false;
-		if (user.username === server.owner_id.username && user.pin === server.owner_id.pin)
+		if (
+			user.username === server.owner_id.username &&
+			user.pin === server.owner_id.pin
+		)
 			serverOwner = true;
 
 		return (
@@ -47,7 +51,12 @@ class CurrentServer extends React.Component {
 				{serverOwner && <Button icon="content" onClick={this.toggleModal} />}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>Update Server</Modal.Header>
+					<Modal.Header>
+						<FormattedMessage
+							id="servers.CurrentServer.updateServer"
+							defaultMessage="Update Server"
+						/>
+					</Modal.Header>
 					<Modal.Content>
 						<ServerForm server={server} submit={this.submit} />
 					</Modal.Content>
@@ -58,7 +67,7 @@ class CurrentServer extends React.Component {
 }
 
 CurrentServer.defaultProps = {
-	server: { name: '', owner_id: { username: '', pin: 0 } },
+	server: { name: '', owner_id: { username: '', pin: 0 } }
 };
 
 CurrentServer.propTypes = {

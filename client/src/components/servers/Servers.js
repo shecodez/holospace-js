@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { fetchMemberServers } from './../../actions/memberships';
 
 // components
@@ -19,8 +20,11 @@ class Servers extends React.Component {
 
 		return (
 			<div className="servers">
-				<Header as="h5" inverted textAlign='center'>
-					Servers
+				<Header as="h5" inverted textAlign="center">
+					<FormattedMessage
+						id="servers.Servers.servers"
+						defaultMessage="Servers"
+					/>
 				</Header>
 
 				<ServerList servers={servers} currentServerId={currentServerId} />
@@ -53,4 +57,6 @@ function mapStateToProps(state, props) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { fetchMemberServers })(Servers));
+export default withRouter(
+	connect(mapStateToProps, { fetchMemberServers })(Servers)
+);

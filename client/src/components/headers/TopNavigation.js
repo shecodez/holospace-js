@@ -20,7 +20,7 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 				<div className="line line-outer" />
 			</div>
 			<span className="menu-span text">
-				<FormattedMessage id="topNavigation.menu" defaultMessage="Menu" />
+				<FormattedMessage id="headers.TopNavigation.menu" defaultMessage="Menu" />
 			</span>
 		</Menu.Item>
 
@@ -36,7 +36,7 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 					{isUser && (
 						<Link to="/@me">
 							<FormattedMessage
-								id="topNavigation.open_app"
+								id="headers.TopNavigation.openApp"
 								defaultMessage="Open App"
 							/>
 						</Link>
@@ -44,7 +44,7 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 					{!isUser && (
 						<Link to="/login">
 							<FormattedMessage
-								id="topNavigation.login"
+								id="headers.TopNavigation.login"
 								defaultMessage="Log In"
 							/>
 						</Link>

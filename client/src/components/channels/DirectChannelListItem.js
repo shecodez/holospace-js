@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { List, Button, Icon, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { updateChannel } from './../../actions/channels';
 // import { fetchChannelSubscribers } from './../../actions/subscriptions';
 
@@ -70,7 +71,7 @@ class DirectChannelListItem extends React.Component {
 			// user
 		} = this.props;
 
-		 const channelOwner = false;
+		const channelOwner = false;
 		/* if (
 			user.username === channel.owner_id.username &&
 			user.pin === channel.owner_id.pin
@@ -103,7 +104,12 @@ class DirectChannelListItem extends React.Component {
 				{channelOwner && <Button icon="setting" onClick={this.toggleModal} />}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>Update Direct Channel</Modal.Header>
+					<Modal.Header>
+						<FormattedMessage
+							id="channels.DirectChannelListItem.updateDirectChannel"
+							defaultMessage="Update Direct Channel"
+						/>
+					</Modal.Header>
 					<Modal.Content>
 						<DirectChannelForm
 							channel={channel}
