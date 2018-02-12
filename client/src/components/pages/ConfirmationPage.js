@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Message, Icon, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { confirm, resendConfirmation } from '../../actions/auth';
 
 class Confirmation extends React.Component {
 	state = {
 		loading: true,
 		errors: {},
-    success: false,
-    resend: false
+		success: false,
+		resend: false
 	};
 
 	componentDidMount() {
@@ -20,65 +21,91 @@ class Confirmation extends React.Component {
 			.catch(err =>
 				this.setState({
 					loading: false,
-          errors: err.response.data.errors,
+					errors: err.response.data.errors,
 					success: false
 				})
 			);
 	}
 
 	resend = () => {
-    this.setState({ loading: true, resend: true })
-    this.props
-      .resendConfirmation(this.props.email)
-      .then(() => this.setState({ loading: false, success: true }));
-  }
+		this.setState({ loading: true, resend: true });
+		this.props
+			.resendConfirmation(this.props.email)
+			.then(() => this.setState({ loading: false, success: true }));
+	};
 
 	render() {
 		const { errors, loading, success, resend } = this.state;
 
 		return (
 			<div>
-				{ loading && (
+				{loading && (
 					<Message icon>
 						<Icon name="circle notched" loading />
-            { resend ?
-              <Message.Header>Resending...</Message.Header>
-              :
-              <Message.Header>Validating...</Message.Header>
-            }
+						{resend ? (
+							<Message.Header>
+								<FormattedMessage
+									id="pages.ConfirmationPage.resending..."
+									defaultMessage="Resending..."
+								/>
+							</Message.Header>
+						) : (
+							<Message.Header>
+								<FormattedMessage
+									id="pages.ConfirmationPage.validating..."
+									defaultMessage="Validating..."
+								/>
+							</Message.Header>
+						)}
 					</Message>
 				)}
 
-				{ !loading &&
+				{!loading &&
 					success && (
 						<Message success icon>
 							<Icon name="checkmark" />
-							{ resend ?
-                <Message.Content>
-					        <Message.Header>
-					          Your request has been processed. Please check your inbox.
-                  </Message.Header>
-				        </Message.Content>
-              	:
-                <Message.Content>
-  								<Message.Header>
-  									Thank you! Your email has been validated.
-  								</Message.Header>
-  								<Link to="/@me">Open Application</Link>
-                </Message.Content>
-              }
+							{resend ? (
+								<Message.Content>
+									<Message.Header>
+										<FormattedMessage
+											id="pages.ConfirmationPage.successResendMsg"
+											defaultMessage="Your request has been processed. Please check your inbox."
+										/>
+									</Message.Header>
+								</Message.Content>
+							) : (
+								<Message.Content>
+									<Message.Header>
+										<FormattedMessage
+											id="pages.ConfirmationPage.successValidatedMsg"
+											defaultMessage="Thank you! Your email has been validated."
+										/>
+									</Message.Header>
+									<Link to="/@me">
+										<FormattedMessage
+											id="pages.ConfirmationPage.openApplication"
+											defaultMessage="Open Application"
+										/>
+									</Link>
+								</Message.Content>
+							)}
 						</Message>
 					)}
 
-				{ !loading &&
+				{!loading &&
 					!success && (
 						<Message negative icon>
 							<Icon name="warning sign" />
 							<Message.Content>
 								<Message.Header>{errors.global}</Message.Header>
-								{errors.global === "Invalid token" &&
-                  <Button onClick={this.resend}>Resend confirmation token</Button>
-                }
+								{errors.global === 'Invalid token' && (
+									<Button onClick={this.resend}>
+										<FormattedMessage
+											id="pages.ConfirmationPage.resendConfirm"
+											defaultMessage="Resend confirmation token"
+										/>
+									</Button>
+								)}
 							</Message.Content>
 						</Message>
 					)}
@@ -94,8 +121,8 @@ Confirmation.propTypes = {
 			token: PropTypes.string.isRequired
 		}).isRequired
 	}).isRequired,
-  email: PropTypes.string.isRequired,
-  resendConfirmation: PropTypes.func.isRequired
+	email: PropTypes.string.isRequired,
+	resendConfirmation: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -104,4 +131,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { confirm, resendConfirmation })(Confirmation);
+export default connect(mapStateToProps, { confirm, resendConfirmation })(
+	Confirmation
+);

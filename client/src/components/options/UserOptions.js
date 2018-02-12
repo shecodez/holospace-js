@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popup, Modal, Icon } from 'semantic-ui-react';
-// import { connect } from 'react-redux';
-// import * as actions from './../../actions/auth';
+import { connect } from 'react-redux';
+import { allowMic } from './../../actions/permissions';
+import { createLocalMediaStream, removeLocalMediaStream } from './../../actions/users';
 
 // TODO: import icons for : no sound, no mic and no VR
 // [hear no evil], [speak no evil], [see no evil]
@@ -14,8 +15,8 @@ class UserOptions extends React.Component {
 		isOpen: false,
 
 		mute: false,
-		useMic: false,
 		useVR: false,
+		error: null,
 
 		options: [
 			{
@@ -59,27 +60,37 @@ class UserOptions extends React.Component {
 		}
 	};
 
+	hasGetUserMedia = () => {
+		return !!(
+			navigator.getUserMedia ||
+			navigator.webkitGetUserMedia ||
+			navigator.mozGetUserMedia ||
+			navigator.msGetUserMedia ||
+			navigator.oGetUserMedia
+		);
+	};
+
 	muteSound = () => this.setState({ mute: !this.state.mute });
 
 	requestMic = () => {
-		navigator.mediaDevices
-			.getUserMedia({ audio: true })
-			.then(() => {
-				// stream
-				this.setState({ useMic: true });
-			})
-			.catch(() => {
-				// error
-				this.setState({ useMic: false });
-			});
-		return this.state.useMic;
+		if (this.props.permissions.allowMic) {
+			this.props.removeLocalMediaStream();
+			this.props.allowMic(false);
+		} else {
+			this.props.createLocalMediaStream();
+			this.props.allowMic(true);
+		}
 	};
 
 	selectVR = () => this.setState({ useVR: !this.state.useVR });
 
 	render() {
 		const { isOpen, options } = this.state;
-		const permissions = [!this.state.mute, this.state.useMic, this.state.useVR];
+		const permissions = [
+			!this.state.mute,
+			this.props.permissions.allowMic,
+			this.state.useVR
+		];
 
 		return (
 			<div className="user-options">
@@ -126,7 +137,23 @@ class UserOptions extends React.Component {
 }
 
 UserOptions.propTypes = {
-	profile: PropTypes.bool.isRequired
+	profile: PropTypes.bool.isRequired,
+	permissions: PropTypes.shape({
+		allowMic: PropTypes.bool.isRequired
+	}).isRequired,
+	allowMic: PropTypes.func.isRequired,
+	user: PropTypes.shape({
+		stream: PropTypes.shape({})
+	}).isRequired,
+	createLocalMediaStream: PropTypes.func.isRequired,
+	removeLocalMediaStream: PropTypes.func.isRequired
 };
 
-export default UserOptions;
+function mapStateToProps(state) {
+	return {
+		user: state.user,
+		permissions: state.permissions
+	};
+}
+
+export default connect(mapStateToProps, { allowMic, createLocalMediaStream, removeLocalMediaStream })(UserOptions);

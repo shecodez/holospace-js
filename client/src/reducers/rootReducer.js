@@ -7,6 +7,7 @@ import memberships from './memberships';
 import channels from './channels';
 import subscriptions from './subscriptions';
 import messages from './messages';
+import permissions from './permissions';
 
 export default combineReducers({
 	locale,
@@ -15,5 +16,6 @@ export default combineReducers({
 	memberships,
 	channels,
 	subscriptions,
-	messages
+	messages,
+	permissions
 });

@@ -12,6 +12,7 @@ import {
 	Header,
 	Search
 } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 // import placeholder from './../../assets/images/favicon-32x32.png';
 
@@ -208,7 +209,12 @@ class DirectChannelForm extends React.Component {
 
 				{data._id && (
 					<Form.Field error={!!errors.name}>
-						<label htmlFor="name">Name</label>
+						<label htmlFor="name">
+							<FormattedMessage
+								id="forms.name"
+								defaultMessage="Name"
+							/>
+						</label>
 						<input
 							type="text"
 							id="name"
@@ -223,7 +229,12 @@ class DirectChannelForm extends React.Component {
 
 				{data._id && (
 					<Form.Field error={!!errors.topic}>
-						<label htmlFor="topic">Topic</label>
+						<label htmlFor="topic">
+							<FormattedMessage
+								id="forms.topic"
+								defaultMessage="Topic"
+							/>
+						</label>
 						<input
 							type="text"
 							id="topic"
@@ -236,7 +247,12 @@ class DirectChannelForm extends React.Component {
 					</Form.Field>
 				)}
 
-				<Header as="h5">{`Select users to create your channel`}</Header>
+				<Header as="h5">
+					<FormattedMessage
+						id="forms.selectUsersHeader"
+						defaultMessage="Select users to create your channel"
+					/>
+				</Header>
 				<Segment className="server-members">
 					{serverMembers &&
 						serverMembers.map(member => (
@@ -254,7 +270,11 @@ class DirectChannelForm extends React.Component {
 				</Segment>
 
 				<Header as="h5">
-					{`Selected users: (${data.selectedUsers.length})`}
+					<FormattedMessage
+						id="forms.selectedUsers"
+						defaultMessage="Selected users"
+					/>
+					{`: (${data.selectedUsers.length})`}
 				</Header>
 				<Form.Field error={!!errors.selectedUsers}>
 					<Segment>

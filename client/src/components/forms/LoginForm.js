@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message, Header } from 'semantic-ui-react';
 import isEmail from 'validator/lib/isEmail';
+import { FormattedMessage } from 'react-intl';
+
 
 // components
 import InlineError from './../alerts/InlineError';
@@ -80,7 +82,12 @@ class LoginForm extends React.Component {
 				)}
 
 				<Form.Field error={!!errors.email}>
-					<label htmlFor="email">Email</label>
+					<label htmlFor="email">
+						<FormattedMessage
+							id="forms.email"
+							defaultMessage="Email"
+						/>
+					</label>
 					<input
 						type="email"
 						id="email"
@@ -93,7 +100,12 @@ class LoginForm extends React.Component {
 				</Form.Field>
 
 				<Form.Field error={!!errors.password}>
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">
+						<FormattedMessage
+							id="forms.password"
+							defaultMessage="Password"
+						/>
+					</label>
 					<input
 						type="password"
 						id="password"
@@ -109,7 +121,12 @@ class LoginForm extends React.Component {
           Forgot Password?
         </Header>
 
-				<Button fluid color='violet'>Login</Button>
+				<Button fluid color='violet'>
+					<FormattedMessage
+						id="forms.login"
+						defaultMessage="Login"
+					/>
+				</Button>
 			</Form>
 		);
 	}

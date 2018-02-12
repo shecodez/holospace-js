@@ -1,5 +1,5 @@
 import api from './../api/api';
-import { SERVER_CREATED, SERVER_FETCHED, SERVER_UPDATED } from '../actionTypes';
+import { SERVER_CREATED, SERVER_FETCHED, SERVER_UPDATED } from './../actionTypes';
 
 export function serverCreated(server) {
 	return {

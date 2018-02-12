@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message } from 'semantic-ui-react';
 import isEmail from 'validator/lib/isEmail';
+import { FormattedMessage } from 'react-intl';
 
 // components
 import InlineError from './../alerts/InlineError';
@@ -76,7 +77,12 @@ class RegisterForm extends React.Component {
 					</Message>
 				)}
 				<Form.Field error={!!errors.username}>
-					<label htmlFor="username">Username</label>
+					<label htmlFor="username">Username
+						<FormattedMessage
+							id="forms.username"
+							defaultMessage="Username"
+						/>
+					</label>
 					<input
 						type="text"
 						id="username"
@@ -88,7 +94,12 @@ class RegisterForm extends React.Component {
 					{errors.username && <InlineError text={errors.username} />}
 				</Form.Field>
 				<Form.Field error={!!errors.email}>
-					<label htmlFor="email">Email</label>
+					<label htmlFor="email">
+						<FormattedMessage
+							id="forms.email"
+							defaultMessage="Email"
+						/>
+					</label>
 					<input
 						type="email"
 						id="email"
@@ -101,7 +112,12 @@ class RegisterForm extends React.Component {
 				</Form.Field>
 
 				<Form.Field error={!!errors.password}>
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">
+						<FormattedMessage
+							id="forms.password"
+							defaultMessage="Password"
+						/>
+					</label>
 					<input
 						type="password"
 						id="password"
@@ -113,7 +129,12 @@ class RegisterForm extends React.Component {
 					{errors.password && <InlineError text={errors.password} />}
 				</Form.Field>
 
-				<Button fluid color='violet'>Register</Button>
+				<Button fluid color='violet'>
+					<FormattedMessage
+						id="forms.register"
+						defaultMessage="Register"
+					/>
+				</Button>
 			</Form>
 		);
 	}

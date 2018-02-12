@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 /* TODO: figure out how to add this script
 <script>
@@ -42,9 +43,16 @@ const NotFoundPage = () => (
 	<div className="error-page fnf">
 		<div className="content">
 			<h1>404</h1>
-			<h2>Page not found</h2>
+			<h2>
+				<FormattedMessage
+					id="pages.NotFoundPage.pageNotFound"
+					defaultMessage="Page not found"
+				/>
+			</h2>
 			{/* <p>{"Forget 404... it's over 9000"}</p> */}
-			<Link to="/">Home</Link>
+			<Link to="/">
+				<FormattedMessage id="pages.NotFoundPage.home" defaultMessage="Home" />
+			</Link>
 		</div>
 	</div>
 );

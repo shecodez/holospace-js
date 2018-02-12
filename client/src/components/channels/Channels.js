@@ -14,8 +14,7 @@ import VoIPActionBar from './VoIPActionBar';
 
 class Channels extends React.Component {
 	state = {
-		serverId: this.props.match.params.serverId,
-		useMic: false // this.props.permissions.useMic
+		serverId: this.props.match.params.serverId
 	};
 
 	componentDidMount() {
@@ -53,7 +52,7 @@ class Channels extends React.Component {
 			});
 		}
 
-		const { useMic } = this.state;
+		const { allowMic } = this.props.permissions;
 
 		return (
 			<div className="channels">
@@ -67,7 +66,7 @@ class Channels extends React.Component {
   				<AddChannel type="VR" />
   				<AccordionChannelList channels={vrChannels} socket={socket} />
         </div>
-				{ useMic && <VoIPActionBar socket={socket} /> }
+				{ allowMic && <VoIPActionBar socket={socket} /> }
 			</div>
 		);
 	}
@@ -93,14 +92,18 @@ Channels.propTypes = {
 	socket: PropTypes.shape({
     on: PropTypes.func,
     emit: PropTypes.func
-  }).isRequired
+  }).isRequired,
+	permissions: PropTypes.shape({
+		allowMic: PropTypes.bool.isRequired
+	}).isRequired
 };
 
 function mapStateToProps(state, props) {
 	return {
 		channels: state.channels,
 		currentChannelId: props.match.params.channelId,
-		currentServerId: props.match.params.serverId
+		currentServerId: props.match.params.serverId,
+		permissions: state.permissions
 	};
 }
 

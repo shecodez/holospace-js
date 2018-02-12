@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message, Image as Img } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 // components
 import InlineError from './../alerts/InlineError';
@@ -82,7 +83,12 @@ class ServerForm extends React.Component {
 					</Message>
 				)}
 				<Form.Field error={!!errors.name}>
-					<label htmlFor="name">Name</label>
+					<label htmlFor="name">
+						<FormattedMessage
+							id="forms.name"
+							defaultMessage="Name"
+						/>
+					</label>
 					<input
 						type="text"
 						id="name"
@@ -95,7 +101,12 @@ class ServerForm extends React.Component {
 				</Form.Field>
 
 				<Form.Field error={!!errors.icon}>
-					<label htmlFor="icon">Icon URL</label>
+					<label htmlFor="icon">
+						<FormattedMessage
+							id="forms.iconURL"
+							defaultMessage="Icon URL"
+						/>
+					</label>
 					<input
 						type="text"
 						id="icon"

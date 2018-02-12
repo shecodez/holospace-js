@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
 
 // components
 import InlineError from '../alerts/InlineError';
@@ -64,7 +65,12 @@ class ResetPasswordForm extends React.Component {
 				)}
 
 				<Form.Field error={!!errors.password}>
-					<label htmlFor="password">New Password</label>
+					<label htmlFor="password">
+						<FormattedMessage
+							id="forms.newPassword"
+							defaultMessage="New Password"
+						/>
+					</label>
 					<input
 						type="password"
 						id="password"
@@ -77,7 +83,12 @@ class ResetPasswordForm extends React.Component {
 				</Form.Field>
 
 				<Form.Field error={!!errors.confirmation}>
-					<label htmlFor="confirmation">Confirmation</label>
+					<label htmlFor="confirmation">
+						<FormattedMessage
+							id="forms.confirmation"
+							defaultMessage="Confirmation"
+						/>
+					</label>
 					<input
 						type="password"
 						id="confirmation"
@@ -90,7 +101,10 @@ class ResetPasswordForm extends React.Component {
 				</Form.Field>
 
 				<Button fluid color="violet">
-					Reset
+					<FormattedMessage
+						id="forms.reset"
+						defaultMessage="Reset"
+					/>
 				</Button>
 			</Form>
 		);

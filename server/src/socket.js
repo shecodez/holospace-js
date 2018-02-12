@@ -26,10 +26,20 @@ exports = module.exports = function(io) {
 
 		socket.on('voip:init', data => {
 			console.log(`${socket.userTag} init p2p connection for channel ${socket.channel}`);
-			// socket.broadcast.to(socket.channel).emit('voip:init', data);
+			// socket.broadcast.to(socket.channel).emit('user:approve', data);
 		});
 
+		socket.on('voip:accept', data => {
+			io.in(data.channel).emit('channel:bridge');
+		});
+		
+		socket.on('voip:reject', () => socket.emit('channel:full'));
+
 		socket.on('channel:join', data => {
+			/* const channel = io.sockets.adapter.rooms[data.channel];
+			if (channel.length > 5)
+				socket.emit('channel:full', data.channel); */
+
 			console.log(`${socket.userTag} joined ${data.channel}`);
 
 			socket.channel = data.channel;

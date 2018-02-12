@@ -5,59 +5,36 @@ import { Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import { allowMic } from './../../actions/permissions';
+import { removeLocalMediaStream } from './../../actions/users';
+
 
 // components
 import CallOptions from './../options/CallOptions';
 
 class VoIPActionBar extends React.Component {
 	state = {
-		peers: [],
-		stream: null,
-		error: ''
+		peers: []
 	};
 
 	componentDidMount() {
-		// this.requestLocalMedia();
+		this.waitForWindowLoad();
+		// this.handleStream(window.stream);
 		// this.props.socket.emit('voice:init');
 	}
 
-	componentWillUnmount() {
-		this.stopMediaStream();
+	waitForWindowLoad = () => {
+		setTimeout(() => this.handleStream(window.stream), 1000);
 	}
 
-	hasGetUserMedia = () => {
-		return !!(
-			navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia ||
-			navigator.oGetUserMedia
-		);
-	};
-
-	requestLocalMedia = () => {
-		if (this.hasGetUserMedia()) {
-			navigator.mediaDevices
-				.getUserMedia({ video: false, audio: true })
-				.then(stream => {
-					// use the stream
-					this.setState({ stream });
-					this.handleStream(stream);
-				})
-				.catch(err => {
-					// handle the error
-					this.handleError(err);
-				});
-		} else {
-			const error = 'WebRTC is not supported by your browser.';
-			this.setState({ error }); console.log(error);
-		}
-	};
+	componentWillUnmount() {
+		this.props.removeLocalMediaStream();
+	}
 
 	// Access to audio/video granted
 	handleStream = stream => {
 		const { user, socket, channel } = this.props;
-
+		console.log('VoIPActionBar handlestream: ', stream);
 		let me;
 		// const socket = io();
 		socket.on('voip:init', () => {
@@ -106,25 +83,10 @@ class VoIPActionBar extends React.Component {
 		});
 	};
 
-	// Access to audio/video denied
-	handleError = err => {
-		const error = 'Reeeejected! Access to audio/video denied.';
-		this.setState({ error }); console.log('Reeeejected!', err);
-	};
-
-	stopMediaStream = () => {
-		const { stream } = this.state;
-
-		if (stream) {
-			stream.getAudioTracks().forEach(track => {
-				track.stop();
-			});
-			stream.getVideoTracks().forEach(track => {
-				track.stop();
-			});
-			// this.setState({ stream: null });
-		}
-	};
+	disconnectVoice = () => {
+		this.props.removeLocalMediaStream();
+		this.props.allowMic(false);
+	}
 
 	// TODO: implement speech-to-text captions for audio track src
 	render() {
@@ -149,7 +111,7 @@ class VoIPActionBar extends React.Component {
 						{`${channel.name}/${user.username}`}
 					</Header.Subheader>
 				</Header>
-				<CallOptions disconnect={this.stopMediaStream} />
+				<CallOptions disconnect={this.disconnectVoice} />
 			</div>
 		);
 	}
@@ -170,10 +132,15 @@ VoIPActionBar.propTypes = {
 		pin: PropTypes.number.isRequired
 	}).isRequired,
 	socket: PropTypes.shape({
-		id: PropTypes.func,
+		id: PropTypes.string,
 		on: PropTypes.func,
 		emit: PropTypes.func
-	})
+	}),
+	allowMic: PropTypes.func.isRequired,
+	permissions: PropTypes.shape({
+		allowMic: PropTypes.bool.isRequired
+	}).isRequired,
+	removeLocalMediaStream: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -181,8 +148,9 @@ function mapStateToProps(state, props) {
 		user: state.user,
 		channel: state.channels.find(
 			channel => channel._id === props.match.params.channelId
-		)
+		),
+		permissions: state.permissions
 	};
 }
 
-export default withRouter(connect(mapStateToProps, {})(VoIPActionBar));
+export default withRouter(connect(mapStateToProps, { allowMic, removeLocalMediaStream })(VoIPActionBar));

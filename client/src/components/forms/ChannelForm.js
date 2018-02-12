@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message } from 'semantic-ui-react';
+import { FormattedMessage } from 'react-intl';
+
 
 // components
 import InlineError from './../alerts/InlineError';
@@ -65,7 +67,12 @@ class ChannelForm extends React.Component {
 					</Message>
 				)}
 				<Form.Field error={!!errors.name}>
-					<label htmlFor="name">Name</label>
+					<label htmlFor="name">
+						<FormattedMessage
+							id="forms.name"
+							defaultMessage="Name"
+						/>
+					</label>
 					<input
 						type="text"
 						id="name"
@@ -78,7 +85,12 @@ class ChannelForm extends React.Component {
 				</Form.Field>
 
 				<Form.Field error={!!errors.topic}>
-					<label htmlFor="topic">Topic</label>
+					<label htmlFor="topic">
+						<FormattedMessage
+							id="forms.topic"
+							defaultMessage="Topic"
+						/>
+					</label>
 					<input
 						type="text"
 						id="topic"
