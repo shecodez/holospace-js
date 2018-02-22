@@ -22,6 +22,8 @@ export function serverUpdated(server) {
 	};
 }
 
+
+// ---------------------------------------------------
 export const createServer = data => dispatch =>
 	api.server.create(data).then(server => {
 		dispatch(serverCreated(server));

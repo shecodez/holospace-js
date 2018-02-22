@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Message, Icon, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { confirm, resendConfirmation } from '../../actions/auth';
+import { confirm, resendConfirmation } from './../../actions/auth';
 
-class Confirmation extends React.Component {
+class ConfirmationPage extends React.Component {
 	state = {
 		loading: true,
 		errors: {},
@@ -114,7 +114,7 @@ class Confirmation extends React.Component {
 	}
 }
 
-Confirmation.propTypes = {
+ConfirmationPage.propTypes = {
 	confirm: PropTypes.func.isRequired,
 	match: PropTypes.shape({
 		params: PropTypes.shape({
@@ -132,5 +132,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { confirm, resendConfirmation })(
-	Confirmation
+	ConfirmationPage
 );

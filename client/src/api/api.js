@@ -29,7 +29,9 @@ export default {
 				.put(`/api/servers/${server._id}`, { server })
 				.then(res => res.data.server),
 		delete: serverId =>
-			axios.delete(`/api/servers/${serverId}`).then(res => res.data.server)
+			axios.delete(`/api/servers/${serverId}`).then(res => res.data.server),
+		invite: serverId =>
+			axios.get(`/api/servers/${serverId}/invite`).then(res => res.data.invitation)
 	},
 	channel: {
 		create: channel =>
@@ -64,9 +66,9 @@ export default {
 				.then(res => res.data.messages)
 	},
 	membership: {
-		create: membership =>
+		create: invitation =>
 			axios
-				.post('/api/memberships', { membership })
+				.post('/api/memberships', { invitation })
 				.then(res => res.data.membership),
 		fetchMemberServers: () => axios.get('/api/memberships/@me/servers'),
 		fetchServerMembers: serverId =>

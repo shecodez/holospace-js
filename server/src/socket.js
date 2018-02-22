@@ -24,16 +24,45 @@ exports = module.exports = function(io) {
 			socket.userTag = data.userTag;
 		});
 
+		//--------------------------------------------------------------------
+		// Manage VoIP
+		//--------------------------------------------------------------------
 		socket.on('voip:init', data => {
-			console.log(`${socket.userTag} init p2p connection for channel ${socket.channel}`);
-			// socket.broadcast.to(socket.channel).emit('user:approve', data);
+			console.log(`${socket.userTag} init voice connection to channel ${socket.channel}`);
 		});
 
-		socket.on('voip:accept', data => {
-			io.in(data.channel).emit('channel:bridge');
+		socket.on('voip:send', data => {
+			socket.broadcast.to(data.channel).emit('voip:recv', data.blob);
 		});
-		
-		socket.on('voip:reject', () => socket.emit('channel:full'));
+		//--------------------------------------------------------------------
+
+		//--------------------------------------------------------------------
+		// Manage Game
+		//--------------------------------------------------------------------
+		let players = [];
+
+		const Player = (holoTag) => {
+			this.pId = holoTag;
+			this.x = 0;
+			this.y = 0;
+			this.z = 0;
+			this.entity = null;
+		}
+
+		socket.on('game:init', data => {
+			console.log(`${socket.userTag} init VR connection for channel ${socket.channel}`);
+
+			const holoTag = socket.userTag;
+			const newPlayer = new Player(holoTag);
+
+			// send connecting client her username and data about the other connected players
+			socket.emit('player:data', { pId: holoTag, others: connections[socket.channel] });
+
+			// send everyone except connecting client data about the new player
+			socket.broadcast
+				.to(socket.channel).emit('player:joined', newPlayer);
+		});
+		//--------------------------------------------------------------------
 
 		socket.on('channel:join', data => {
 			/* const channel = io.sockets.adapter.rooms[data.channel];

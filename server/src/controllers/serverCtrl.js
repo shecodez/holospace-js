@@ -4,19 +4,18 @@ import parseErrors from './../utils/parseErrors';
 const serverController = {};
 
 serverController.getOne = (req, res) => {
-  db.Server.findById(req.params.id)
-    .populate({
-      path: "owner_id",
-      select: "username pin -_id"
-    })
-    .then(server => {
-      return res.status(200).json({ server });
-    })
-    .catch(err => {
-      return res.status(500).json(err);
-    });
+	db.Server.findById(req.params.id)
+		.populate({
+			path: 'owner_id',
+			select: 'username pin -_id'
+		})
+		.then(server => {
+			return res.status(200).json({ server });
+		})
+		.catch(err => {
+			return res.status(500).json(err);
+		});
 };
-
 
 // create new server,
 // create new membership between user and server
@@ -63,17 +62,43 @@ serverController.create = (req, res) => {
 		});
 };
 
+serverController.invite = (req, res) => {
+	db.Server.findById({ _id: req.params.id })
+		.then(server => {
+
+			if (req.currentUser._id.equals(server.owner_id)) {
+        if (server.inviteCode) {
+					const invitation = server.generateInvitationURL();
+					return res.status(200).json({ invitation });
+				} else {
+					server.createInvitation();
+					server.save().then(server => {
+						const invitation = server.generateInvitationURL();
+						return res.status(200).json({ invitation });
+					});
+				}
+			} else {
+        return res.status(401).json({
+					errors: { global: 'Unauthorized' }
+				});
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+};
+
 serverController.update = (req, res) => {
 	const { name, icon } = req.body.server;
 	db.Server.findByIdAndUpdate(
 		req.params.id,
 		// Validations
-    {
-      $set: {
-        name: name,
-        icon: icon
-      }
-    },
+		{
+			$set: {
+				name: name,
+				icon: icon
+			}
+		},
 		{ new: true }
 	)
 		.then(updatedServer => {

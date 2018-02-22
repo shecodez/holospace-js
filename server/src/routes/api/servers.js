@@ -13,9 +13,17 @@ var router = express.Router();
 // get one server by id
 router.get('/servers/:id', Server.getOne);
 
+// GET holospace.com/api/servers/invite
+// Request server invitation
+router.get('/servers/:id/invite', authenticate, Server.invite);
+
 // POST holospace.com/api/servers/:params
 // create new server
 router.post('/servers', authenticate, Server.create);
+
+// POST holospace.com/api/servers/join/:invitation
+// Validate server invitation same as create membership
+// router.post('/servers/join', authenticate, Server.join);
 
 // PUT holospace.com/api/servers/:params
 // update a server

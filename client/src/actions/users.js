@@ -45,11 +45,10 @@ export const updateUser = data => dispatch => dispatch(userUpdated(data));
 export const createLocalMediaStream = () => dispatch =>
 	getLocalUserMedia().then(stream => {
 		window.stream = stream;
-		console.log('createLocalMediaStream', window.stream);
 		dispatch(localMediaStreamCreated(stream));
 	});
 
 export const removeLocalMediaStream = () => dispatch => {
-	stopLocalUserMedia(window.stream);// .then(() => {});
+	stopLocalUserMedia(window.stream);
 	dispatch(localMediaStreamRemoved());
 };

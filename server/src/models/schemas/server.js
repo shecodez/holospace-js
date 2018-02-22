@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 const { Schema } = mongoose;
 
@@ -29,5 +30,24 @@ const schema = new Schema({
 schema.methods.setDefaultId = function setDefaultId(id) {
   this.default_id = id;
 }
+
+schema.methods.createInvitation = function createInvitation() {
+  this.inviteCode = this.generateToken(); // = bcrypt.hashSync(this.generateToken(), 10);
+};
+
+// generateInvitationURL
+schema.methods.generateInvitationURL = function generateInvitationURL() {
+  return `${process.env.HOST}/invite/${this.inviteCode}`
+};
+
+schema.methods.generateToken = function generateToken() {
+  return jwt.sign(
+    {
+      _id: this._id
+    },
+    process.env.JWT_SECRET,
+    // { expiresIn: "24h" }
+  );
+};
 
 export default mongoose.model('Server', schema);

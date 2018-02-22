@@ -33,7 +33,7 @@ class MainPage extends React.Component {
 	componentDidMount() {
 		this.state.socket.on('user:update', this.updateUser);
 	}
-	
+
 	componentWillUnmount() {
 		this.setState({ socket: null });
 	}

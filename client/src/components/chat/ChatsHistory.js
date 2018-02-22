@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Comment, Header, Dimmer, Loader } from 'semantic-ui-react';
+import moment from 'moment';
+import { Comment, Header, Dimmer, Loader, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import { fetchChannelMessages, updateChatsHistory } from './../../actions/messages';
+import {
+	fetchChannelMessages,
+	updateChatsHistory
+} from './../../actions/messages';
 
 // components
 import ChatMessage from './ChatMessage';
@@ -68,11 +72,66 @@ class ChatsHistory extends React.Component {
 		}
 	};
 
+	createMessageBlocks = messages => {
+		const msgBlocks = [];
+
+		for (let i = 0; i < messages.length; i += 1) {
+			const prevMsg = messages[i - 1]
+			const message = messages[i]
+
+			// first message
+			if (i === 0) {
+				const msg = {
+					_id: message._id,
+					author_id: message.author_id,
+					createdAt: message.createdAt,
+					blocks: []
+				}; msg.blocks.push(message);
+				msgBlocks.push(msg);
+			}
+
+			// if the message date is NOT equal to prev prev messsage date
+			if (i !== 0 && moment(prevMsg.createdAt).calendar() !== moment(message.createdAt).calendar()) {
+				const msg = {
+					_id: message._id,
+					author_id: message.author_id,
+					createdAt: message.createdAt,
+					blocks: []
+				}; msg.blocks.push(message);
+				msgBlocks.push(msg);
+				continue;
+			}
+
+			// not first and message author IS prev message author
+			if (i !== 0 && prevMsg.author_id.username === message.author_id.username) {
+				const current = msgBlocks.length;
+				msgBlocks[current-1].blocks.push(message)
+			}
+
+			// not first and message author is NOT prev message author
+			if (i !== 0 && prevMsg.author_id.username !== message.author_id.username) {
+				const msg = {
+					_id: message._id,
+					author_id: message.author_id,
+					createdAt: message.createdAt,
+					blocks: []
+				}; msg.blocks.push(message);
+				msgBlocks.push(msg);
+			}
+		}
+		return msgBlocks;
+	};
+
 	render() {
 		const { messages, channel, socket } = this.props;
 
-		const history = messages.map(message => (
-			<ChatMessage key={message._id} message={message} socket={socket} />
+		const history = this.createMessageBlocks(messages).map((message, i) => (
+			<ChatMessage
+				key={message._id}
+				message={message}
+				socket={socket}
+				prevDate={i === 0 ? message.createdAt : messages[i - 1].createdAt}
+			/>
 		));
 
 		return (
@@ -99,9 +158,12 @@ class ChatsHistory extends React.Component {
 							</p>
 						) : (
 							<Comment.Group size="large">
-								<Header as="h3" inverted dividing>
+								<Header as="h3" inverted>
 									{`Welcome to the genesis of the '${channel.name}' channel`}
 								</Header>
+								<Divider horizontal inverted>
+									{moment(messages[0].createdAt).calendar()}
+								</Divider>
 								{history}
 							</Comment.Group>
 						)}{' '}
@@ -148,5 +210,7 @@ function mapStateToProps(state, props) {
 }
 
 export default withRouter(
-	connect(mapStateToProps, { fetchChannelMessages, updateChatsHistory })(ChatsHistory)
+	connect(mapStateToProps, { fetchChannelMessages, updateChatsHistory })(
+		ChatsHistory
+	)
 );

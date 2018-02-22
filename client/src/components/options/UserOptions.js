@@ -77,7 +77,7 @@ class UserOptions extends React.Component {
 			this.props.removeLocalMediaStream();
 			this.props.allowMic(false);
 		} else {
-			this.props.createLocalMediaStream();
+			this.props.createLocalMediaStream(); // then allowMic
 			this.props.allowMic(true);
 		}
 	};

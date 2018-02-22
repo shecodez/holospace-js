@@ -35,7 +35,7 @@ class DirectChannelListItem extends React.Component {
 			const text = usernames.join(', ').slice(0, 37);
 			return usernames.join(', ').length < 38 ? text : `${text}...`;
 		}
-		return '???';
+		return '¯\\_(ツ)_/¯';
 	};
 
 	componentWillUnmount() {

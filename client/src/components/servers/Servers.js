@@ -8,7 +8,7 @@ import { fetchMemberServers } from './../../actions/memberships';
 
 // components
 import ServerList from './ServerList';
-import AddServer from './AddServer';
+import AddOrJoinServerButton from './../buttons/AddOrJoinServerButton';
 
 class Servers extends React.Component {
 	componentDidMount() {
@@ -29,7 +29,7 @@ class Servers extends React.Component {
 
 				<ServerList servers={servers} currentServerId={currentServerId} />
 
-				<AddServer />
+				<AddOrJoinServerButton history={this.props.history} />
 			</div>
 		);
 	}
@@ -46,7 +46,10 @@ Servers.propTypes = {
 		})
 	).isRequired,
 	fetchMemberServers: PropTypes.func.isRequired,
-	currentServerId: PropTypes.string
+	currentServerId: PropTypes.string,
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}).isRequired
 };
 
 function mapStateToProps(state, props) {

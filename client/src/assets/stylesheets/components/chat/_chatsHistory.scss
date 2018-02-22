@@ -12,16 +12,17 @@
   .comment {
     background-color: rgba(155,155,155,0.2) !important;
     padding: 7px 10px !important;
-
-    &:hover {
-      .actions {
-        visibility: visible;
-      }
-    }
+    position: relative;
 
     .author,
     .text {
       color: #ddd;
+
+      &:hover {
+        .actions {
+          visibility: visible;
+        }
+      }
 
       .edited {
         font-size: 10px;
@@ -34,9 +35,6 @@
     }
 
     .actions {
-      position: absolute;
-      right: 10px;
-      bottom: 7px;
       visibility: hidden;
     }
   }

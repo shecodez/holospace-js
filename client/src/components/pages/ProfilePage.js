@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
+import { updateUser } from './../../actions/users';
+import { updateMember } from './../../actions/memberships';
 
 // conponents
 import Grid from './../layouts/Grid';
@@ -16,7 +19,44 @@ import Customization from './../users/Customization';
 import ProfileHeader from './../headers/ProfileHeader';
 
 class ProfilePage extends React.Component {
-	state = {};
+	state = {
+		socket: null
+	};
+
+	componentWillMount() {
+		this.initSocket();
+	}
+
+	componentDidMount() {
+		this.state.socket.on('user:update', this.updateUser);
+	}
+
+	componentWillUnmount() {
+		this.setState({ socket: null });
+	}
+
+	initSocket = () => {
+		const { user } = this.props;
+
+		const socket = io(); // url : ~/direct/channels/
+		this.setState({ socket });
+
+		socket.emit('user:init', {
+			iconURL: user.avatar,
+			userTag: `${user.username}#${user.pin}`
+		});
+	}
+
+	updateUser = data => {
+		if (this.props.user.email === data.user.email){
+			this.props.updateUser(data.user);
+			this.props.updateMember(data.user);
+		}
+		else {
+			this.props.updateMember(data.user);
+		}
+		// console.log(data.user);
+	}
 
 	render() {
 		const { user } = this.props;
@@ -50,7 +90,12 @@ class ProfilePage extends React.Component {
 }
 
 ProfilePage.propTypes = {
-	user: PropTypes.shape({}).isRequired
+	user: PropTypes.shape({
+		email: PropTypes.string.isRequired,
+    confirmed: PropTypes.bool.isRequired
+  }).isRequired,
+	updateUser: PropTypes.func.isRequired,
+	updateMember: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -59,4 +104,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { updateUser, updateMember })(ProfilePage);

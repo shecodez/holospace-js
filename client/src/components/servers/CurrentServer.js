@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Header, Button, Modal } from 'semantic-ui-react';
+import { Header, Button, Modal, Popup } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
@@ -8,14 +8,17 @@ import { updateServer, fetchServer } from './../../actions/servers';
 
 // components
 import ServerForm from './../forms/ServerForm';
+import ServerOptions from './../options/ServerOptions';
+import ServerInvitation from './ServerInvitation';
 
 class CurrentServer extends React.Component {
 	state = {
-		isOpen: false
+		isOpen: false,
+		inviteToServer: false
 	};
 
 	componentDidMount() {
-		if (this.props.server.name === '') {
+		if (this.props.server.name === '' && this.props.match.params.serverId) {
 			this.props.fetchServer(this.props.match.params.serverId);
 		}
 	}
@@ -30,8 +33,14 @@ class CurrentServer extends React.Component {
 		});
 	};
 
+	openServerInvitation = () => {
+		this.setState({
+			inviteToServer: true
+		});
+	};
+
 	render() {
-		const { isOpen } = this.state;
+		const { isOpen, inviteToServer } = this.state;
 		const { user, server } = this.props;
 
 		let serverOwner = false;
@@ -48,7 +57,22 @@ class CurrentServer extends React.Component {
 						{server.name}
 					</Header>
 				)}
-				{serverOwner && <Button icon="content" onClick={this.toggleModal} />}
+				<Popup
+					trigger={<Button icon="content" />}
+					style={{ padding: 0 }}
+					content={
+						<ServerOptions
+							isOwner={serverOwner}
+							toggleEditModal={this.toggleModal}
+							serverName={server.name}
+							inviteToServer={this.openServerInvitation}
+						/>
+					}
+					on="click"
+				/>
+				{inviteToServer && (
+					<ServerInvitation serverName={server.name} serverId={server._id} />
+				)}
 
 				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
 					<Modal.Header>

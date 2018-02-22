@@ -39,7 +39,7 @@ router.get(
 
 // POST holospace.com/api/memberships/:params
 // create new membership
-//router.post('/memberships', authenticate, Membership.create);
+router.post('/memberships', authenticate, Membership.create);
 
 // PUT holospace.com/api/memberships/:params
 // update a membership

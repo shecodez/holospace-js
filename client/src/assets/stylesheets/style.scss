@@ -48,10 +48,10 @@ body > #root > .App {
 @import "./components/members/member";
 @import "./components/members/memberList";
 @import "./components/members/members";
-//-- forms -------------------------------------------
+//-- Forms -------------------------------------------
 @import "./components/forms/customForm";
 @import "./components/forms/directChannelForm";
-//-- channels ----------------------------------------
+//-- Channels ----------------------------------------
 @import "./components/channels/accordionChannelList";
 @import "./components/channels/addChannel";
 @import "./components/channels/channel";
@@ -59,14 +59,14 @@ body > #root > .App {
 @import "./components/channels/channels";
 @import "./components/channels/currentChannel";
 @import "./components/channels/voipActionBar";
-
 //-- ChatRoom ----------------------------------------
 @import "./components/chat/chatMessage";
 @import "./components/chat/chatMsgInput";
 @import "./components/chat/chatRoom";
 @import "./components/chat/chatsHistory";
 @import "./components/chat/isTypingList";
-//----------------------------------------------------
+//-- PlayCanvas --------------------------------------
+@import "./components/playcanvas/playCanvas";
 //----------------------------------------------------
 
 .site-grid-r2 {
@@ -203,4 +203,12 @@ ___ _____ _________ ___
 .c4 {
   display: flex;
   flex-direction: column;
+}
+
+.grid-3c-vr {
+  .c3m {
+    position: relative !important;
+    padding: 0 !important;
+    background-color: transparent;
+  }
 }

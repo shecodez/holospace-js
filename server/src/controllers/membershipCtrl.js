@@ -1,4 +1,5 @@
 import db from './../models';
+import jwt from 'jsonwebtoken';
 import parseErrors from './../utils/parseErrors';
 import mongoose from 'mongoose';
 
@@ -85,63 +86,66 @@ membershipController.getServerMembers = (req, res) => {
 
 membershipController.getMutualMembers = (req, res) => {
 	let members = [];
-	// const serverIds = [ '5a0f4bcb1c35354aa41d95bd','5a0f4be41c35354aa41d95c0','5a29aa0cbaddde4dfcc8af8b'];
+	// const serverIds = [ '5a0f4bcb1c35354aa41d95bd','5a0f4be41c35354aa41d95c0'];
 	// const objectIds = serverIds.map(function(el) { return mongoose.Types.ObjectId(el) })
 	getCurrentUserServerIds(req.currentUser._id)
-	.then(serverIds => {
-		let promise = db.Membership.find({
-		  'server_id': { $in: serverIds }})
-		  .where('isDeleted')
-		  .equals(false)
-		  .populate({
-		    path: 'member_id',
-		    select: 'avatar username pin -_id',
-		    match: {
-		      isDeleted: false
-		    }
-		  })
-			.exec((err, memberships) => {
-				if (err)
-					return console.log(err);
-
-				memberships.filter(function(membership) {
-					const member = {
-						title: `${membership.member_id.username}#${ membership.member_id.pin}`,
-						image: membership.member_id.avatar
-					};
-					if (!members.some(e => (e.title === member.title)))
-						members.push(member);
-				});
-			});
-		promise
-			.then(() => {
-				// console.log(members);
-				return res.status(200).json({ members });
+		.then(serverIds => {
+			let promise = db.Membership.find({
+				server_id: { $in: serverIds }
 			})
-			.catch(err => {
-				return res.status(400).json({
-					errors: parseErrors(err.errors)
+				.where('isDeleted')
+				.equals(false)
+				.populate({
+					path: 'member_id',
+					select: 'avatar username pin -_id',
+					match: {
+						isDeleted: false
+					}
+				})
+				.exec((err, memberships) => {
+					if (err) return console.log(err);
+
+					memberships.filter(function(membership) {
+						const member = {
+							title: `${membership.member_id.username}#${
+								membership.member_id.pin
+							}`,
+							image: membership.member_id.avatar
+						};
+						if (!members.some(e => e.title === member.title))
+							members.push(member);
+					});
 				});
-			});
-	})
-	.catch(err => { console.log(err);});
+			promise
+				.then(() => {
+					// console.log(members);
+					return res.status(200).json({ members });
+				})
+				.catch(err => {
+					return res.status(400).json({
+						errors: parseErrors(err.errors)
+					});
+				});
+		})
+		.catch(err => {
+			console.log(err);
+		});
 };
 
-const getCurrentUserServerIds = (userId) => {
+const getCurrentUserServerIds = userId => {
 	// console.log('getCurrentUserServerIds' +userId);
 	return new Promise(function(resolve, reject) {
 		db.Membership.find({ member_id: userId })
-		.distinct('server_id')
-		.where('isDeleted')
-		.equals(false)
-		.exec((err, serverIds) => {
-			if (err)
-				reject(err);
+			.distinct('server_id')
+			.where('isDeleted')
+			.equals(false)
+			.exec((err, serverIds) => {
+				if (err) reject(err);
 
-			resolve(serverIds)
-		});
+				resolve(serverIds);
+			});
 	});
-}
+};
 
 /* membershipController.getOne = (req, res) => {
 	db.Membership.findById(req.params.id)
@@ -154,24 +158,99 @@ const getCurrentUserServerIds = (userId) => {
 }; */
 
 membershipController.create = (req, res) => {
-	const { member_id, server_id } = req.body.membership;
+	jwt.verify(req.body.invitation, process.env.JWT_SECRET, (err, decoded) => {
+		if (err) {
+			return res.status(401).json({
+				errors: { global: 'The invitation is invalid or expired.' }
+			});
+		} else {
+			const server = db.Server.findOne({ _id: decoded._id }, (err, server) => {
+				if (err) {
+					return res.status(404).json({
+						errors: { global: 'Server does NOT exist' }
+					});
+				}
+				// findOrCreate (the long way...)
+				db.Membership.findOne({
+					member_id: req.currentUser._id,
+					server_id: decoded._id
+				})
+					.then(joined => {
+						if (joined) {
+							return res.status(401).json({
+								errors: { global: 'User is already a member of the Server' }
+							});
+						} else {
+							const membership = new db.Membership({
+								member_id: req.currentUser._id,
+								server_id: decoded._id
+							});
 
-	// Validations
-
-	const membership = new db.Membership({
-		member_id,
-		server_id
+							let populatedMembership = {};
+							let promises = [];
+							let promise = membership
+								.save()
+								.then(newMembership => {
+									// populate server_id && owner_id (username pin -_id)
+									promises.push(
+										newMembership
+											.populate({
+												path: 'member_id',
+												select:
+													'avatar username pin email online status createdAt -_id',
+												match: {
+													isDeleted: false
+												}
+											})
+											.execPopulate()
+								      .then((doc) => {
+												console.log('populate member_id', doc);
+												populatedMembership.member_id = doc.member_id;
+								      })
+									);
+									// populate member_id (avatar username pin email online status joined -_id)
+									promises.push(
+										newMembership
+											.populate({
+												path: 'server_id',
+												match: {
+													isDeleted: false
+												},
+												populate: {
+													path: 'owner_id',
+													select: 'username pin -_id'
+												}
+											})
+											.execPopulate()
+								      .then((doc) => {
+												//console.log('populate server_id', doc);
+												populatedMembership.server_id = doc.server_id;
+											})
+									);
+								})
+								.catch(err => {
+									console.log(err);
+								});
+							promise
+								.then(() => {
+									Promise.all(promises)
+										.then(() => {
+											console.log('populatedMembership', populatedMembership);
+											return res
+												.status(200)
+												.json({ membership: populatedMembership });
+										})
+										.catch(() => {});
+								})
+								.catch(() => {});
+						}
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			});
+		}
 	});
-
-	membership
-		.save()
-		.then(newMembership => {
-			//...
-			return res.status(200).json(newMembership);
-		})
-		.catch(err => {
-			return res.status(500).json(err);
-		});
 };
 
 /* membershipController.delete = (req, res) => {

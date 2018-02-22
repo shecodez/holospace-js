@@ -18,6 +18,7 @@ import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
 import ConfirmationPage from './components/pages/ConfirmationPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
+import InvitePage from './components/pages/InvitePage';
 
 import ProfilePage from './components/pages/ProfilePage';
 import MainPage from './components/pages/MainPage';
@@ -27,6 +28,7 @@ import DMsgPage from './components/pages/DMsgPage';
 import NotFoundPage from './components/pages/NotFoundPage';
 
 class App extends React.Component {
+	
 	componentDidMount() {
 		if (this.props.isAuthenticated)
 			this.props.fetchCurrentUser();
@@ -49,6 +51,7 @@ class App extends React.Component {
 					<GuestRoute path="/reset_password/:token" exact component={ResetPasswordPage} />
 
 					<UserRoute path="/@me" exact component={ProfilePage} />
+					<Route path="/invite/:invitation" exact component={InvitePage} />
 					<UserRoute path="/channels/:serverId/:channelId" exact component={MainPage} />
 					<UserRoute path="/channels/:serverId/vr/:channelId" exact component={VRPage} />
 					<UserRoute path="/direct/channels" exact component={DMsgPage} />

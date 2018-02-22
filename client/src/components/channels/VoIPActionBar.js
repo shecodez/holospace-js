@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Peer from 'peerjs';
 import { Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -8,24 +7,23 @@ import { FormattedMessage } from 'react-intl';
 import { allowMic } from './../../actions/permissions';
 import { removeLocalMediaStream } from './../../actions/users';
 
-
 // components
 import CallOptions from './../options/CallOptions';
 
 class VoIPActionBar extends React.Component {
 	state = {
-		peers: []
+		audioSrc: null
 	};
 
 	componentDidMount() {
-		this.waitForWindowLoad();
-		// this.handleStream(window.stream);
-		// this.props.socket.emit('voice:init');
+		this.waitForMediaStream();
+		this.props.socket.on('voice:recv', this.playAudio);
 	}
 
-	waitForWindowLoad = () => {
+	// TODO: think of a better way to make this work
+	waitForMediaStream = () => {
 		setTimeout(() => this.handleStream(window.stream), 1000);
-	}
+	};
 
 	componentWillUnmount() {
 		this.props.removeLocalMediaStream();
@@ -34,72 +32,49 @@ class VoIPActionBar extends React.Component {
 	// Access to audio/video granted
 	handleStream = stream => {
 		const { user, socket, channel } = this.props;
-		console.log('VoIPActionBar handlestream: ', stream);
-		let me;
-		// const socket = io();
-		socket.on('voip:init', () => {
-			const options = {
-				host: 'localhost',
-				port: 9001,
-				// path: '/api',
-				config: {
-					iceServers: [{ url: 'stun:stun.l.google.com:19302' }]
-				},
-				metadata: {
-					userTag: `${user.username}#${user.pin}`,
-					channel: channel._id
-				}
-			};
-			me = new Peer(socket.id, options);
+		const mediaRecorder = new MediaRecorder(stream);
 
-			me.on('call', incomingCall => {
-				console.log('%sにcallされました', incomingCall.me);
-				incomingCall.answer(stream);
-			});
-		});
+		const data = {};
+		data.holoTag = `${user.username}#${user.pin}`;
+		data.channel = channel._id;
 
-		// peers = connections[channel_id]
-		socket.on('peers', peers => {
-			const index = peers.indexOf(socket.id);
-			if (index > -1) {
-				peers.splice(index, 1); // 自分自身を無視
-			}
+		mediaRecorder.onstart = function() {
+			this.chuncks = [];
+		};
+		mediaRecorder.ondataavailable = e => this.chuncks.push(e);
+		mediaRecorder.onstop = function() {
+			data.blob = new Blob(this.chuncks, { type: 'audio/ogg; codecs=opus' });
+			socket.emit('voice:send', data);
+		};
+		mediaRecorder.start();
 
-			peers.forEach(id => {
-				const outgoingCall = me.outgoingCall(id, stream);
-				if (outgoingCall === undefined) {
-					console.log(`${id} なんて居ません`);
-					return;
-				}
-				outgoingCall.on('stream', remoteStream => {
-					this.setState({
-						peers: [
-							...this.state.peers,
-							{ id, stream: window.URL.createObjectURL(remoteStream) }
-						]
-					});
-				});
-			});
-		});
+		// stop rec after 5 sec and broadcast it to server
+		setInterval(() => {
+			mediaRecorder.stop();
+			mediaRecorder.start();
+		}, 5000);
+	};
+
+	playAudio = arrayBuffer => {
+		const blob = new Blob([arrayBuffer], { type: 'audio/ogg; codecs=opus' });
+		this.setState({ audioSrc: window.URL.createObjectURL(blob) });
 	};
 
 	disconnectVoice = () => {
 		this.props.removeLocalMediaStream();
 		this.props.allowMic(false);
-	}
+	};
 
 	// TODO: implement speech-to-text captions for audio track src
 	render() {
-		const { peers } = this.state;
+		const { audioSrc } = this.state;
 		const { user, channel } = this.props;
 
 		return (
 			<div className={'voip-action-bar'}>
-				{peers.map(peer => (
-					<audio key={peer.id} autoPlay src={peer.stream}>
-						<track kind="captions" />
-					</audio>
-				))}
+				<audio autoPlay src={audioSrc}>
+					<track kind="captions" />
+				</audio>
 
 				<Header as="h5" color="teal">
 					<Icon name="signal" />{' '}
@@ -137,9 +112,6 @@ VoIPActionBar.propTypes = {
 		emit: PropTypes.func
 	}),
 	allowMic: PropTypes.func.isRequired,
-	permissions: PropTypes.shape({
-		allowMic: PropTypes.bool.isRequired
-	}).isRequired,
 	removeLocalMediaStream: PropTypes.func.isRequired
 };
 
@@ -153,4 +125,6 @@ function mapStateToProps(state, props) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { allowMic, removeLocalMediaStream })(VoIPActionBar));
+export default withRouter(
+	connect(mapStateToProps, { allowMic, removeLocalMediaStream })(VoIPActionBar)
+);

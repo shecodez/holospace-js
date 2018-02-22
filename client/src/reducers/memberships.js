@@ -1,4 +1,4 @@
-import { SET_SERVER_MEMBERS, MEMBER_UPDATED } from './../actionTypes';
+import { SET_SERVER_MEMBERS, MEMBER_UPDATED, MEMBERSHIP_CREATED } from './../actionTypes';
 
 export default function memberships(state = [], action = {}) {
 	switch (action.type) {
@@ -10,6 +10,9 @@ export default function memberships(state = [], action = {}) {
         if (item.email === action.member.email) return action.member;
         return item;
       });
+
+		case MEMBERSHIP_CREATED:
+      return [...state, action.membership.member_id];
 
 		default:
 			return state;
