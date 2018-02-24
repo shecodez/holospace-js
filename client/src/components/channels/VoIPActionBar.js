@@ -32,7 +32,7 @@ class VoIPActionBar extends React.Component {
 	// Access to audio/video granted
 	handleStream = stream => {
 		const { user, socket, channel } = this.props;
-		const mediaRecorder = new MediaRecorder(stream);
+		const mediaRecorder = new window.MediaRecorder(stream);
 
 		const data = {};
 		data.holoTag = `${user.username}#${user.pin}`;

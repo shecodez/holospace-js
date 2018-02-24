@@ -206,33 +206,35 @@ exports = module.exports = function(io) {
 	};
 
 	const setUserOnline = (userTag, online) => {
-		const username = userTag.slice(0, -5);
-		const pin = userTag.slice(-4);
-		db.User.findOneAndUpdate(
-			{ username, pin },
-			{
-				$set: { online }
-			},
-			{ new: true }
-		)
-			.then(user => {
-				io.sockets.emit('user:update', {
-      		user: {
-      			avatar: user.avatar,
-      			email: user.email,
-      			username: user.username,
-      			pin: user.pin,
-      			online: user.online,
-      			status: user.status,
-      			confirmed: user.confirmed,
-						joined: user.createdAt
-      		}
-      	});
-				console.log(`${userTag}: ${online}`);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		if (userTag) {
+			const username = userTag.slice(0, -5);
+			const pin = userTag.slice(-4);
+			db.User.findOneAndUpdate(
+				{ username, pin },
+				{
+					$set: { online }
+				},
+				{ new: true }
+			)
+				.then(user => {
+					io.sockets.emit('user:update', {
+	      		user: {
+	      			avatar: user.avatar,
+	      			email: user.email,
+	      			username: user.username,
+	      			pin: user.pin,
+	      			online: user.online,
+	      			status: user.status,
+	      			confirmed: user.confirmed,
+							joined: user.createdAt
+	      		}
+	      	});
+					console.log(`${userTag}: ${online}`);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
 	};
 };
 

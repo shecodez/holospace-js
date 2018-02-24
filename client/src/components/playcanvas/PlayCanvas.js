@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const pc = window.pc;
 
-// TODO: this script will be HYYUUUUUGGGGEEEEEE without making playcanvas-react 
+// TODO: this script will be HYYUUUUUGGGGEEEEEE without making playcanvas react friendly
 class PlayCanvas extends React.Component {
 	state = {};
 
