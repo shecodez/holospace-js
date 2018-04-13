@@ -1,7 +1,20 @@
 import db from './models';
 
+// TODO: change userTag to holoTag
 exports = module.exports = function(io) {
 	let connections = {};
+
+	let clients = {};
+	let players = {};
+
+
+	function Player (socket) {
+		this.id = socket.id;
+		this.holoTag = socket.userTag || socket.id;
+		this.position = [0, 0, 0];
+		this.rotation = [0, 0, 0];
+		this.entity = null;
+	};
 
 	io.on('connection', socket => {
 		console.log(`New client connected: ${socket.id}`);
@@ -10,6 +23,13 @@ exports = module.exports = function(io) {
 			console.log(`${socket.userTag} disconnected: ${socket.id}`);
 
 			removeClientFromChannel(socket);
+
+			delete players[socket.id];
+			if (socket.channel)
+			 	delete clients[socket.channel][socket.id]; // delete clients[socket.channel][socket.id]
+
+			// Sends everyone except the connecting player data about the disconnected player.
+			socket.broadcast.emit('player:disconnected', socket.id);
 
 			io.sockets.emit('connections:update', connections);
 			socket.broadcast.emit('user:left', `${socket.userTag} disconnected`);
@@ -22,6 +42,8 @@ exports = module.exports = function(io) {
 
 			socket.iconURL = data.iconURL;
 			socket.userTag = data.userTag;
+			// socket.position = { x: data.position.x, y: data.position.y, z: data.position.z };
+			// socket.rotation = { x: data.rotation.x, y: data.rotation.y, z: data.rotation.z };
 		});
 
 		//--------------------------------------------------------------------
@@ -34,43 +56,69 @@ exports = module.exports = function(io) {
 		socket.on('voip:send', data => {
 			socket.broadcast.to(data.channel).emit('voip:recv', data.blob);
 		});
-		//--------------------------------------------------------------------
 
 		//--------------------------------------------------------------------
-		// Manage Game
+		// Manage VR
 		//--------------------------------------------------------------------
-		let players = [];
+		socket.on('player:init', function (channel) {
+				console.log(`${socket.userTag} init VR connection to channel ${socket.channel}`);
 
-		const Player = (holoTag) => {
-			this.pId = holoTag;
-			this.x = 0;
-			this.y = 0;
-			this.z = 0;
-			this.entity = null;
-		}
+				let newPlayer = new Player(socket);
+				players[socket.id] = newPlayer;
 
-		socket.on('game:init', data => {
-			console.log(`${socket.userTag} init VR connection for channel ${socket.channel}`);
+				socket.channel = channel || "DeepSpace";
+				socket.join(channel);
+				clients[socket.channel] = clients[socket.channel] || {};
+				clients[socket.channel][socket.id] = clients[socket.channel][socket.id] || {};
+				clients[socket.channel][socket.id] = newPlayer;
 
-			const holoTag = socket.userTag;
-			const newPlayer = new Player(holoTag);
+				console.log('-- vr clients -----------------------');
+				console.log(JSON.stringify(clients));
+				console.log('-------------------------------------');
 
-			// send connecting client her username and data about the other connected players
-			socket.emit('player:data', { pId: holoTag, others: connections[socket.channel] });
+				// send connecting client her username and data about the other connected players
+				socket.emit('player:data', { player: new Player(socket), others: clients[socket.channel] });
 
-			// send everyone except connecting client data about the new player
-			socket.broadcast
-				.to(socket.channel).emit('player:joined', newPlayer);
-		});
+				// Sends everyone except the connecting client data about the new player.
+				socket.broadcast.to(socket.channel).emit('player:joined', newPlayer);
+				//socket.broadcast.emit('player:joined', newPlayer);
+    });
+
+		socket.on('position:update', function (data) {
+			if(!players[data.id]) return;
+      players[data.id].position = [data.x, data.y, data.z];
+
+      socket.broadcast.emit('player:moved', data);
+    });
+
+		socket.on('rotation:update', function (data) {
+			if(!players[data.id]) return;
+      players[data.id].rotation = [data.x, data.y, data.z];
+
+      socket.broadcast.emit('player:turned', data);
+    });
+
+		socket.on('player:exit', function (data) {
+				delete players[data];
+
+				if (socket.channel)
+				 	delete clients[socket.channel][socket.id];
+
+				// Sends everyone except the connecting player data about the disconnected player.
+        socket.broadcast.emit('player:disconnected', data);
+    });
+
 		//--------------------------------------------------------------------
-
+		// Manage Channels
+		//--------------------------------------------------------------------
 		socket.on('channel:join', data => {
 			/* const channel = io.sockets.adapter.rooms[data.channel];
-			if (channel.length > 5)
+			if (channel.length > 99)
 				socket.emit('channel:full', data.channel); */
 
 			console.log(`${socket.userTag} joined ${data.channel}`);
 
+			// socket.server = data.server;
 			socket.channel = data.channel;
 
 			addClientToChannel(socket);
@@ -203,6 +251,20 @@ exports = module.exports = function(io) {
 			}
 		}
 		console.log(JSON.stringify(connections), null, '\t');
+	};
+
+	// mutating element removal
+	const remove = (array, element) => {
+    const index = array.indexOf(element);
+
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+	};
+
+	// non-mutating element removal
+	const filter = (array, element) => {
+    return array.filter(e => e !== element);
 	};
 
 	const setUserOnline = (userTag, online) => {

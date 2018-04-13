@@ -96,7 +96,10 @@ class VRPage extends React.Component {
                 <PlayCanvas
                   width={holospace.width}
                   height={holospace.height}
-                  socket={socket} />
+                  socket={socket}
+									// owner={this.props.server.owner_id.username}
+									channelId={this.props.match.params.channelId}
+								/>
               </div>
             </Nested>
             <Section className="c4"><Members /></Section>
