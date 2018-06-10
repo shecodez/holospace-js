@@ -18,15 +18,18 @@ class MainLayout extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			collapsed: false,
-			serverId: this.props.match.params.serverId
+			c2collapsed: false,
+			serverId: this.props.match.params.serverId,
+			c4collapsed: false
 		};
 	}
 
 	componentDidMount() {
 		this.props.fetchMemberServers();
-		this.props.fetchServerChannels(this.props.match.params.serverId);
-		this.props.fetchServerMembers(this.props.match.params.serverId);
+		if (this.props.match.params.serverId) {
+			this.props.fetchServerChannels(this.props.match.params.serverId);
+			this.props.fetchServerMembers(this.props.match.params.serverId);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -40,14 +43,32 @@ class MainLayout extends React.Component {
 
 	toggle = () => {
 		this.setState({
-			collapsed: !this.state.collapsed
+			c2collapsed: !this.state.c2collapsed
 		});
 	};
 
-	setCollapsed = collapsed => {
-		this.setState({
-			collapsed
-		});
+	setC2collapsed = c2collapsed => {
+		this.setState({ c2collapsed });
+	};
+
+	setGrid = page => {
+		switch (page) {
+			case "profile":
+				//this.setState({ c2collapsed: true, c4collapsed: false });
+				return "grid-row c2-collapsed";
+
+			case "holospace":
+				//this.setState({ c2collapsed: true, c4collapsed: true });
+				return "grid-row c2-collapsed c4-collapsed";
+
+			case "direct":
+				//this.setState({ c2collapsed: false, c4collapsed: true });
+				return "grid-row c4-collapsed";
+
+			default:
+				//this.setState({ c2collapsed: false, c4collapsed: false });
+				return "grid-row full";
+		}
 	};
 
 	render() {
@@ -57,7 +78,8 @@ class MainLayout extends React.Component {
 			channels,
 			channel,
 			server,
-			members
+			members,
+			page
 		} = this.props;
 
 		let isOwner = false;
@@ -74,13 +96,13 @@ class MainLayout extends React.Component {
 				<div className="row">
 					{!user.confirmed && <ConfirmEmailReminder />}
 
-					<div className="grid-row full">
+					<div className={this.setGrid(page)}>
 						<ChannelSidebar
 							channels={channels}
 							current={channel._id}
 							server={server}
-							collapsed={this.state.collapsed}
-							setCollapsed={this.setCollapsed}
+							collapsed={this.state.c2collapsed}
+							setCollapsed={this.setC2collapsed}
 							owner={isOwner}
 						/>
 
@@ -88,13 +110,14 @@ class MainLayout extends React.Component {
 							<ChannelHeader
 								channel={channel}
 								toggle={this.toggle}
-								collapsed={this.state.collapsed}
+								collapsed={this.state.c2collapsed}
+								profile={page === "profile" ? true : false}
 							/>
 							{this.props.children}
 						</div>
 
 						<MemberSidebar
-							header="Members"
+							header={page === "profile" ? "Friends" : "Members"}
 							current={user}
 							users={members}
 							owner={server.owner_id}

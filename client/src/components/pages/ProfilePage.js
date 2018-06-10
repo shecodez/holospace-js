@@ -1,107 +1,66 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import io from 'socket.io-client';
-import { connect } from 'react-redux';
-import { updateUser } from './../../actions/users';
-import { updateMember } from './../../actions/memberships';
+import React from "react";
 
-// conponents
-import Grid from './../layouts/Grid';
-import Nested from './../layouts/Nested';
-import Section from './../layouts/Section';
-import FlexSection from './../layouts/FlexSection';
+// import { friends } from "../../utils/mock";
 
-import Servers from './../servers/Servers';
-import ConfirmEmailReminder from './../alerts/ConfirmEmailReminder';
-import DMsgButton from './../buttons/DMsgButton';
-import CurrentUser from './../users/CurrentUser';
-import Customization from './../users/Customization';
-import ProfileHeader from './../headers/ProfileHeader';
+import MainLayout from "../layouts/MainLayout";
+import UserModel from "../user/UserModel";
 
 class ProfilePage extends React.Component {
-	state = {
-		socket: null
-	};
-
-	componentWillMount() {
-		this.initSocket();
+	constructor(props) {
+		super(props);
+		this.state = {
+			canvas: {
+				width: 0,
+				height: 0
+			}
+		};
 	}
 
 	componentDidMount() {
-		this.state.socket.on('user:update', this.updateUser);
+		this.onWindowResize();
+		window.addEventListener("resize", this.onWindowResize);
 	}
 
 	componentWillUnmount() {
-		this.setState({ socket: null });
+		window.removeEventListener("resize", this.onWindowResize);
 	}
 
-	initSocket = () => {
-		const { user } = this.props;
-
-		const socket = io(); // url : ~/direct/channels/
-		this.setState({ socket });
-
-		socket.emit('user:init', {
-			iconURL: user.avatar,
-			userTag: `${user.username}#${user.pin}`
+	onWindowResize = () => {
+		this.setState({
+			canvas: {
+				width: this.canvasArea.clientWidth,
+				height: this.canvasArea.clientHeight
+			}
 		});
-	}
-
-	updateUser = data => {
-		if (this.props.user.email === data.user.email){
-			this.props.updateUser(data.user);
-			this.props.updateMember(data.user);
-		}
-		else {
-			this.props.updateMember(data.user);
-		}
-		// console.log(data.user);
-	}
-
+	};
 	render() {
-		const { user } = this.props;
+		const { canvas } = this.state;
+
+		const areaStyle = {
+			display: "block",
+			width: "100%",
+			height: "100%",
+			background: "#000"
+		};
 
 		return (
-			<div className="site-grid-r2 profile-page">
-				<Section className="c1 centered">
-					<DMsgButton />
-					<Servers />
-				</Section>
-
-				<div className="two-r">
-					{!user.confirmed && <ConfirmEmailReminder />}
-					<Grid className="profile grid-3c">
-						<Nested>
-							<Section className="c2t centered">Preview</Section>
-							<FlexSection className="c2m centered">(User 3D Model)</FlexSection>
-							<Section className="c2b">
-								<CurrentUser user={user} profile />
-							</Section>
-						</Nested>
-						<Nested>
-							<Section className="c3t"><ProfileHeader /></Section>
-							<FlexSection className="c3m"><Customization /></FlexSection>
-						</Nested>
-					</Grid>
-				</div>
+			<div className="profile-page">
+				<MainLayout page={"profile"}>
+					<div
+						ref={element => {
+							this.canvasArea = element;
+						}}
+						style={areaStyle}
+					>
+						<UserModel
+							width={canvas.width}
+							height={canvas.height}
+						/>
+					</div>
+				</MainLayout>
 			</div>
 		);
 	}
 }
 
-ProfilePage.propTypes = {
-	user: PropTypes.shape({
-		email: PropTypes.string.isRequired,
-    confirmed: PropTypes.bool.isRequired
-  }).isRequired,
-	updateUser: PropTypes.func.isRequired,
-	updateMember: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-	return {
-		user: state.user
-	};
-}
-
-export default connect(mapStateToProps, { updateUser, updateMember })(ProfilePage);
+export default ProfilePage;

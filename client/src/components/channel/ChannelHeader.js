@@ -21,7 +21,7 @@ class ChannelHeader extends React.Component {
 	};
 
 	render() {
-		const { channel } = this.props;
+		const { channel, profile } = this.props;
 
 		return (
 			<div className="c3t channel-header">
@@ -32,18 +32,22 @@ class ChannelHeader extends React.Component {
 					flipped={this.props.collapsed ? "horizontally" : undefined}
 				/>
 
-				<span className="current-channel">
-					<span className="name">
-						{channel.type === "Text" && <Icon name="hashtag" />}
-						{channel.type === "VR" && <Icon name="rocket" />}
-						{channel.direct
-							? this.listChannelSubscribers()
-							: channel.name}
+				{profile ? (
+					<span className="name">Profile</span>
+				) : (
+					<span className="current-channel">
+						<span className="name">
+							{channel.type === "Text" && <Icon name="hashtag" />}
+							{channel.type === "VR" && <Icon name="rocket" />}
+							{channel.direct
+								? this.listChannelSubscribers()
+								: channel.name}
+						</span>
+						{channel.topic && (
+							<span className="topic">{channel.topic}</span>
+						)}
 					</span>
-					{channel.topic && (
-						<span className="topic">{channel.topic}</span>
-					)}
-				</span>
+				)}
 
 				<MainOptions />
 			</div>
