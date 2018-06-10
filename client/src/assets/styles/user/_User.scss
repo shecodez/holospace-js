@@ -1,0 +1,44 @@
+$show: #00b5ad !important;
+$away: #fbbd08 !important;
+$busy: #db2828 !important;
+$hide: #767676 !important;
+
+.user {
+	position: relative;
+	display: inline-block;
+	max-height: 32px;
+	vertical-align: middle;
+
+	.status {
+		position: absolute;
+		width: 0.85em;
+		height: 0.85em;
+		border-radius: 100%;
+		right: 0;
+		bottom: 0;
+
+		&.online--true {
+			&.Show {
+				background-color: $show;
+				border: 2px solid lighten(#00b5ad, 10%);
+			}
+			&.Away {
+				background-color: $away;
+				border: 2px solid lighten(#fbbd08, 10%);
+			}
+			&.Busy {
+				background-color: $busy;
+				border: 2px solid lighten(#db2828, 10%);
+			}
+		}
+
+		&.online--false {
+			&.Away,
+			&.Busy,
+			&.Show {
+				background-color: $hide;
+				border: 2px solid lighten(#767676, 10%);
+			}
+		}
+	}
+}

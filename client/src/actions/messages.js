@@ -1,10 +1,10 @@
-import api from './../api/api';
+import api from "./../api/api";
 import {
 	MESSAGE_CREATED,
 	MESSAGE_RECEIVED,
 	MESSAGE_UPDATED,
 	SET_CHANNEL_MESSAGES
-} from './../actionTypes';
+} from "./../actionTypes";
 
 export function messageCreated(message) {
 	return {
@@ -36,11 +36,11 @@ export function messageUpdated(message) {
 
 export const createMessage = (data, socket) => dispatch =>
 	api.message.create(data).then(message => {
-		socket.emit('message:send', (message));
+		socket.emit("message:send", message);
 		dispatch(messageCreated(message));
 	});
 
-export const updateChatsHistory = (message) => dispatch =>
+export const updateChatHistory = message => dispatch =>
 	dispatch(messageReceived(message));
 
 export const fetchChannelMessages = channelId => dispatch =>
@@ -50,6 +50,6 @@ export const fetchChannelMessages = channelId => dispatch =>
 
 export const updateMessage = (data, socket) => dispatch =>
 	api.message.update(data).then(message => {
-		socket.emit('message:send', (message));
+		socket.emit("message:send", message);
 		dispatch(messageUpdated(message));
 	});

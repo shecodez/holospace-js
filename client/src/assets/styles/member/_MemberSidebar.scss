@@ -1,0 +1,15 @@
+.member-sidebar {
+	.header {
+		line-height: 56px;
+	}
+
+	.trigger {
+		font-size: 18px;
+		margin: 0 24px !important;
+		cursor: pointer;
+		transition: color 0.3s;
+		&:hover {
+			color: $primary;
+		}
+	}
+}

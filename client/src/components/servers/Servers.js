@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Header } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
-import { fetchMemberServers } from './../../actions/memberships';
+import React from "react";
+import PropTypes from "prop-types";
+import { Header } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { FormattedMessage } from "react-intl";
+import { fetchMemberServers } from "./../../actions/memberships";
 
 // components
-import ServerList from './ServerList';
-import AddOrJoinServerButton from './../buttons/AddOrJoinServerButton';
+import ServerList from "./ServerList";
+import AddOrJoinServerButton from "./../buttons/AddOrJoinServerButton";
 
 class Servers extends React.Component {
 	componentDidMount() {
@@ -27,7 +27,10 @@ class Servers extends React.Component {
 					/>
 				</Header>
 
-				<ServerList servers={servers} currentServerId={currentServerId} />
+				<ServerList
+					servers={servers}
+					currentServerId={currentServerId}
+				/>
 
 				<AddOrJoinServerButton history={this.props.history} />
 			</div>
@@ -36,7 +39,7 @@ class Servers extends React.Component {
 }
 
 Servers.defaultProps = {
-	currentServerId: ''
+	currentServerId: ""
 };
 
 Servers.propTypes = {

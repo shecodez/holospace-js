@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import { Comment, Header, Dimmer, Loader, Divider } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
+import { Comment, Header, Dimmer, Loader, Divider } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { FormattedMessage } from "react-intl";
 import {
 	fetchChannelMessages,
-	updateChatsHistory
-} from './../../actions/messages';
+	updateChatHistory
+} from "./../../actions/messages";
 
 // components
-import ChatMessage from './ChatMessage';
-import FlexImgBG from './../layouts/FlexImgBG';
+import ChatMessage from "./ChatMessage";
+import FlexImgBG from "./../layouts/FlexImgBG";
 
 // TODO: make message blocks
 
@@ -28,7 +28,7 @@ class ChatsHistory extends React.Component {
 
 		const { socket } = this.props;
 		if (socket) {
-			socket.on('message:recv', this.addMessage);
+			socket.on("message:recv", this.addMessage);
 		}
 	}
 
@@ -40,12 +40,13 @@ class ChatsHistory extends React.Component {
 	}
 
 	addMessage = message => {
-		this.props.updateChatsHistory(message);
+		this.props.updateChatHistory(message);
 
 		// Smart scrolling - when the user scrolls up we don't want auto scroll to bottom
 		const container = this.messageContainer;
 		if (
-			container.scrollHeight - (container.scrollTop + container.offsetHeight) >=
+			container.scrollHeight -
+				(container.scrollTop + container.offsetHeight) >=
 			50
 		) {
 			this.scrolled = true;
@@ -76,8 +77,8 @@ class ChatsHistory extends React.Component {
 		const msgBlocks = [];
 
 		for (let i = 0; i < messages.length; i += 1) {
-			const prevMsg = messages[i - 1]
-			const message = messages[i]
+			const prevMsg = messages[i - 1];
+			const message = messages[i];
 
 			// first message
 			if (i === 0) {
@@ -86,36 +87,49 @@ class ChatsHistory extends React.Component {
 					author_id: message.author_id,
 					createdAt: message.createdAt,
 					blocks: []
-				}; msg.blocks.push(message);
+				};
+				msg.blocks.push(message);
 				msgBlocks.push(msg);
 			}
 
 			// if the message date is NOT equal to prev prev messsage date
-			if (i !== 0 && moment(prevMsg.createdAt).calendar() !== moment(message.createdAt).calendar()) {
+			if (
+				i !== 0 &&
+				moment(prevMsg.createdAt).calendar() !==
+					moment(message.createdAt).calendar()
+			) {
 				const msg = {
 					_id: message._id,
 					author_id: message.author_id,
 					createdAt: message.createdAt,
 					blocks: []
-				}; msg.blocks.push(message);
+				};
+				msg.blocks.push(message);
 				msgBlocks.push(msg);
 				continue;
 			}
 
 			// not first and message author IS prev message author
-			if (i !== 0 && prevMsg.author_id.username === message.author_id.username) {
+			if (
+				i !== 0 &&
+				prevMsg.author_id.username === message.author_id.username
+			) {
 				const current = msgBlocks.length;
-				msgBlocks[current-1].blocks.push(message)
+				msgBlocks[current - 1].blocks.push(message);
 			}
 
 			// not first and message author is NOT prev message author
-			if (i !== 0 && prevMsg.author_id.username !== message.author_id.username) {
+			if (
+				i !== 0 &&
+				prevMsg.author_id.username !== message.author_id.username
+			) {
 				const msg = {
 					_id: message._id,
 					author_id: message.author_id,
 					createdAt: message.createdAt,
 					blocks: []
-				}; msg.blocks.push(message);
+				};
+				msg.blocks.push(message);
 				msgBlocks.push(msg);
 			}
 		}
@@ -130,7 +144,9 @@ class ChatsHistory extends React.Component {
 				key={message._id}
 				message={message}
 				socket={socket}
-				prevDate={i === 0 ? message.createdAt : messages[i - 1].createdAt}
+				prevDate={
+					i === 0 ? message.createdAt : messages[i - 1].createdAt
+				}
 			/>
 		));
 
@@ -148,7 +164,7 @@ class ChatsHistory extends React.Component {
 				{!this.props.match.params.channelId ? (
 					<FlexImgBG />
 				) : (
-					<div style={{ width: '100%' }}>
+					<div style={{ width: "100%" }}>
 						{messages.length === 0 ? (
 							<p>
 								<FormattedMessage
@@ -159,14 +175,16 @@ class ChatsHistory extends React.Component {
 						) : (
 							<Comment.Group size="large">
 								<Header as="h3" inverted>
-									{`Welcome to the genesis of the '${channel.name}' channel`}
+									{`Welcome to the genesis of the '${
+										channel.name
+									}' channel`}
 								</Header>
 								<Divider horizontal inverted>
 									{moment(messages[0].createdAt).calendar()}
 								</Divider>
 								{history}
 							</Comment.Group>
-						)}{' '}
+						)}{" "}
 					</div>
 				)}
 			</div>
@@ -175,7 +193,7 @@ class ChatsHistory extends React.Component {
 }
 
 ChatsHistory.defaultProps = {
-	channel: { name: '' },
+	channel: { name: "" },
 	socket: null
 };
 
@@ -197,7 +215,7 @@ ChatsHistory.propTypes = {
 	socket: PropTypes.shape({
 		on: PropTypes.func
 	}),
-	updateChatsHistory: PropTypes.func.isRequired
+	updateChatHistory: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -210,7 +228,7 @@ function mapStateToProps(state, props) {
 }
 
 export default withRouter(
-	connect(mapStateToProps, { fetchChannelMessages, updateChatsHistory })(
+	connect(mapStateToProps, { fetchChannelMessages, updateChatHistory })(
 		ChatsHistory
 	)
 );

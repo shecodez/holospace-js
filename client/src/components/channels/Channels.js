@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import { fetchServerChannels } from './../../actions/channels';
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { fetchServerChannels } from "./../../actions/channels";
 
 // components
-import ChannelList from './ChannelList';
-import AccordionChannelList from './AccordionChannelList';
-import AddChannel from './AddChannel';
-import VoIPActionBar from './VoIPActionBar';
+import ChannelsList from "./ChannelsList";
+import AccordionChannelList from "./AccordionChannelList";
+import AddChannel from "../channel/AddChannel";
+import VoIPActionBar from "./VoIPActionBar";
 // import Tabs from './../layouts/Tabs';
 // import Pane from './../layouts/Pane';
 
@@ -38,11 +38,11 @@ class Channels extends React.Component {
 		if (channels) {
 			channels.forEach(channel => {
 				switch (channel.type) {
-					case 'Voice':
+					case "Voice":
 						voiceChannels.push(channel);
 						break;
 
-					case 'VR':
+					case "VR":
 						vrChannels.push(channel);
 						break;
 
@@ -56,25 +56,31 @@ class Channels extends React.Component {
 
 		return (
 			<div className="channels">
-        <div className="channels-list">
-  				<AddChannel type="Text" />
-  				<ChannelList channels={textChannels} socket={socket} />
+				<div className="channels-list">
+					<AddChannel type="Text" />
+					<ChannelsList channels={textChannels} socket={socket} />
 
-  				<AddChannel type="Voice" />
-  				<AccordionChannelList channels={voiceChannels} socket={socket} />
+					<AddChannel type="Voice" />
+					<AccordionChannelList
+						channels={voiceChannels}
+						socket={socket}
+					/>
 
-  				<AddChannel type="VR" />
-  				<AccordionChannelList channels={vrChannels} socket={socket} />
-        </div>
-				{ allowMic && <VoIPActionBar socket={socket} /> }
+					<AddChannel type="VR" />
+					<AccordionChannelList
+						channels={vrChannels}
+						socket={socket}
+					/>
+				</div>
+				{allowMic && <VoIPActionBar socket={socket} />}
 			</div>
 		);
 	}
 }
 
 Channels.defaultProps = {
-	currentChannelId: '',
-	currentServerId: ''
+	currentChannelId: "",
+	currentServerId: ""
 };
 
 Channels.propTypes = {
@@ -90,9 +96,9 @@ Channels.propTypes = {
 		})
 	}).isRequired,
 	socket: PropTypes.shape({
-    on: PropTypes.func,
-    emit: PropTypes.func
-  }).isRequired,
+		on: PropTypes.func,
+		emit: PropTypes.func
+	}).isRequired,
 	permissions: PropTypes.shape({
 		allowMic: PropTypes.bool.isRequired
 	}).isRequired

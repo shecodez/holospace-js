@@ -1,0 +1,108 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import moment from "moment";
+import { List, Header, Divider } from "semantic-ui-react";
+import { createMessageBlocks } from "../../utils/createMessageBlocks";
+import { updateChatHistory } from "./../../actions/messages";
+// import { messages } from "../../utils/mock";
+
+import ChatMessage from "./ChatMessage";
+
+class ChatHistory extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+
+	/* componentDidMount() {
+		const { socket } = this.props;
+		if (socket) {
+			socket.on("message:recv", this.addMessage);
+		} 
+	} */
+
+	componentDidUpdate() {
+		if (this.scrolled) return;
+
+		const container = this.messageList;
+		container.scrollTop = container.scrollHeight;
+	}
+
+	addMessage = message => {
+		this.props.updateChatHistory(message);
+
+		// Smart scrolling - when the user scrolls up we don't want auto scroll to bottom
+		const container = this.messageList;
+		if (
+			container.scrollHeight -
+				(container.scrollTop + container.offsetHeight) >=
+			50
+		) {
+			this.scrolled = true;
+		} else {
+			this.scrolled = false;
+		}
+	};
+
+	render() {
+		const { messages, channel } = this.props;
+
+		const history = createMessageBlocks(messages).map((msg, i) => (
+			<ChatMessage
+				key={msg._id}
+				message={msg}
+				prevDate={i === 0 ? msg.createdAt : messages[i - 1].createdAt}
+			/>
+		));
+
+		return (
+			<div
+				className="chat-history"
+				ref={element => {
+					this.messageList = element;
+				}}
+			>
+				{messages.length === 0 ? (
+					<p>No messages yet</p>
+				) : (
+					<List>
+						<Header inverted>Welcome to {channel.name}!</Header>
+						<Divider horizontal inverted>
+							{moment(messages[0].createdAt).calendar()}
+						</Divider>
+						{history}
+					</List>
+				)}
+			</div>
+		);
+	}
+}
+
+ChatHistory.defaultProps = {
+	channel: { name: "" }
+};
+
+ChatHistory.propTypes = {
+	messages: PropTypes.arrayOf(
+		PropTypes.shape({
+			message: PropTypes.object
+		})
+	).isRequired,
+
+	channel: PropTypes.shape({
+		name: PropTypes.string.isRequired
+	}),
+	/* socket: PropTypes.shape({
+		on: PropTypes.func
+	}).isRequired, */
+	updateChatHistory: PropTypes.func.isRequired
+};
+
+/* function mapStateToProps(state) {
+	return {
+		socket: state.socket
+	};
+} */
+
+export default connect(null, { updateChatHistory })(ChatHistory);

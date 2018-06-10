@@ -559,8 +559,7 @@ class PlayCanvas extends React.Component {
 		};
 
 		Network.prototype.removePlayer = function(data) {
-			if (this.players[data].entity)
-				this.players[data].entity.destroy();
+			if (this.players[data].entity) this.players[data].entity.destroy();
 			this.players[data].deleted = true;
 		};
 
@@ -744,17 +743,25 @@ class PlayCanvas extends React.Component {
 
 		HoloSpace.prototype.join = function(playerData) {
 			this.joined = true;
-	    this.player = this.spawnHolosmith(playerData, true);
+			this.player = this.spawnHolosmith(playerData, true);
 
-	    // disable Scene Camera
-	    this.app.root.findByName('Scene Camera').enabled = false;
+			// disable Scene Camera
+			this.app.root.findByName('Scene Camera').enabled = false;
 
-	    return this.player;
+			return this.player;
 		};
 
 		HoloSpace.prototype.spawnHolosmith = function(playerData, isLocal) {
-			const position = new pc.Vec3(playerData.position[0], playerData.position[1], playerData.position[2]);
-			const rotation = new pc.Vec3(playerData.rotation[0], playerData.rotation[1], playerData.rotation[2]);
+			const position = new pc.Vec3(
+				playerData.position[0],
+				playerData.position[1],
+				playerData.position[2]
+			);
+			const rotation = new pc.Vec3(
+				playerData.rotation[0],
+				playerData.rotation[1],
+				playerData.rotation[2]
+			);
 
 			const player = new pc.Entity();
 			player.name = playerData.id;
@@ -790,14 +797,14 @@ class PlayCanvas extends React.Component {
 			player.model.material = this.createMaterial(randomColor);
 
 			// add movement scripts to local player
-	    if (isLocal) {
-        player.addComponent('script');
-        player.script.create('firstPersonMovement');
-	    } else {
-        player.addChild(this.displayUsername(playerData.holoTag.slice(0, -5)));
-	    }
+			if (isLocal) {
+				player.addComponent('script');
+				player.script.create('firstPersonMovement');
+			} else {
+				player.addChild(this.displayUsername(playerData.holoTag.slice(0, -5)));
+			}
 
-	    return player;
+			return player;
 		};
 
 		HoloSpace.prototype.displayUsername = function(username) {
@@ -813,10 +820,10 @@ class PlayCanvas extends React.Component {
 			label.setLocalScale(1, 1, 0.24);
 
 			label.model.material = new pc.StandardMaterial();
-	    label.model.material.name = 'Username Material';
-	    label.model.material.diffuse.set(0, 0, 0);
-	    label.model.material.specular.set(0, 0, 0);
-	    label.model.material.update();
+			label.model.material.name = 'Username Material';
+			label.model.material.diffuse.set(0, 0, 0);
+			label.model.material.specular.set(0, 0, 0);
+			label.model.material.update();
 
 			label.addComponent('script');
 			label.script.create('billboard');
@@ -835,11 +842,11 @@ class PlayCanvas extends React.Component {
 		};
 
 		HoloSpace.prototype.exit = function() {
-	    this.joined = false;
-	    this.player.destroy();
+			this.joined = false;
+			this.player.destroy();
 
-	    // enable Scene Camera
-	    this.app.root.findByName('Scene Camera').enabled = true;
+			// enable Scene Camera
+			this.app.root.findByName('Scene Camera').enabled = true;
 		};
 	};
 
@@ -847,7 +854,11 @@ class PlayCanvas extends React.Component {
 		const Text = pc.createScript('text');
 
 		Text.attributes.add('text', { type: 'string', default: 'Unknown' });
-		Text.attributes.add('fontsize', { type: 'number', default:70, title:"Font Size" });
+		Text.attributes.add('fontsize', {
+			type: 'number',
+			default: 70,
+			title: 'Font Size'
+		});
 
 		// initialize code called once per entity
 		Text.prototype.initialize = function() {
@@ -870,9 +881,9 @@ class PlayCanvas extends React.Component {
 			this.updateText();
 
 			this.entity.model.material.emissiveMap = this.texture;
-	    this.entity.model.material.opacityMap = this.texture;
-	    this.entity.model.material.blendType = pc.BLEND_NORMAL;
-	    this.entity.model.material.update();
+			this.entity.model.material.opacityMap = this.texture;
+			this.entity.model.material.blendType = pc.BLEND_NORMAL;
+			this.entity.model.material.update();
 		};
 
 		Text.prototype.updateText = function() {
@@ -899,9 +910,7 @@ class PlayCanvas extends React.Component {
 		};
 
 		// update code called every frame
-		Text.prototype.update = function(dt) {
-
-		};
+		Text.prototype.update = function(dt) {};
 	};
 
 	createBillboardScript = () => {

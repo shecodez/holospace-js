@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import { Input, Icon, Label } from "semantic-ui-react";
 
 // components
-import InlineError from '../alerts/InlineError';
+import InlineError from "../alerts/InlineError";
 
 class MessageForm extends React.Component {
 	state = {
 		data: {
 			_id: this.props.message ? this.props.message._id : null,
-			body: this.props.message ? this.props.message.body : ''
+			body: this.props.message ? this.props.message.body : ""
 		},
 		loading: false,
 		errors: {},
@@ -42,7 +43,7 @@ class MessageForm extends React.Component {
 			this.setState({ loading: true });
 			this.props.submit(this.state.data);
 		}
-		this.setState({ data: { body: '' } });
+		this.setState({ data: { body: "" } });
 	};
 
 	sendTyping = () => {
@@ -74,7 +75,7 @@ class MessageForm extends React.Component {
 
 	validate = data => {
 		const errors = {};
-		if (!data.body) errors.body = 'Cannot be blank';
+		if (!data.body) errors.body = "Cannot be blank";
 		return errors;
 	};
 
@@ -82,41 +83,58 @@ class MessageForm extends React.Component {
 		const { data, errors } = this.state;
 
 		return (
-			<form className="custom-form" onSubmit={this.onSubmit}>
-				<div className="group">
-					<input
+			<form className="form message-form" onSubmit={this.onSubmit}>
+				{!this.props.noLabels ? (
+					<Input
+						fluid
+						size="large"
+						labelPosition="right"
 						type="text"
-						id="body"
-						name="body"
-						placeholder=" "
-						value={data.body}
-						onChange={this.onChange}
-						autoComplete={'off'}
-						onKeyUp={e => {
-							e.keyCode !== 13 && this.sendTyping();
-						}}
-						required
+						placeholder={this.props.placeholder}
+					>
+						<Label basic>
+							<Icon name="add circle" />
+						</Label>
+
+						<input
+							id="body"
+							name="body"
+							value={data.body}
+							onChange={this.onChange}
+							onKeyUp={e => {
+								e.keyCode !== 13 && this.sendTyping();
+							}}
+						/>
+
+						<Label basic>
+							<Icon name="smile" />
+						</Label>
+					</Input>
+				) : (
+					<Input
+						fluid
+						type="text"
+						placeholder={this.props.placeholder}
 					/>
-					<label htmlFor="body">{this.props.message_label}</label>
-					<button className="emoji-btn">EMO</button>
-					{errors.topic && <InlineError text={errors.topic} />}
-				</div>
+				)}
+
+				{errors.topic && <InlineError text={errors.topic} />}
 			</form>
 		);
 	}
 }
 
 MessageForm.defaultProps = {
+	noLabels: false,
 	message: null,
-	sendTyping: null
+	sendTyping: null,
+	placeholder: "Message"
 };
 
 MessageForm.propTypes = {
+	noLabels: PropTypes.bool,
 	submit: PropTypes.func.isRequired,
-	message_label: PropTypes.oneOfType([
-  	PropTypes.string,
-  	PropTypes.object
-	]).isRequired,
+	placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 	message: PropTypes.shape({
 		_id: PropTypes.string,
 		body: PropTypes.string

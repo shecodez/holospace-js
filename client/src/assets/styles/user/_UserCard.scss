@@ -1,0 +1,37 @@
+.user-card {
+	min-width: 350px;
+
+	.header {
+		position: relative;
+		margin-top: 3em;
+
+		.user {
+			min-height: 58px !important;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+		}
+
+		.avatar {
+			cursor: pointer;
+			width: 64px !important;
+			height: 64px !important;
+			line-height: 64px;
+			text-align: center;
+			color: #fff !important;
+		}
+
+		.text {
+			margin-top: 0.5em;
+			margin-left: 4.5em;
+
+			small {
+				display: block;
+			}
+			.pin {
+				color: #666;
+				font-size: 12px;
+			}
+		}
+	}
+}

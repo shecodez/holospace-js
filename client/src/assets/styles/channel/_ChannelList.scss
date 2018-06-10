@@ -1,0 +1,39 @@
+.channel-list {
+	padding: 1em 0;
+	flex: 1 1 auto;
+	height: 0;
+	overflow-y: auto;
+
+	.title {
+		color: #fff !important;
+		text-transform: uppercase;
+		font-weight: bold;
+		line-height: 26px;
+
+		.add-channel {
+			//display: inline-flex;
+			//align-items: center;
+			//justify-content: space-between;
+			.menu {
+				float: right;
+			}
+		}
+	}
+
+	.content {
+		color: #999;
+	}
+
+	i {
+		color: #fff;
+	}
+
+	.menu {
+		i {
+			font-size: 18px;
+			margin-right: 24px;
+			cursor: pointer;
+			transition: color 0.3s;
+		}
+	}
+}

@@ -17,10 +17,10 @@ export const getLocalUserMedia = () => {
 					resolve(stream);
 				})
 				.catch(err => {
-					reject('Reeeejected! Access to audio/video denied.', err);
+					reject("Reeeejected! Access to audio/video denied.", err);
 				});
 		} else {
-			reject('WebRTC is not supported by your browser.');
+			reject("WebRTC is not supported by your browser.");
 		}
 	});
 };

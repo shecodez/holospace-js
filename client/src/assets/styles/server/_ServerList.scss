@@ -1,0 +1,26 @@
+.server-list {
+	flex: 1 1 auto;
+	height: 0;
+	overflow-y: auto;
+
+	.server {
+		&.current {
+			.avatar {
+				border-radius: 15% !important;
+			}
+		}
+	}
+
+	.avatar {
+		width: 40px !important;
+		height: 40px !important;
+		line-height: 40px;
+		text-align: center;
+		color: #fff !important;
+		cursor: pointer;
+
+		&:hover {
+			border-radius: 15%;
+		}
+	}
+}

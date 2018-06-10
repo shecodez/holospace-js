@@ -1,0 +1,35 @@
+.member-list {
+	flex: 1 1 auto;
+	height: 0;
+	overflow-y: auto;
+
+	.avatar {
+		cursor: pointer;
+		width: 32px !important;
+		height: 32px !important;
+		line-height: 32px;
+		text-align: center;
+		color: #fff !important;
+	}
+
+	.member {
+		margin: 0.5em auto;
+		background-color: transparent;
+		transition: all 0.5s ease-out;
+
+		&:hover {
+			background: black; /* For browsers that do not support gradients */
+			background: linear-gradient(
+				to right,
+				rgba(0, 0, 0, 1),
+				rgba(0, 0, 0, 0)
+			);
+		}
+
+		.text {
+			margin-left: 0.4em;
+			margin-right: 0.2em;
+			vertical-align: middle;
+		}
+	}
+}

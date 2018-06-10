@@ -1,0 +1,104 @@
+.main-layout {
+	display: grid;
+	grid-template-columns: 80px 1fr;
+	height: 100vh;
+	overflow: hidden;
+
+	.grid-row {
+		height: 100vh;
+	}
+
+	/*
+	___ _____ _________ ______
+	|  |_c2t_|___c3t___|     |
+	|  |     |         |     |
+	|c1| c2m |   c3m   | c4t |
+	|  |     |         |_____|
+	|__|_____|_________|_c4b_|	
+	*/
+	.grid-row.full {
+		display: grid;
+		grid-template-columns: 240px 1fr 240px;
+	}
+
+	/*
+	___ _______________ ______
+	|  |______c3t______|     |
+	|  |               |     |
+	|c1|      c3m      | c4t | 
+	|  |               |_____|
+	|__|_______________|_c4b_|
+	*/
+	.grid-row.c2-collapsed {
+		display: grid;
+		grid-template-columns: 0fr 1fr 240px;
+
+		/*
+		___ __________________ ___
+		|  |________c3t_______|  |
+		|  |                  |c |
+		|c1|        c3m       |4t| 
+		|  |                  |__|
+		|__|__________________|4b|			
+		*/
+		&.c4-collapsed {
+			display: grid;
+			grid-template-columns: 0fr 1fr 80px;
+		}
+	}
+
+	/*
+	___ _____ ____________ ___
+	|  |_c2t_|_____c3t____|  |
+	|  |     |            |c |
+	|c1| c2m |     c3m    |4t|
+	|  |     |            |__|
+	|__|_____|____________|4b|	
+	*/
+	.grid-row.c4-collapsed {
+		display: grid;
+		grid-template-columns: 204px 1fr 80px;
+	}
+
+	.col,
+	.row {
+		color: $white;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.stretch {
+		flex: 1;
+	}
+
+	.c1 {
+		background-color: #111;
+		background-color: rgba(17, 17, 17, 0.8) !important;
+	}
+
+	.c2m,
+	.c2t {
+		background-color: #303030;
+	}
+	.c2m {
+		background-color: rgba(48, 48, 48, 0.8) !important;
+	}
+
+	.c3m,
+	.c3t {
+		background-color: #424242;
+	}
+	.c3m {
+		background-color: rgba(66, 66, 66, 0.8) !important;
+	}
+
+	.c4b,
+	.c4t {
+		background-color: #212121;
+	}
+	.c4t {
+		background-color: rgba(33, 33, 33, 0.8) !important;
+	}
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
 	Button,
 	Modal,
@@ -8,11 +8,11 @@ import {
 	Segment,
 	Grid,
 	Divider
-} from 'semantic-ui-react';
+} from "semantic-ui-react";
 
 // components
-import AddServer from './../servers/AddServer';
-import JoinServer from './../servers/JoinServer';
+import AddServer from "./../server/AddServer";
+import JoinServer from "./../server/JoinServer";
 
 class AddOrJoinServerButton extends React.Component {
 	state = {
@@ -57,11 +57,18 @@ class AddOrJoinServerButton extends React.Component {
 					onClick={this.toggleModal}
 				/>
 
-				{addServer && <AddServer toggleAdd={this.toggleAddServerModal} />}
-				{joinServer && <JoinServer toggleJoin={this.toggleJoinServerModal} history={this.props.history} />}
+				{addServer && (
+					<AddServer toggleAdd={this.toggleAddServerModal} />
+				)}
+				{joinServer && (
+					<JoinServer
+						toggleJoin={this.toggleJoinServerModal}
+						history={this.props.history}
+					/>
+				)}
 
-				<Modal size={'tiny'} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Content style={{ textAlign: 'center' }}>
+				<Modal size={"tiny"} open={isOpen} onClose={this.toggleModal}>
+					<Modal.Content style={{ textAlign: "center" }}>
 						<Header as="h3" color="violet">
 							Make space, another server incoming
 						</Header>
@@ -73,15 +80,19 @@ class AddOrJoinServerButton extends React.Component {
 											<Icon name="add" circular />
 											Create
 											<Header.Subheader>
-												Create a space for me and my peeps
+												Create a space for me and my
+												peeps
 											</Header.Subheader>
 										</Header>
-										<Button color="violet" onClick={this.addServer}>
+										<Button
+											color="violet"
+											onClick={this.addServer}
+										>
 											Create a Server
 										</Button>
 									</Segment>
 								</Grid.Column>
-								<Divider vertical style={{ left: '50%' }}>
+								<Divider vertical style={{ left: "50%" }}>
 									Or
 								</Divider>
 								<Grid.Column>
@@ -90,10 +101,14 @@ class AddOrJoinServerButton extends React.Component {
 											<Icon name="add user" circular />
 											Join
 											<Header.Subheader>
-												Have an invite code? Join your peeps
+												Have an invite code? Join your
+												peeps
 											</Header.Subheader>
 										</Header>
-										<Button color="teal" onClick={this.joinServer}>
+										<Button
+											color="teal"
+											onClick={this.joinServer}
+										>
 											Join a Server
 										</Button>
 									</Segment>
@@ -111,6 +126,6 @@ AddOrJoinServerButton.propTypes = {
 	history: PropTypes.shape({
 		push: PropTypes.func.isRequired
 	}).isRequired
-}
+};
 
 export default AddOrJoinServerButton;

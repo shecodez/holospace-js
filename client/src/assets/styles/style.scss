@@ -1,0 +1,305 @@
+$primary: #6435c9;
+$black: #171820;
+$white: #fdfdfe;
+$grey: #a4a4a4;
+$lightGrey: #ccccd0;
+$dark: #2a3334;
+$light: #e7e6e3;
+$grey2: #828d87;
+$secondary: #35d195;
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+html {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body > #root > .App {
+	color: $white;
+	min-height: 100%;
+	overflow: hidden;
+	background-color: transparent !important;
+}
+
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: linear-gradient(
+			90deg,
+			rgba(#ff4d4d, 0.6) 10%,
+			rgba(#ff8183, 0.6)
+		),
+		url("../images/flat-mountains-1080p.jpg") no-repeat;
+	background-position: 50% 50%;
+}
+
+.centered {
+	text-align: center;
+}
+
+.a-link {
+	cursor: pointer;
+}
+
+i.icon {
+	margin: 0;
+	display: inline-block;
+	padding: 0 !important;
+}
+
+.banner {
+	margin-bottom: 0 !important;
+	border-radius: 0 !important;
+}
+
+.menu {
+	i.icon {
+		cursor: pointer;
+		width: 26px;
+		height: 26px;
+		line-height: 26px;
+		border-radius: 4px;
+		&:hover {
+			background-color: #111;
+		}
+	}
+}
+
+//-- User ---------------------------------------------
+@import "./user/UserHeader";
+@import "./user/User";
+@import "./user/UserCard";
+//-- Layouts ------------------------------------------
+@import "./layout/MainLayout";
+//-- Server -------------------------------------------
+@import "./server/ServerHeader";
+@import "./server/ServerList";
+@import "./server/ServerSidebar";
+//-- Member -------------------------------------------
+@import "./member/MemberSidebar";
+@import "./member/MemberList";
+//-- Channel ------------------------------------------
+@import "./channel/ChannelHeader";
+@import "./channel/ChannelList";
+@import "./channel/ChannelItem";
+@import "./channel/ChannelPresence";
+//-- Chat ---------------------------------------------
+@import "./chat/ChatRoom";
+@import "./chat/ChatHistory";
+@import "./chat/ChatInput";
+@import "./chat/ChatMessage";
+@import "./chat/IsTypingList";
+//-- Pages -------------------------------------------
+@import "./pages/homePage";
+@import "./pages/loginPage";
+@import "./pages/registerPage";
+@import "./pages/passwordResetPage";
+@import "./pages/errorPage";
+//-- Forms --------------------------------------------
+@import "./forms/MessageForm";
+
+/*
+//-- Headers ------------------------------------------
+@import "./components/headers/topnav";
+@import "./components/headers/profileHeader";
+//-- Users -------------------------------------------
+@import "./components/users/currentUser";
+@import "./components/users/user";
+@import "./components/users/customization";
+@import "./components/users/userCard";
+//-- Options -----------------------------------------
+@import "./components/options/mainOptions";
+@import "./components/options/callOptions";
+//-- Layouts -----------------------------------------
+@import "./components/layouts/tabs";
+@import "./components/layouts/flexImgBG";
+//-- Servers -----------------------------------------
+@import "./components/servers/currentServer";
+@import "./components/servers/server";
+@import "./components/servers/serverList";
+@import "./components/servers/servers";
+//-- Member ------------------------------------------
+@import "./components/members/member";
+@import "./components/members/memberList";
+@import "./components/members/members";
+//-- Forms -------------------------------------------
+@import "./components/forms/customForm";
+@import "./components/forms/directChannelForm";
+//-- Channels ----------------------------------------
+@import "./components/channels/accordionChannelList";
+@import "./components/channels/addChannel";
+@import "./components/channels/channel";
+@import "./components/channels/channelList";
+@import "./components/channels/channels";
+@import "./components/channels/currentChannel";
+@import "./components/channels/voipActionBar";
+//-- ChatRoom ----------------------------------------
+@import "./components/chat/chatMessage";
+@import "./components/chat/chatMsgInput";
+@import "./components/chat/chatRoom";
+@import "./components/chat/chatsHistory";
+@import "./components/chat/isTypingList";
+//-- PlayCanvas --------------------------------------
+@import "./components/playcanvas/playCanvas";
+//----------------------------------------------------
+
+.site-grid-r2 {
+	display: grid;
+	grid-template-columns: 1fr 15fr;
+	height: 100vh;
+	overflow: hidden;
+
+	.section {
+		padding: 1em 0;
+		color: white;
+		overflow: hidden;
+	}
+}
+
+.site-grid-r1 {
+	display: grid;
+	grid-template-columns: 16fr;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.banner {
+	margin-bottom: 0 !important;
+	border-radius: 0 !important;
+}
+
+.one-r,
+.two-r {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.grid {
+	display: grid;
+	flex: 1;
+
+	.section {
+		padding: 1em 0;
+		color: white;
+		overflow: hidden;
+	}
+
+	.nested {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.stretch {
+		flex: 1;
+	}
+}*/
+/*
+___ _____ ____________
+|  |_c2t_|____c3t____|
+|  |     |           |
+|c1| c2m |    c3m    |
+|  |_____|           |
+|__|_c2b_|___________|
+
+
+.grid-3c {
+	grid-template-columns: 3fr 12fr;
+}*/
+/*
+______ ___________ ___
+|_c2t_|____c3t____|  |
+|     |           |  |
+| c2m |   c3m     |c4|
+|_____|           |  |
+|_c2b_|___________|__|
+
+
+.grid-3c-vr {
+	grid-template-columns: 3fr 12fr 1fr;
+}*/
+/*
+___ _____ _________ ___
+|  |_c2t_|___c3t___|  |
+|  |     |         |  |
+|c1| c2m |   c3m   |c4|
+|  |_____|         |  |
+|__|_c2b_|_________|__|
+
+
+.grid-4c {
+	grid-template-columns: 3fr 9fr 3fr;
+}
+
+.c1 {
+	background-color: #111;
+}
+
+.c2m,
+.c3m {
+	color: #ddd;
+}
+
+.c2m,
+.c2t {
+	background-color: #303030;
+}
+
+.c3m,
+.c3t {
+	background-color: #424242;
+}
+
+.c2b,
+.c4 {
+	background-color: #212121;
+}
+
+.c2b,
+.c2t,
+.c3t {
+	filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12))
+		drop-shadow(0 3px 1px rgba(0, 0, 0, 0.14))
+		drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
+		drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.c2b,
+.c2t,
+.c3t {
+	line-height: 28px;
+}
+
+.dmsg-btn,
+.user-btn {
+	text-align: center;
+}
+
+.c1,
+.c4 {
+	display: flex;
+	flex-direction: column;
+}
+
+.grid-3c-vr {
+	.c3m {
+		position: relative !important;
+		padding: 0 !important;
+		background-color: transparent;
+	}
+}
+*/

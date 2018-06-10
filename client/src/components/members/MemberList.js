@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { List, Button, Popup } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { List, Button, Popup } from "semantic-ui-react";
 
 // components
-import User from './../users/User';
-import UserCard from './../users/UserCard';
+import User from "./../users/User";
+import UserCard from "./../user/UserCard";
 
 const MemberList = ({ members, server, online }) => (
 	<List className={`member-list ${online}`}>

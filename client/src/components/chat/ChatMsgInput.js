@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { createMessage } from './../../actions/messages';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { createMessage } from "./../../actions/messages";
 
 // components
-import MessageForm from '../forms/MessageForm';
-import IsTypingList from './IsTypingList';
+import MessageForm from "../forms/MessageForm";
+import IsTypingList from "../chat2/IsTypingList";
 
 class ChatMsgInput extends React.Component {
 	state = {
@@ -17,8 +17,8 @@ class ChatMsgInput extends React.Component {
 		const { socket } = this.props;
 
 		if (socket) {
-			socket.on('user:typing', this.renderWhoTyping);
-			socket.on('stop:typing', this.updateWhoTyping);
+			socket.on("user:typing", this.renderWhoTyping);
+			socket.on("stop:typing", this.updateWhoTyping);
 		}
 	}
 
@@ -35,28 +35,28 @@ class ChatMsgInput extends React.Component {
 		return message;
 	};
 
-	sendTyping = (typing) => {
+	sendTyping = typing => {
 		const { user, socket } = this.props;
 
 		if (typing) {
-			socket.emit('user:typing', {
-	      channel: this.props.match.params.channelId,
-	      userTag: `${user.username}#${user.pin}`
-	    });
+			socket.emit("user:typing", {
+				channel: this.props.match.params.channelId,
+				userTag: `${user.username}#${user.pin}`
+			});
 		}
 
 		if (!typing) {
-			socket.emit('stop:typing', {
-	      channel: this.props.match.params.channelId,
-	      userTag: `${user.username}#${user.pin}`
-	    });
+			socket.emit("stop:typing", {
+				channel: this.props.match.params.channelId,
+				userTag: `${user.username}#${user.pin}`
+			});
 		}
 	};
 
 	renderWhoTyping = data => {
 		const typers = this.state.typing;
 
-		if (!typers.some(typer => (typer === data.userTag))) {
+		if (!typers.some(typer => typer === data.userTag)) {
 			// const username = data.userTag.slice(0, -5);
 			this.setState({ typing: [...typers, data.userTag] });
 		}
@@ -72,7 +72,7 @@ class ChatMsgInput extends React.Component {
 			this.setState({ typing: typers });
 		}
 		// console.log(`update typing: ${this.state.typing}`);
-	}
+	};
 
 	render() {
 		const { channel } = this.props;
@@ -86,16 +86,18 @@ class ChatMsgInput extends React.Component {
 						channelId={channel._id}
 						message_label={
 							channel.direct
-								? `Direct Message ${channel.type === 'Text' ? '# ' : ''}${
-										channel.name
-									}`
-								: `Message ${channel.type === 'Text' ? '# ' : ''}${
-										channel.name
-									}`
+								? `Direct Message ${
+										channel.type === "Text" ? "# " : ""
+									}${channel.name}`
+								: `Message ${
+										channel.type === "Text" ? "# " : ""
+									}${channel.name}`
 						}
 					/>
 				)}
-				{ this.state.typing.length === 0 ? null : <IsTypingList typers={this.state.typing} /> }
+				{this.state.typing.length === 0 ? null : (
+					<IsTypingList typers={this.state.typing} />
+				)}
 			</div>
 		);
 	}

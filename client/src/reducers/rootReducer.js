@@ -1,13 +1,14 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import locale from './locale';
-import user from './user';
-import servers from './servers';
-import memberships from './memberships';
-import channels from './channels';
-import subscriptions from './subscriptions';
-import messages from './messages';
-import permissions from './permissions';
+import locale from "./locale";
+import user from "./user";
+import servers from "./servers";
+import memberships from "./memberships";
+import channels from "./channels";
+import subscriptions from "./subscriptions";
+import messages from "./messages";
+import permissions from "./permissions";
+import socket from "./socket";
 
 export default combineReducers({
 	locale,
@@ -17,5 +18,6 @@ export default combineReducers({
 	channels,
 	subscriptions,
 	messages,
-	permissions
+	permissions,
+	socket
 });

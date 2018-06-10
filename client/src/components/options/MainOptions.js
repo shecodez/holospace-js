@@ -1,12 +1,12 @@
-import React from 'react';
-import { Button } from 'semantic-ui-react';
+import React from "react";
+import { Icon } from "semantic-ui-react";
 
 const MainOptions = () => (
-	<Button.Group className="main-options">
-		<Button icon="bell outline" />
-		<Button icon="search" />
-		<Button icon="calendar plus" />
-	</Button.Group>
+	<span className="menu">
+		<Icon name="bell outline" />
+		<Icon name="search" />
+		<Icon name="calendar plus" />
+	</span>
 );
 
 export default MainOptions;

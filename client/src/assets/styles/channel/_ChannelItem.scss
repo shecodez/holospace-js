@@ -1,0 +1,154 @@
+.channel-item {
+	color: #999;
+	border-left: 4px solid transparent;
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+
+	.channel-item-header {
+		padding-left: 1.2em;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.hashtag {
+			margin-right: 0.5em;
+			font-size: 11px;
+		}
+	}
+
+	i,
+	a {
+		color: #999 !important;
+	}
+	.menu {
+		visibility: hidden !important;
+	}
+
+	&:hover,
+	&.current {
+		border-left: 4px solid $primary;
+		background: #424242; /* For browsers that do not support gradients */
+		background: linear-gradient(
+			to right,
+			rgba(66, 66, 66, 1),
+			rgba(66, 66, 66, 0)
+		);
+
+		i,
+		a,
+		.text {
+			color: white !important;
+		}
+		.menu {
+			visibility: visible !important;
+			position: relative;
+			z-index: 3;
+		}
+	}
+	&.current:after {
+		content: "";
+		display: block;
+		border: 20px solid transparent;
+		border-right-color: rgba(200, 200, 200, 0.1);
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}
+
+.channel-accordion-item {
+	color: #999;
+	margin-top: 0 !important;
+
+	i,
+	a {
+		color: #999 !important;
+	}
+	.menu {
+		visibility: hidden !important;
+	}
+
+	.title {
+		padding: 0 !important;
+		line-height: 40px !important;
+		height: 40px;
+		border-left: 4px solid transparent;
+		padding-left: 0.9em !important;
+		position: relative;
+
+		.dropdown.icon {
+			vertical-align: middle !important;
+		}
+
+		.channel-item-header {
+			cursor: pointer;
+			//display: flex;
+			//align-items: center;
+			//justify-content: space-between;
+
+			.text,
+			a {
+				text-transform: none;
+				font-weight: normal;
+				color: #999;
+			}
+
+			.menu {
+				float: right;
+			}
+		}
+		&:hover {
+			border-left: 4px solid $primary;
+			background: #424242; /* For browsers that do not support gradients */
+			background: linear-gradient(
+				to right,
+				rgba(66, 66, 66, 1),
+				rgba(66, 66, 66, 0)
+			);
+
+			i,
+			a,
+			.text {
+				color: white !important;
+			}
+			.menu {
+				visibility: visible !important;
+				position: relative;
+				z-index: 3;
+			}
+		}
+	}
+}
+.channel-accordion-item.current {
+	.title {
+		border-left: 4px solid $primary;
+		background: #424242; /* For browsers that do not support gradients */
+		background: linear-gradient(
+			to right,
+			rgba(66, 66, 66, 1),
+			rgba(66, 66, 66, 0)
+		);
+
+		i,
+		a,
+		.text {
+			color: white !important;
+		}
+		.menu {
+			visibility: visible !important;
+			position: relative;
+			z-index: 3;
+		}
+		&:after {
+			content: "";
+			display: block;
+			border: 20px solid transparent;
+			border-right-color: rgba(200, 200, 200, 0.1);
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	}
+}

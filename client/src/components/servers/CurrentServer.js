@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Header, Button, Modal, Popup } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
-import { updateServer, fetchServer } from './../../actions/servers';
+import React from "react";
+import PropTypes from "prop-types";
+import { Header, Button, Modal, Popup } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { FormattedMessage } from "react-intl";
+import { updateServer, fetchServer } from "./../../actions/servers";
 
 // components
-import ServerForm from './../forms/ServerForm';
-import ServerOptions from './../options/ServerOptions';
-import ServerInvitation from './ServerInvitation';
+import ServerForm from "./../forms/ServerForm";
+import ServerOptions from "./../options/ServerOptions";
+import ServerInvitation from "../server/ServerInvitation";
 
 class CurrentServer extends React.Component {
 	state = {
@@ -18,7 +18,7 @@ class CurrentServer extends React.Component {
 	};
 
 	componentDidMount() {
-		if (this.props.server.name === '' && this.props.match.params.serverId) {
+		if (this.props.server.name === "" && this.props.match.params.serverId) {
 			this.props.fetchServer(this.props.match.params.serverId);
 		}
 	}
@@ -71,10 +71,13 @@ class CurrentServer extends React.Component {
 					on="click"
 				/>
 				{inviteToServer && (
-					<ServerInvitation serverName={server.name} serverId={server._id} />
+					<ServerInvitation
+						serverName={server.name}
+						serverId={server._id}
+					/>
 				)}
 
-				<Modal size={'small'} open={isOpen} onClose={this.toggleModal}>
+				<Modal size={"small"} open={isOpen} onClose={this.toggleModal}>
 					<Modal.Header>
 						<FormattedMessage
 							id="servers.CurrentServer.updateServer"
@@ -91,7 +94,7 @@ class CurrentServer extends React.Component {
 }
 
 CurrentServer.defaultProps = {
-	server: { name: '', owner_id: { username: '', pin: 0 } }
+	server: { name: "", owner_id: { username: "", pin: 0 } }
 };
 
 CurrentServer.propTypes = {

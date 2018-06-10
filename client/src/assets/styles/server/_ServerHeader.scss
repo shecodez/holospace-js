@@ -1,0 +1,22 @@
+.server-header {
+	height: 56px;
+	line-height: 56px;
+	padding: 0 24px;
+
+	.text {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.menu {
+		float: right;
+
+		i {
+			font-size: 18px;
+			margin-left: 5px;
+			cursor: pointer;
+			transition: color 0.3s;
+		}
+	}
+}

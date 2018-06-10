@@ -1,23 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'semantic-ui-css/semantic.min.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import "semantic-ui-css/semantic.min.css";
+import { BrowserRouter, Route } from "react-router-dom";
 
-import { addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import ja from 'react-intl/locale-data/ja';
+import { addLocaleData } from "react-intl";
+import en from "react-intl/locale-data/en";
+import ja from "react-intl/locale-data/ja";
 
-import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
 
-import { localeSet } from './actions/locale';
-import { currentUserFetched, fetchCurrentUser } from './actions/users';
+import { localeSet } from "./actions/locale";
+import { currentUserFetched, fetchCurrentUser } from "./actions/users";
 
-import setAuthorizationHeader from './utils/setAuthorizationHeader';
+import setAuthorizationHeader from "./utils/setAuthorizationHeader";
 
-import App from './App';
-
-import './assets/stylesheets/style.css';
+import "./assets/styles/style.css";
+import App from "./App";
 
 addLocaleData(en);
 addLocaleData(ja);
@@ -41,5 +40,5 @@ ReactDOM.render(
 			<Route component={App} />
 		</Provider>
 	</BrowserRouter>,
-	document.getElementById('root')
+	document.getElementById("root")
 );
