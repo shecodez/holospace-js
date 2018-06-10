@@ -1,6 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+
+const NotFound = () => (
+	<div className="error-page not-found">
+		<div className="content">
+			<h1 className="title">404</h1>
+			<h2 className="desc">
+				<FormattedMessage
+					id="pages.NotFoundPage.pageNotFound"
+					defaultMessage="Sorry, Page Not Found"
+				/>
+			</h2>
+			<Link to="/">
+				<FormattedMessage
+					id="pages.NotFoundPage.home"
+					defaultMessage="Go Back to Home Page"
+				/>
+			</Link>
+		</div>
+	</div>
+);
+
+export default NotFound;
 
 /* TODO: figure out how to add this script
 <script>
@@ -38,23 +60,3 @@ import { FormattedMessage } from 'react-intl';
   animate();
 </script>
  */
-
-const NotFoundPage = () => (
-	<div className="error-page fnf">
-		<div className="content">
-			<h1>404</h1>
-			<h2>
-				<FormattedMessage
-					id="pages.NotFoundPage.pageNotFound"
-					defaultMessage="Page not found"
-				/>
-			</h2>
-			{/* <p>{"Forget 404... it's over 9000"}</p> */}
-			<Link to="/">
-				<FormattedMessage id="pages.NotFoundPage.home" defaultMessage="Home" />
-			</Link>
-		</div>
-	</div>
-);
-
-export default NotFoundPage;

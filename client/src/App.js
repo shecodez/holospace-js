@@ -22,14 +22,12 @@ import ConfirmationPage from "./components/pages/ConfirmationPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import InvitePage from "./components/pages/InvitePage";
 
-import PublicChatPage from "./components/pages/PublicChatPage";
-
 import ProfilePage from "./components/pages/ProfilePage";
-// import MainPage from "./components/pages/MainPage";
+import PublicChatPage from "./components/pages/PublicChatPage";
 import VRPage from "./components/pages/VRPage";
 import DMsgPage from "./components/pages/DMsgPage";
 
-import NotFoundPage from "./components/pages/NotFoundPage";
+import NotFound from "./components/pages/error/NotFound";
 
 class App extends React.Component {
 	componentDidMount() {
@@ -108,7 +106,7 @@ class App extends React.Component {
 								component={DMsgPage}
 							/>
 
-							<Route component={NotFoundPage} />
+							<Route component={NotFound} />
 						</Switch>
 					</Loader>
 				</div>
