@@ -24,7 +24,7 @@ import InvitePage from "./components/pages/InvitePage";
 
 import ProfilePage from "./components/pages/ProfilePage";
 import PublicChatPage from "./components/pages/PublicChatPage";
-import VRPage from "./components/pages/VRPage";
+import HoloSpacePage from "./components/pages/HoloSpacePage";
 import DirectChatPage from "./components/pages/DirectChatPage";
 
 import NotFound from "./components/pages/error/NotFound";
@@ -91,9 +91,9 @@ class App extends React.Component {
 								component={PublicChatPage}
 							/>
 							<UserRoute
-								path="/channels/:serverId/vr/:channelId"
+								path="/channels/:serverId/holo/:channelId"
 								exact
-								component={VRPage}
+								component={HoloSpacePage}
 							/>
 							<UserRoute
 								path="/direct/channels"
