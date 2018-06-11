@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const AddDirectBtn = () => (
+const DirectBtn = () => (
 	<div>
 		<Popup
 			inverted
@@ -23,4 +23,4 @@ const AddDirectBtn = () => (
 	</div>
 );
 
-export default AddDirectBtn;
+export default DirectBtn;

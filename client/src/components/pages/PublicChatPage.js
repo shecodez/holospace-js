@@ -1,7 +1,7 @@
 import React from "react";
 
 import MainLayout from "../layouts/MainLayout";
-import ChatRoom from "../chat2/ChatRoom";
+import ChatRoom from "../chat/ChatRoom";
 
 class PublicChatPage extends React.Component {
 	constructor(props) {

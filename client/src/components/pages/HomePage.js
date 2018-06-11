@@ -1,11 +1,11 @@
 import React from "react";
 import { Header, Button } from "semantic-ui-react";
 
-import HomeNavigation from "../navigation/HomeNavigation";
+import TopNavigation from "../navigation/headers/TopNavigation";
 
 const HomePage = () => (
 	<div className="home-page">
-		<HomeNavigation />
+		<TopNavigation />
 
 		<div className="some-stars" />
 		<div className="stars" />

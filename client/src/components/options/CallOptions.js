@@ -1,59 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, Popup } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { Icon, Popup } from "semantic-ui-react";
 
 class CallOptions extends React.Component {
-	state = {
-		options: [
-			{
-				icon: 'info',
-				desc: 'Connection Info'
-			},
-			{
-				icon: 'phone',
-				desc: 'Disconnect Voice'
-			}
-		]
-	};
-
-	handleOptionClick = option => {
-		switch (option) {
-			case 'info':
-				this.connectionInfo();
-				break;
-			case 'phone':
-				this.disconnectVoice();
-				break;
-			default:
-				break;
-		}
-	};
+	state = {};
 
 	connectionInfo = () => {};
 
 	disconnectVoice = () => this.props.disconnect();
 
 	render() {
-		const { options } = this.state;
-
 		return (
 			<div className="call-options">
-				<Button.Group>
-					{options.map(option => (
-						<Popup
-							trigger={
-								<Button
-									icon={option.icon}
-									onClick={() => this.handleOptionClick(option.icon)}
-								/>
-							}
-							content={option.desc}
-							inverted
-							position="top center"
-							key={option.icon}
-						/>
-					))}
-				</Button.Group>
+				<div className="menu">
+					<Popup
+						inverted
+						position="top center"
+						trigger={
+							<Icon name="info" onClick={this.connectionInfo} />
+						}
+						content="Connection Info"
+					/>
+					<Popup
+						inverted
+						position="top center"
+						trigger={
+							<Icon name="phone" onClick={this.disconnectVoice} />
+						}
+						content="Disconnect Voice"
+					/>
+				</div>
 			</div>
 		);
 	}

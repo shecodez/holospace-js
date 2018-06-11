@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Route, Redirect, withRouter } from "react-router-dom";
 
 // TODO: OnComponentUnmount reset props.location
 
 // TODO: create toast 'You must log in to view te page'
-const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
+const PrivateRoute = ({ isAuthenticated, component: Component, ...rest }) => (
 	<Route
 		{...rest}
 		render={props =>
@@ -15,7 +15,7 @@ const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
 			) : (
 				<Redirect
 					to={{
-						pathname: '/login',
+						pathname: "/login",
 						state: { from: props.location }
 					}}
 				/>
@@ -23,11 +23,11 @@ const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
 		}
 	/>
 );
-UserRoute.defaultProps = {
+PrivateRoute.defaultProps = {
 	location: null
-}
+};
 
-UserRoute.propTypes = {
+PrivateRoute.propTypes = {
 	component: PropTypes.func.isRequired,
 	isAuthenticated: PropTypes.bool.isRequired,
 	location: PropTypes.shape({})
@@ -39,4 +39,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(UserRoute);
+export default withRouter(connect(mapStateToProps)(PrivateRoute));

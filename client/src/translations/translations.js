@@ -8,7 +8,7 @@ export default {
 		"channels.ChannelListItem.updateChannel": "Update Channel",
 		"channels.DirectChannelListItem.updateDirectChannel":
 			"Update Direct Channel",
-		"channels.VoIPActionBar.voiceConnected": "Voice Connected",
+		"voip.VoipHeader.voiceConnected": "Voice Connected",
 		"chat.ChatMessage.edited": "edited",
 		"chat.ChatMessage.editMessage": "Edit Message",
 		"chat.ChatsHistory.noMessages": "No Messages",
@@ -70,7 +70,7 @@ export default {
 		"channels.ChannelListItem.updateChannel": "チャンネルの更新",
 		"channels.DirectChannelListItem.updateDirectChannel":
 			"ダイレクトメッセージの更新",
-		"channels.VoIPActionBar.voiceConnected": "ボイスコネクション",
+		"voip.VoipHeader.voiceConnected": "ボイスコネクション",
 		"chat.ChatMessage.edited": "「編集」",
 		"chat.ChatMessage.editMessage": "メッセージを編集する",
 		"chat.ChatsHistory.noMessages": "メッセージなし",

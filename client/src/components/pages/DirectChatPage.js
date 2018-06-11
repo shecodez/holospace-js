@@ -2,7 +2,7 @@ import React from "react";
 //import { friends } from "../../utils/mock";
 
 import MainLayout from "../layouts/MainLayout";
-import ChatRoom from "../chat2/ChatRoom";
+import ChatRoom from "../chat/ChatRoom";
 
 const DirectChatPage = () => {
 	return (

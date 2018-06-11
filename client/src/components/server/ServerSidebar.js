@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import AddServerBtn from "./AddServerBtn";
-import ProfileBtn from "../user/ProfileBtn";
-import AddDirectBtn from "../channel/AddDirectBtn";
+import ProfileBtn from "../buttons/ProfileBtn";
+import DirectBtn from "../buttons/DirectBtn";
 import ServerList from "./ServerList";
 
 const ServerSidebar = ({ servers, current, direct }) => (
 	<div className="col c1 centered server-sidebar">
-		{direct ? <ProfileBtn /> : <AddDirectBtn />}
+		{direct ? <ProfileBtn /> : <DirectBtn />}
 		<div>Servers</div>
 		<ServerList servers={servers} current={current} />
 		<AddServerBtn />

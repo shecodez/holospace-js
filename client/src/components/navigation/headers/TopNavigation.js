@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Menu, Dropdown, Header, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import * as actions from './../../actions/locale';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Menu, Dropdown, Header, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import * as actions from "./../../../actions/locale";
+import { FormattedMessage } from "react-intl";
 
 const languageOptions = [
-	{ key: 'en', value: 'en', flag: 'us', text: 'EN' },
-	{ key: 'ja', value: 'ja', flag: 'jp', text: 'JP' }
+	{ key: "en", value: "en", flag: "us", text: "EN" },
+	{ key: "ja", value: "ja", flag: "jp", text: "JP" }
 ];
 
 const TopNavigation = ({ isUser, lang, setLocale }) => (
-	<Menu secondary className="top-nav">
+	<Menu secondary className="top-navigation">
 		<Menu.Item as={Link} to="/">
 			<div className="menu-btn icon">
 				<div className="line line-outer" />
@@ -20,7 +20,10 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 				<div className="line line-outer" />
 			</div>
 			<span className="menu-span text">
-				<FormattedMessage id="headers.TopNavigation.menu" defaultMessage="Menu" />
+				<FormattedMessage
+					id="headers.TopNavigation.menu"
+					defaultMessage="Menu"
+				/>
 			</span>
 		</Menu.Item>
 
@@ -60,7 +63,7 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 							header="Languages"
 							options={languageOptions}
 							defaultValue={lang}
-							onChange={(e, {value}) => setLocale(value)}
+							onChange={(e, { value }) => setLocale(value)}
 						/>
 					</Header.Content>
 				</Header>

@@ -11,7 +11,7 @@ import { setSocket } from "./actions/socket";
 import translations from "./translations/translations";
 
 // components
-import UserRoute from "./components/routes/UserRoute";
+import PrivateRoute from "./components/routes/PrivateRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 
 import HomePage from "./components/pages/HomePage";
@@ -35,7 +35,6 @@ class App extends React.Component {
 			const user = this.props.fetchCurrentUser();
 
 			this.socket = io();
-			// TODO: add socket to state?
 			this.socket.emit("user:init", {
 				iconURL: user.avatar,
 				userTag: `${user.username}#${user.pin}`
@@ -58,6 +57,11 @@ class App extends React.Component {
 								exact
 								component={ConfirmationPage}
 							/>
+							<Route
+								path="/invite/:invitation"
+								exact
+								component={InvitePage}
+							/>
 
 							<GuestRoute
 								path="/login"
@@ -75,32 +79,27 @@ class App extends React.Component {
 								component={ResetPasswordPage}
 							/>
 
-							<UserRoute
+							<PrivateRoute
 								path="/@me"
 								exact
 								component={ProfilePage}
 							/>
-							<Route
-								path="/invite/:invitation"
-								exact
-								component={InvitePage}
-							/>
-							<UserRoute
+							<PrivateRoute
 								path="/channels/:serverId/:channelId"
 								exact
 								component={PublicChatPage}
 							/>
-							<UserRoute
+							<PrivateRoute
 								path="/channels/:serverId/holo/:channelId"
 								exact
 								component={HoloSpacePage}
 							/>
-							<UserRoute
+							<PrivateRoute
 								path="/direct/channels"
 								exact
 								component={DirectChatPage}
 							/>
-							<UserRoute
+							<PrivateRoute
 								path="/direct/channels/:channelId"
 								exact
 								component={DirectChatPage}
