@@ -4,10 +4,11 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateChannel } from "./../../actions/channels";
-// import { fetchChannelSubscribers } from './../../actions/subscriptions';
+//import { fetchChannelSubscribers } from "./../../actions/subscriptions";
 import { Icon, Modal } from "semantic-ui-react";
 
 import ChannelForm from "./../forms/ChannelForm";
+import DirectChannelForm from "../forms/DirectChannelForm";
 
 class Channel extends React.Component {
 	constructor(props) {
@@ -35,15 +36,13 @@ class Channel extends React.Component {
         // console.log(`socket.emit(channel:left, ${channel._id})`);
     }
 
-	fetchChannelSubscribers = channelId => {
-		this.props.fetchChannelSubscribers(channelId);
-    };
+	
 
     setChannel = () => {
 		const { channel, socket } = this.props;
 		socket.emit('channel:switch', channel._id);
 		// console.log(`socket.emit(channel:switch, ${channel._id})`);
-    }; */
+	}; */
 
 	submit = data => {
 		this.props.updateChannel(data).then(() => this.toggleModal());
@@ -53,6 +52,20 @@ class Channel extends React.Component {
 		this.setState({
 			open: !this.state.open
 		});
+	};
+
+	listChannelSubscribers = () => {
+		const { subscribers } = this.props.channel;
+
+		if (subscribers) {
+			const usernames = subscribers.map(
+				subscriber => subscriber.username
+			);
+
+			const text = usernames.join(", ").slice(0, 37);
+			return usernames.join(", ").length < 38 ? text : `${text}...`;
+		}
+		return "¯\\_(ツ)_/¯";
 	};
 
 	render() {
@@ -78,13 +91,21 @@ class Channel extends React.Component {
 		return (
 			<span className="channel-item-header">
 				<span className="text">
-					{channel.type === "Text" ? (
+					{channel.direct ? (
 						<span>
-							<Icon name="hashtag" />
-							<Link to={url}>{channel.name}</Link>
+							<Icon
+								circular
+								color="violet"
+								size="large"
+								name="group"
+							/>
+							<Link to={url}>
+								{this.listChannelSubscribers()}
+							</Link>
 						</span>
 					) : (
 						<span>
+							{channel.type === "Text" && <Icon name="hashtag" />}
 							<Link to={url}>{channel.name}</Link>
 						</span>
 					)}
@@ -98,11 +119,19 @@ class Channel extends React.Component {
 				<Modal size={"small"} open={open} onClose={this.toggleModal}>
 					<Modal.Header>Update Channel</Modal.Header>
 					<Modal.Content>
-						<ChannelForm
-							channel={channel}
-							submit={this.submit}
-							type={channel.type}
-						/>
+						{channel.direct ? (
+							<DirectChannelForm
+								channel={channel}
+								submit={this.submit}
+								type={channel.type}
+							/>
+						) : (
+							<ChannelForm
+								channel={channel}
+								submit={this.submit}
+								type={channel.type}
+							/>
+						)}
 					</Modal.Content>
 				</Modal>
 			</span>
@@ -144,8 +173,8 @@ function mapStateToProps(state, props) {
 		user: state.user,
 		server: state.servers.find(
 			server => server._id === props.match.params.serverId
-		)
-		//subscribers: props.subscriptions
+		),
+		subscribers: props.subscriptions
 	};
 }
 

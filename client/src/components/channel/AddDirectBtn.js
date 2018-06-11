@@ -7,7 +7,6 @@ const AddDirectBtn = () => (
 		<Popup
 			inverted
 			position="right center"
-			content={"Direct Message"}
 			trigger={
 				<Button
 					color="violet"
@@ -19,6 +18,7 @@ const AddDirectBtn = () => (
 					className="btn"
 				/>
 			}
+			content={"Direct Message"}
 		/>
 	</div>
 );

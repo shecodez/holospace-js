@@ -78,6 +78,12 @@ i.icon {
 	}
 }
 
+.c4-collapsed {
+	.no-display {
+		display: none !important;
+	}
+}
+
 //-- User ---------------------------------------------
 @import "./user/UserHeader";
 @import "./user/User";

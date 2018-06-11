@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import moment from "moment";
 import { List, Header, Divider } from "semantic-ui-react";
 import { createMessageBlocks } from "../../utils/createMessageBlocks";
@@ -63,16 +64,24 @@ class ChatHistory extends React.Component {
 					this.messageList = element;
 				}}
 			>
-				{messages.length === 0 ? (
-					<p>No messages yet</p>
+				{this.props.match.params.channelId ? (
+					<div>
+						{messages.length === 0 ? (
+							<p>No messages yet</p>
+						) : (
+							<List>
+								<Header inverted>
+									Welcome to {channel.name}!
+								</Header>
+								<Divider horizontal inverted>
+									{moment(messages[0].createdAt).calendar()}
+								</Divider>
+								{history}
+							</List>
+						)}
+					</div>
 				) : (
-					<List>
-						<Header inverted>Welcome to {channel.name}!</Header>
-						<Divider horizontal inverted>
-							{moment(messages[0].createdAt).calendar()}
-						</Divider>
-						{history}
-					</List>
+					<div>HoloSpace</div>
 				)}
 			</div>
 		);
@@ -105,4 +114,4 @@ ChatHistory.propTypes = {
 	};
 } */
 
-export default connect(null, { updateChatHistory })(ChatHistory);
+export default withRouter(connect(null, { updateChatHistory })(ChatHistory));

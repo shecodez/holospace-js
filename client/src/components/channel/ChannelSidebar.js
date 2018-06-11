@@ -4,11 +4,15 @@ import PropTypes from "prop-types";
 import ServerHeader from "../server/ServerHeader";
 import ChannelList from "./ChannelList";
 
-const ChannelSidebar = ({ channels, current, server, owner }) => {
+const ChannelSidebar = ({ channels, current, server, owner, direct }) => {
 	return (
 		<div className="col c2">
-			<ServerHeader server={server} owner={owner} />
-			<ChannelList channels={channels} current={current} />
+			<ServerHeader server={server} owner={owner} direct={direct} />
+			<ChannelList
+				channels={channels}
+				current={current}
+				direct={direct}
+			/>
 		</div>
 	);
 };

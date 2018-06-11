@@ -36,7 +36,7 @@ class ChatRoom extends React.Component {
 	};
 
 	render() {
-		const { messages, channel } = this.props;
+		const { messages, channel, match } = this.props;
 
 		return (
 			<div className="c3m chat-room">
@@ -45,7 +45,7 @@ class ChatRoom extends React.Component {
 				</Dimmer>
 
 				<ChatHistory messages={messages} channel={channel} />
-				{channel && <ChatInut channel={channel} />}
+				{match.params.channelId && <ChatInut channel={channel} />}
 			</div>
 		);
 	}

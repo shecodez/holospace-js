@@ -6,7 +6,10 @@ import {
 	fetchMemberServers,
 	fetchServerMembers
 } from "./../../actions/memberships";
-import { fetchServerChannels } from "./../../actions/channels";
+import {
+	fetchServerChannels,
+	fetchDirectChannels
+} from "./../../actions/channels";
 
 import ConfirmEmailReminder from "../alerts/ConfirmEmailReminder";
 import ChannelSidebar from "../channel/ChannelSidebar";
@@ -29,6 +32,8 @@ class MainLayout extends React.Component {
 		if (this.props.match.params.serverId) {
 			this.props.fetchServerChannels(this.props.match.params.serverId);
 			this.props.fetchServerMembers(this.props.match.params.serverId);
+		} else {
+			this.props.fetchDirectChannels();
 		}
 	}
 
@@ -91,7 +96,11 @@ class MainLayout extends React.Component {
 
 		return (
 			<div className="main-layout background">
-				<ServerSidebar servers={servers} current={server._id} />
+				<ServerSidebar
+					servers={servers}
+					current={server._id}
+					direct={page === "direct" ? true : false}
+				/>
 
 				<div className="row">
 					{!user.confirmed && <ConfirmEmailReminder />}
@@ -104,6 +113,7 @@ class MainLayout extends React.Component {
 							collapsed={this.state.c2collapsed}
 							setCollapsed={this.setC2collapsed}
 							owner={isOwner}
+							direct={page === "direct" ? true : false}
 						/>
 
 						<div className="col c3">
@@ -111,7 +121,7 @@ class MainLayout extends React.Component {
 								channel={channel}
 								toggle={this.toggle}
 								collapsed={this.state.c2collapsed}
-								profile={page === "profile" ? true : false}
+								page={page}
 							/>
 							{this.props.children}
 						</div>
@@ -152,6 +162,7 @@ MainLayout.propTypes = {
 	}),
 
 	fetchServerChannels: PropTypes.func.isRequired,
+	fetchDirectChannels: PropTypes.func.isRequired,
 	channels: PropTypes.arrayOf(
 		PropTypes.shape({
 			channel: PropTypes.object
@@ -195,6 +206,7 @@ export default withRouter(
 	connect(mapStateToProps, {
 		fetchMemberServers,
 		fetchServerChannels,
-		fetchServerMembers
+		fetchServerMembers,
+		fetchDirectChannels
 	})(MainLayout)
 );

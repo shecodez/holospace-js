@@ -1,5 +1,7 @@
 import React from "react";
+import { withRouter } from "react-router";
 import { Icon } from "semantic-ui-react";
+
 import MainOptions from "../options/MainOptions";
 
 class ChannelHeader extends React.Component {
@@ -21,7 +23,7 @@ class ChannelHeader extends React.Component {
 	};
 
 	render() {
-		const { channel, profile } = this.props;
+		const { channel, page } = this.props;
 
 		return (
 			<div className="c3t channel-header">
@@ -32,9 +34,7 @@ class ChannelHeader extends React.Component {
 					flipped={this.props.collapsed ? "horizontally" : undefined}
 				/>
 
-				{profile ? (
-					<span className="name">Profile</span>
-				) : (
+				{this.props.match.params.channelId ? (
 					<span className="current-channel">
 						<span className="name">
 							{channel.type === "Text" && <Icon name="hashtag" />}
@@ -47,6 +47,8 @@ class ChannelHeader extends React.Component {
 							<span className="topic">{channel.topic}</span>
 						)}
 					</span>
+				) : (
+					<span className="name">{page}</span>
 				)}
 
 				<MainOptions />
@@ -55,4 +57,4 @@ class ChannelHeader extends React.Component {
 	}
 }
 
-export default ChannelHeader;
+export default withRouter(ChannelHeader);

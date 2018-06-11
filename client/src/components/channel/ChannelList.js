@@ -11,7 +11,7 @@ class ChannelList extends React.Component {
 	state = {};
 
 	render() {
-		const { channels, current } = this.props;
+		const { channels, current, direct } = this.props;
 
 		const textChannels = [];
 		const voipChannels = [];
@@ -60,15 +60,24 @@ class ChannelList extends React.Component {
 
 		const panels = [
 			{
-				title: { key: "t0", content: <AddChannel type="Text" /> },
+				title: {
+					key: "t0",
+					content: <AddChannel type="Text" direct={direct} />
+				},
 				content: { key: "c0", content: textChannels }
 			},
 			{
-				title: { key: "t1", content: <AddChannel type="VoIP" /> },
+				title: {
+					key: "t1",
+					content: <AddChannel type="VoIP" direct={direct} />
+				},
 				content: { key: "c1", content: voipChannels }
 			},
 			{
-				title: { key: "t2", content: <AddChannel type="Holo" /> },
+				title: {
+					key: "t2",
+					content: <AddChannel type="Holo" direct={direct} />
+				},
 				content: { key: "c2", content: holoChannels }
 			}
 		];

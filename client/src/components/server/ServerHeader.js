@@ -32,26 +32,32 @@ class ServerHeader extends React.Component {
 
 	render() {
 		const { open, inviteToServer } = this.state;
-		const { server, owner } = this.props;
+		const { server, owner, direct } = this.props;
 
 		return (
 			<div className="c2t server-header">
-				<span className="no-display text">{server.name}</span>
-				<span className="no-display menu">
-					<Popup
-						on="click"
-						style={{ padding: 0 }}
-						trigger={<Icon name="chevron down" />}
-						content={
-							<ServerOptions
-								isOwner={owner}
-								toggleEditModal={this.toggleModal}
-								serverName={server.name}
-								inviteToServer={this.openServerInvitation}
-							/>
-						}
-					/>
-				</span>
+				{direct ? (
+					<div className="centered">Direct Messages</div>
+				) : (
+					<span className="no-display text">{server.name}</span>
+				)}
+				{!direct && (
+					<span className="no-display menu">
+						<Popup
+							on="click"
+							style={{ padding: 0 }}
+							trigger={<Icon name="chevron down" />}
+							content={
+								<ServerOptions
+									isOwner={owner}
+									toggleEditModal={this.toggleModal}
+									serverName={server.name}
+									inviteToServer={this.openServerInvitation}
+								/>
+							}
+						/>
+					</span>
+				)}
 
 				{inviteToServer && (
 					<ServerInvitation

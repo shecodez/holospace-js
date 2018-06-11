@@ -25,7 +25,7 @@ import InvitePage from "./components/pages/InvitePage";
 import ProfilePage from "./components/pages/ProfilePage";
 import PublicChatPage from "./components/pages/PublicChatPage";
 import VRPage from "./components/pages/VRPage";
-import DMsgPage from "./components/pages/DMsgPage";
+import DirectChatPage from "./components/pages/DirectChatPage";
 
 import NotFound from "./components/pages/error/NotFound";
 
@@ -98,12 +98,12 @@ class App extends React.Component {
 							<UserRoute
 								path="/direct/channels"
 								exact
-								component={DMsgPage}
+								component={DirectChatPage}
 							/>
 							<UserRoute
 								path="/direct/channels/:channelId"
 								exact
-								component={DMsgPage}
+								component={DirectChatPage}
 							/>
 
 							<Route component={NotFound} />
