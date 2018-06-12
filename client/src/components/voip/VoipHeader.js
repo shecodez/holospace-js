@@ -15,8 +15,8 @@ class VoipHeader extends React.Component {
 	}
 
 	componentDidMount() {
-		this.waitForMediaStream();
-		this.props.socket.on("voice:recv", this.playAudio);
+		// this.waitForMediaStream();
+		// this.props.socket.on("voice:recv", this.playAudio);
 	}
 
 	// TODO: think of a better way to make this work
@@ -45,7 +45,7 @@ class VoipHeader extends React.Component {
 			data.blob = new Blob(this.chuncks, {
 				type: "audio/ogg; codecs=opus"
 			});
-			socket.emit("voice:send", data);
+			// socket.emit("voice:send", data);
 		};
 		mediaRecorder.start();
 
@@ -77,16 +77,16 @@ class VoipHeader extends React.Component {
 					<track kind="captions" />
 				</audio>
 
-				<Header as="h5" color="teal">
-					<Icon name="signal" />{" "}
+				<div className="text">
+					<Icon name="signal" color="teal" />
 					<FormattedMessage
 						id="voip.VoipHeader.voiceConnected"
 						defaultMessage="Voice Connected"
 					/>
-					<Header.Subheader>
-						{`${channel.name}/${user.username}`}
-					</Header.Subheader>
-				</Header>
+					<small className="sub-text">
+						{`${channel.name} / ${user.username}`}
+					</small>
+				</div>
 				<CallOptions disconnect={this.disconnect} />
 			</div>
 		);

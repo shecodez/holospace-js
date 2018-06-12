@@ -11,7 +11,7 @@ import DirectChannelForm from "./../forms/DirectChannelForm";
 
 class AddChannel extends React.Component {
 	state = {
-		isOpen: false
+		open: false
 	};
 
 	submit = data => {
@@ -31,9 +31,9 @@ class AddChannel extends React.Component {
 			name: data.name,
 			topic: data.topic,
 			type: data.type,
-			server_id: this.props.currentServerId
+			server_id: this.props.server._id
 		};
-		return channel;
+		return channel; // { ...data, server._id }
 	};
 
 	cleanupChannelUsers = data => {
@@ -54,34 +54,35 @@ class AddChannel extends React.Component {
 
 	toggleModal = () => {
 		this.setState({
-			isOpen: !this.state.isOpen
+			open: !this.state.open
 		});
 	};
 
 	render() {
-		const { isOpen } = this.state;
+		const { open } = this.state;
 
 		const { user, server, direct } = this.props;
-		let serverOwner = false;
+
+		let canAdd = false;
 		if (
 			user.username === server.owner_id.username &&
 			user.pin === server.owner_id.pin
 		)
-			serverOwner = true;
+			canAdd = true;
 
 		return (
 			<span className="add-channel">
 				<span className="text">{`${this.props.type} Channels`}</span>
-				{(serverOwner || direct) && (
+				{(canAdd || direct) && (
 					<span className="menu">
 						<Icon name="add" onClick={this.toggleModal} />
 					</span>
 				)}
 
-				<Modal size={"small"} open={isOpen} onClose={this.toggleModal}>
-					<Modal.Header>{`Create new ${
-						this.props.type
-					} Channel`}</Modal.Header>
+				<Modal size={"small"} open={open} onClose={this.toggleModal}>
+					<Modal.Header>
+						{`Create new ${this.props.type} Channel`}
+					</Modal.Header>
 					<Modal.Content>
 						{direct ? (
 							<DirectChannelForm
@@ -103,15 +104,13 @@ class AddChannel extends React.Component {
 }
 
 AddChannel.defaultProps = {
-	currentServerId: null,
 	server: { owner_id: { username: "", pin: 0 } },
 	direct: false
 };
 
 AddChannel.propTypes = {
-	createChannel: PropTypes.func.isRequired,
+	direct: PropTypes.bool,
 	type: PropTypes.string.isRequired,
-	currentServerId: PropTypes.string,
 	user: PropTypes.shape({
 		username: PropTypes.string.isRequired,
 		pin: PropTypes.number.isRequired
@@ -122,12 +121,11 @@ AddChannel.propTypes = {
 			pin: PropTypes.number
 		})
 	}),
-	direct: PropTypes.bool
+	createChannel: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
 	return {
-		currentServerId: props.match.params.serverId,
 		user: state.user,
 		server: state.servers.find(
 			server => server._id === props.match.params.serverId

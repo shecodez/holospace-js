@@ -1,21 +1,34 @@
 .voip-header {
-	display: flex;
-	justify-content: space-between;
-	margin: 0;
-	padding: 1rem 1rem 0;
-	border-top: 2px solid rgba(0, 0, 0, 0.3);
+	height: 48px;
+	line-height: 48px;
+	position: absolute;
+	bottom: 56px;
+	right: 0;
+	border: 2px solid rgba(0, 0, 0, 0.3);
+	width: 240px;
 
 	.signal.icon {
-		font-size: 1em;
-		display: inline-block;
-		vertical-align: inherit;
+		margin-right: 0.5em;
 	}
 
-	.header {
-		margin: 0;
+	.text {
+		display: inline-block;
+		line-height: 20px;
 
-		.sub.header {
+		small {
 			color: #999;
+			display: block;
+		}
+	}
+
+	.menu {
+		float: right;
+
+		i {
+			font-size: 18px;
+			margin-left: 5px;
+			cursor: pointer;
+			transition: color 0.3s;
 		}
 	}
 }

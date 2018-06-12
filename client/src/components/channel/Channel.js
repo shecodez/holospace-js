@@ -22,9 +22,7 @@ class Channel extends React.Component {
 		const { channel, socket, match } = this.props;
 
 		if (match.params.channelId === channel._id) {
-			socket.emit('channel:join', {
-				channel: channel._id
-			});
+			socket.emit('channel:join', channel._id);
 
 			if (channel.direct) this.fetchChannelSubscribers(channel._id);
 		}
@@ -35,8 +33,6 @@ class Channel extends React.Component {
         socket.emit('channel:left', channel._id);
         // console.log(`socket.emit(channel:left, ${channel._id})`);
     }
-
-	
 
     setChannel = () => {
 		const { channel, socket } = this.props;
@@ -81,7 +77,10 @@ class Channel extends React.Component {
 
 		let url = "";
 		if (channel.direct) {
-			url = `/direct/channels/${channel._id}`;
+			// url = `/direct/channels/${channel._id}`;
+			url = `/direct/channels${channel.type === "VR" ? "/holo/" : "/"}${
+				channel._id
+			}`;
 		} else {
 			url = `/channels/${match.params.serverId}${
 				channel.type === "VR" ? "/holo/" : "/"

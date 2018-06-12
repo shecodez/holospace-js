@@ -11,26 +11,22 @@ class CallOptions extends React.Component {
 
 	render() {
 		return (
-			<div className="call-options">
-				<div className="menu">
-					<Popup
-						inverted
-						position="top center"
-						trigger={
-							<Icon name="info" onClick={this.connectionInfo} />
-						}
-						content="Connection Info"
-					/>
-					<Popup
-						inverted
-						position="top center"
-						trigger={
-							<Icon name="phone" onClick={this.disconnectVoice} />
-						}
-						content="Disconnect Voice"
-					/>
-				</div>
-			</div>
+			<span className="call-options menu">
+				<Popup
+					inverted
+					position="top center"
+					trigger={<Icon name="info" onClick={this.connectionInfo} />}
+					content="Connection Info"
+				/>
+				<Popup
+					inverted
+					position="top center"
+					trigger={
+						<Icon name="phone" onClick={this.disconnectVoice} />
+					}
+					content="Disconnect Voice"
+				/>
+			</span>
 		);
 	}
 }

@@ -8,7 +8,19 @@ import AddChannel from "./AddChannel";
 import ChannelItem from "./ChannelItem";
 
 class ChannelList extends React.Component {
-	state = {};
+	state = {
+		presence: {}
+	};
+
+	/* componentDidMount() {
+		const { socket } = this.props;
+		if (socket)
+			socket.on('clients:update', this.updatePresence);
+	} */
+
+	updatePresence = data => {
+		this.setState({ presence: data });
+	};
 
 	render() {
 		const { channels, current, direct } = this.props;

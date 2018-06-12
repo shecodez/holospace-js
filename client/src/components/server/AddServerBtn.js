@@ -101,7 +101,7 @@ class AddServerBtn extends React.Component {
 								<Grid.Column>
 									{header(
 										"Join",
-										"add user",
+										"users",
 										"teal",
 										"Have an invite code? Join their programme",
 										this.joinServer

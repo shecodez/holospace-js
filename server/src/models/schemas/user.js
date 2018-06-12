@@ -1,17 +1,16 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import uniqueValidator from 'mongoose-unique-validator';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import uniqueValidator from "mongoose-unique-validator";
 
 // TODO: avatar will be a ref to the avatar model
 const schema = new mongoose.Schema(
 	{
+		//icon : {},
 		avatar: {
 			type: String,
-			default:
-				'https://res.cloudinary.com/shecodez/image/upload/c_scale,w_250/v1509243733/default_pmmlaf.png'
+			default: ""
 		},
-		//iconURL : {},
 		email: {
 			type: String,
 			lowercase: true,
@@ -21,28 +20,28 @@ const schema = new mongoose.Schema(
 		},
 		username: {
 			type: String,
-			minlength: [4, 'Username too short.'],
+			minlength: [4, "Username too short."],
 			required: true
 		},
 		pin: Number,
 		password: {
 			type: String,
-			minlength: [6, 'Password too short.'],
+			minlength: [6, "Password too short."],
 			required: true
 		},
 		online: { type: Boolean, default: true },
 		status: {
 			type: String,
-			enum: ['Away', 'Busy', 'Show', 'Hide'],
-			default: 'Show'
+			enum: ["Away", "Busy", "Show", "Hide"],
+			default: "Show"
 		},
 		confirmationToken: {
 			type: String,
-			default: ''
+			default: ""
 		},
 		passwordResetToken: {
 			type: String,
-			default: ''
+			default: ""
 		},
 		confirmed: { type: Boolean, default: false },
 		isDeleted: { type: Boolean, default: false }
@@ -110,7 +109,7 @@ schema.methods.generateToken = function generateToken() {
 			email: this.email
 		},
 		process.env.JWT_SECRET,
-		{ expiresIn: '2h' }
+		{ expiresIn: "2h" }
 	);
 };
 
@@ -136,6 +135,6 @@ schema.methods.toAuthJSON = function toAuthJSON() {
 	};
 };
 
-schema.plugin(uniqueValidator, { message: '{PATH} already in use' });
+schema.plugin(uniqueValidator, { message: "{PATH} already in use" });
 
-export default mongoose.model('User', schema);
+export default mongoose.model("User", schema);

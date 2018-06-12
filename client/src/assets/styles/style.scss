@@ -88,7 +88,7 @@ i.icon {
 @import "./user/UserHeader";
 @import "./user/User";
 @import "./user/UserCard";
-//-- Layouts ------------------------------------------
+//-- Layout -------------------------------------------
 @import "./layout/MainLayout";
 //-- Server -------------------------------------------
 @import "./server/ServerHeader";
@@ -108,6 +108,8 @@ i.icon {
 @import "./chat/ChatInput";
 @import "./chat/ChatMessage";
 @import "./chat/IsTypingList";
+//-- VoIP --------------------------------------------
+// @import "./voip/VoipHeader";
 //-- Pages -------------------------------------------
 @import "./pages/homePage";
 @import "./pages/loginPage";
@@ -115,6 +117,7 @@ i.icon {
 @import "./pages/passwordResetPage";
 @import "./pages/errorPage";
 @import "./pages/ProfilePage";
+@import "./pages/HoloSpacePage";
 //-- Forms --------------------------------------------
 @import "./forms/MessageForm";
 //-- Navigation ---------------------------------------

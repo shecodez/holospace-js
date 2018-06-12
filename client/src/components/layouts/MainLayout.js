@@ -131,6 +131,7 @@ class MainLayout extends React.Component {
 							current={user}
 							users={members}
 							owner={server.owner_id}
+							channel={channel}
 						/>
 					</div>
 				</div>
