@@ -4,7 +4,6 @@ import { Icon } from "semantic-ui-react";
 
 import MemberList from "./MemberList";
 import UserHeader from "../user/UserHeader";
-import VoipHeader from "../voip/VoipHeader";
 
 class MemberSidebar extends React.Component {
 	state = {
@@ -18,7 +17,7 @@ class MemberSidebar extends React.Component {
 	};
 
 	render() {
-		const { header, users, current, owner, channel } = this.props;
+		const { header, users, current, owner } = this.props;
 
 		return (
 			<div className="col c4t member-sidebar">
@@ -35,8 +34,6 @@ class MemberSidebar extends React.Component {
 				</div>
 
 				<MemberList members={users} owner={owner} />
-
-				{false && <VoipHeader channel={channel} />}
 
 				<UserHeader user={current} />
 			</div>

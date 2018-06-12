@@ -41,7 +41,7 @@ class JoinServer extends React.Component {
 			<Modal size={"tiny"} open={isOpen} onClose={this.toggleModal}>
 				<Modal.Content style={{ textAlign: "center" }}>
 					<Header as="h2" icon textAlign="center">
-						<Icon name="add user" circular />
+						<Icon name="users" circular />
 						Join a Server
 						<Header.Subheader>
 							Enter an invite link below to become a member of an

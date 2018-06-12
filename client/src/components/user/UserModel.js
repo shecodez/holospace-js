@@ -31,9 +31,9 @@ class UserModel extends React.Component {
 		this.createApp();
 	}
 
-	componentWillUnmount() {
+	/* componentWillUnmount() {
 		window.removeEventListener("resize");
-	}
+	} */
 
 	createApp = () => {
 		const canvas = this.canvas;
@@ -50,7 +50,7 @@ class UserModel extends React.Component {
 		// fill the available space at full resolution
 		app.setCanvasFillMode(pc.FILLMODE_NONE); // FILLMODE_FILL_WINDOW
 		app.setCanvasResolution(pc.RESOLUTION_AUTO);
-		
+
 		const { width, height } = this.props;
 		app.resizeCanvas(width, height);
 		// ensure canvas is resized when window changes size

@@ -1,9 +1,14 @@
 .channel-header {
 	padding: 0 50px;
+	min-height: 56px !important;
+	max-height: 56px !important;
 	line-height: 56px !important;
-	height: 56px !important;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
 	.trigger {
+		display: unset;
 		font-size: 18px;
 		margin: 0 24px !important;
 		cursor: pointer;
@@ -14,13 +19,10 @@
 	}
 
 	.current-channel {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-
 		.name {
 			font-size: 18px;
 			i {
+				display: unset;
 				font-size: 16px;
 				color: #999;
 				margin-right: 5px;

@@ -5,17 +5,18 @@ import { connect } from "react-redux";
 import {
 	fetchMemberServers,
 	fetchServerMembers
+	// fetchFriends
 } from "./../../actions/memberships";
 import {
 	fetchServerChannels,
 	fetchDirectChannels
 } from "./../../actions/channels";
 
-import ConfirmEmailReminder from "../alerts/ConfirmEmailReminder";
 import ChannelSidebar from "../channel/ChannelSidebar";
 import ChannelHeader from "../channel/ChannelHeader";
 import MemberSidebar from "../member/MemberSidebar";
 import ServerSidebar from "../server/ServerSidebar";
+import ConfirmEmailReminder from "../alerts/ConfirmEmailReminder";
 
 class MainLayout extends React.Component {
 	constructor(props) {
@@ -34,6 +35,7 @@ class MainLayout extends React.Component {
 			this.props.fetchServerMembers(this.props.match.params.serverId);
 		} else {
 			this.props.fetchDirectChannels();
+			// this.props.fetchFriends();
 		}
 	}
 
@@ -59,19 +61,15 @@ class MainLayout extends React.Component {
 	setGrid = page => {
 		switch (page) {
 			case "profile":
-				//this.setState({ c2collapsed: true, c4collapsed: false });
 				return "grid-row c2-collapsed";
 
 			case "holospace":
-				//this.setState({ c2collapsed: true, c4collapsed: true });
 				return "grid-row c2-collapsed c4-collapsed";
 
 			case "direct":
-				//this.setState({ c2collapsed: false, c4collapsed: true });
 				return "grid-row c4-collapsed";
 
 			default:
-				//this.setState({ c2collapsed: false, c4collapsed: false });
 				return "grid-row full";
 		}
 	};
@@ -131,7 +129,6 @@ class MainLayout extends React.Component {
 							current={user}
 							users={members}
 							owner={server.owner_id}
-							channel={channel}
 						/>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
@@ -20,6 +21,7 @@ import DirectHoloPage from "../pages/DirectHoloPage";
 
 import NotFound from "../pages/error/NotFound";
 
+// <Switch location={props.location}></Switch>
 const Routes = () => (
 	<Switch>
 		<Route path="/" exact component={HomePage} />
@@ -65,4 +67,4 @@ const Routes = () => (
 	</Switch>
 );
 
-export default Routes;
+export default withRouter(Routes);
