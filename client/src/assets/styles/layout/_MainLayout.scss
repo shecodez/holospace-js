@@ -6,6 +6,7 @@
 
 	.grid-row {
 		height: 100vh;
+		display: grid;
 	}
 
 	/*
@@ -17,7 +18,6 @@
 	|__|_____|_________|_c4b_|	
 	*/
 	.grid-row.full {
-		display: grid;
 		grid-template-columns: 240px 1fr 240px;
 	}
 
@@ -30,7 +30,6 @@
 	|__|_______________|_c4b_|
 	*/
 	.grid-row.c2-collapsed {
-		display: grid;
 		grid-template-columns: 0fr 1fr 240px;
 
 		/*
@@ -42,7 +41,6 @@
 		|__|__________________|4b|			
 		*/
 		&.c4-collapsed {
-			display: grid;
 			grid-template-columns: 0fr 1fr 80px;
 		}
 	}
@@ -56,7 +54,6 @@
 	|__|_____|____________|4b|	
 	*/
 	.grid-row.c4-collapsed {
-		display: grid;
 		grid-template-columns: 240px 1fr 80px;
 	}
 

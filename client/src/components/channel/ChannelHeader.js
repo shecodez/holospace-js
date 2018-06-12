@@ -23,7 +23,7 @@ class ChannelHeader extends React.Component {
 	};
 
 	render() {
-		const { channel, page } = this.props;
+		const { channel, header } = this.props;
 
 		return (
 			<div className="c3t channel-header">
@@ -48,7 +48,7 @@ class ChannelHeader extends React.Component {
 						)}
 					</span>
 				) : (
-					<span className="name">{page}</span>
+					<span className="name">{header}</span>
 				)}
 
 				<MainOptions />

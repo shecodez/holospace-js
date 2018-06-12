@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
 
 		return (
 			<div className="profile-page">
-				<MainLayout page={"profile"}>
+				<MainLayout profile>
 					<div
 						ref={element => {
 							this.canvasArea = element;

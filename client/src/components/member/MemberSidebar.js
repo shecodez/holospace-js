@@ -6,14 +6,8 @@ import MemberList from "./MemberList";
 import UserHeader from "../user/UserHeader";
 
 class MemberSidebar extends React.Component {
-	state = {
-		collapsed: this.props.collapsed || false
-	};
-
 	toggle = () => {
-		this.setState({
-			collapsed: !this.state.collapsed
-		});
+		this.props.toggle();
 	};
 
 	render() {
@@ -27,7 +21,7 @@ class MemberSidebar extends React.Component {
 						name="outdent"
 						onClick={this.toggle}
 						flipped={
-							this.state.collapsed ? undefined : "horizontally"
+							this.props.collapsed ? undefined : "horizontally"
 						}
 					/>
 					<span className="no-display">{header}</span>

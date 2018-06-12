@@ -3,6 +3,21 @@
 	height: 0;
 	overflow-y: auto;
 
+	.online {
+		.avatar {
+			filter: none;
+		}
+	}
+
+	.offline {
+		.avatar {
+			filter: grayscale(100%);
+			&:hover {
+				filter: none;
+			}
+		}
+	}
+
 	.avatar {
 		cursor: pointer;
 		width: 32px !important;

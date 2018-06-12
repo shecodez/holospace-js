@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 //import { members } from "../../utils/mock";
 
 import MainLayout from "../layouts/MainLayout";
@@ -17,7 +18,8 @@ class HoloSpacePage extends React.Component {
 
 	componentDidMount() {
 		this.onWindowResize();
-		window.addEventListener("resize", this.onWindowResize);
+		//window.addEventListener("resize", this.onWindowResize);
+		window.addEventListener("resize", _.debounce(this.onWindowResize, 300));
 	}
 
 	componentWillUnmount() {
@@ -45,7 +47,7 @@ class HoloSpacePage extends React.Component {
 
 		return (
 			<div className="holospace-page">
-				<MainLayout page="holospace">
+				<MainLayout holospace>
 					<div
 						ref={element => {
 							this.canvasArea = element;

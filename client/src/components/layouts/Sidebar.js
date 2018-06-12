@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
 
 import React from "react";
 import PropTypes from "prop-types";
-// import omit from "omit.js";
+import _ from "lodash";
 
 const dimensionMap = {
 	xs: "480px",
@@ -111,12 +111,12 @@ class Sidebar extends React.Component {
 			...rest
 		} = this.props;
 
-		/* const divProps = omit(others, [
+		const divProps = _.omit(rest, [
 			"collapsed",
 			"defaultCollapsed",
 			"onCollapse",
 			"breakpoint"
-		]); */
+		]);
 
 		const rawWidth = this.state.collapsed ? collapsedWidth : width;
 
@@ -135,11 +135,7 @@ class Sidebar extends React.Component {
 			width: siderWidth
 		};
 		return (
-			<div
-				className={status}
-				// {...divProps}
-				style={divStyle}
-			>
+			<div className={status} {...divProps} style={divStyle}>
 				{this.props.children}
 			</div>
 		);

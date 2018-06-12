@@ -22,9 +22,11 @@ class MainLayout extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			c2collapsed: false,
+			c2collapsed: props.profile || props.holospace ? true : false,
 			serverId: this.props.match.params.serverId,
-			c4collapsed: false
+			c4collapsed: props.direct || props.holospace ? true : false,
+			defaultc2collapsed: props.profile || props.holospace ? true : false,
+			defaultc4collapsed: props.direct || props.holospace ? true : false
 		};
 	}
 
@@ -37,6 +39,11 @@ class MainLayout extends React.Component {
 			this.props.fetchDirectChannels();
 			// this.props.fetchFriends();
 		}
+		window.addEventListener("resize", this.onWindowResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.onWindowResize);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -48,29 +55,41 @@ class MainLayout extends React.Component {
 		this.setState({ serverId: nextProps.match.params.serverId });
 	}
 
-	toggle = () => {
-		this.setState({
-			c2collapsed: !this.state.c2collapsed
-		});
+	togglec2 = () => {
+		this.setState(
+			{
+				c2collapsed: !this.state.c2collapsed
+			},
+			() => this.setPrevC2state(this.state.c2collapsed)
+		);
 	};
 
-	setC2collapsed = c2collapsed => {
-		this.setState({ c2collapsed });
+	togglec4 = () => {
+		this.setState(
+			{
+				c4collapsed: !this.state.c4collapsed
+			},
+			() => this.setPrevC4state(this.state.c4collapsed)
+		);
 	};
 
-	setGrid = page => {
-		switch (page) {
-			case "profile":
-				return "grid-row c2-collapsed";
+	setPrevC2state = defaultc2collapsed => {
+		this.setState({ defaultc2collapsed });
+	};
 
-			case "holospace":
-				return "grid-row c2-collapsed c4-collapsed";
+	setPrevC4state = defaultc4collapsed => {
+		this.setState({ defaultc4collapsed });
+	};
 
-			case "direct":
-				return "grid-row c4-collapsed";
-
-			default:
-				return "grid-row full";
+	onWindowResize = () => {
+		const { defaultc2collapsed, defaultc4collapsed } = this.state;
+		if (window.innerWidth < 768) {
+			this.setState({ c2collapsed: true, c4collapsed: true });
+		} else if (window.innerWidth >= 768) {
+			this.setState({
+				c2collapsed: defaultc2collapsed,
+				c4collapsed: defaultc4collapsed
+			});
 		}
 	};
 
@@ -81,54 +100,68 @@ class MainLayout extends React.Component {
 			channels,
 			channel,
 			server,
-			members,
-			page
+			members
 		} = this.props;
 
-		let isOwner = false;
+		let serverOwner = false;
 		if (
 			user.username === server.owner_id.username &&
 			user.pin === server.owner_id.pin
 		)
-			isOwner = true;
+			serverOwner = true;
+
+		const { users, profile, holospace, direct } = this.props;
+
+		const { c2collapsed, c4collapsed } = this.state;
+		const _c2collapsed = c2collapsed ? " c2-collapsed" : "";
+		const _c4collapsed = c4collapsed ? " c4-collapsed" : "";
+		const full = !c2collapsed && !c4collapsed ? "full" : "";
+
+		const header = profile || direct ? "Friends" : "Members";
 
 		return (
 			<div className="main-layout background">
 				<ServerSidebar
 					servers={servers}
 					current={server._id}
-					direct={page === "direct" ? true : false}
+					direct={direct}
 				/>
 
 				<div className="row">
 					{!user.confirmed && <ConfirmEmailReminder />}
 
-					<div className={this.setGrid(page)}>
+					<div
+						className={`grid-row ${full}${_c2collapsed}${_c4collapsed}`}
+					>
 						<ChannelSidebar
 							channels={channels}
 							current={channel._id}
 							server={server}
-							collapsed={this.state.c2collapsed}
-							setCollapsed={this.setC2collapsed}
-							owner={isOwner}
-							direct={page === "direct" ? true : false}
+							owner={serverOwner}
+							direct={direct}
 						/>
 
 						<div className="col c3">
 							<ChannelHeader
 								channel={channel}
-								toggle={this.toggle}
+								toggle={this.togglec2}
 								collapsed={this.state.c2collapsed}
-								page={page}
+								header={
+									profile
+										? "Profile"
+										: `${user.username}'s Private Log`
+								}
 							/>
 							{this.props.children}
 						</div>
 
 						<MemberSidebar
-							header={page === "profile" ? "Friends" : "Members"}
+							header={header}
+							toggle={this.togglec4}
 							current={user}
 							users={members}
 							owner={server.owner_id}
+							collapsed={this.state.c4collapsed}
 						/>
 					</div>
 				</div>

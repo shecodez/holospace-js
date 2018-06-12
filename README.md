@@ -1,6 +1,6 @@
 # HoloSpace
 
-### the final 'chat' tier
+### the final 'chat'tier
 
 ### Live Demo
 
@@ -8,7 +8,7 @@ The application is hosted on Heroku. Check out the live demo at https://holospac
 
 ## My Thoughts
 
-I do not believe **VR** (Virtual Reality) is the final frontier in communication just because it rhymes well and I'm a Star Trek nerd.
+I do not believe **VR** (Virtual Reality) is the final _chat_ tier (frontier) in communication just because it rhymes well and I'm a Star Trek nerd.
 
 ![Alt Text](https://res.cloudinary.com/shecodez/image/upload/v1524228903/trek_yourself.jpg)
 
@@ -28,8 +28,8 @@ I'm not a mechanical engineer but I have some hardware ideas that if possible co
 
 ### Issues (I am aware of)
 
-* [ ] The VR channel chat room is currently just 3D and not VR ready yet.
-* [ ] Voice communication doesn't work well if at all.
-* [ ] Resizing the canvas in a VR channel makes the canvas UI non-responsive.
-* [ ] It's slooooow!
-* [ ] Security. What security!?
+-   [ ] The VR channel chat room is currently just 3D and not VR ready yet.
+-   [ ] Voice communication doesn't work well if at all.
+-   [ ] Resizing the canvas in a VR channel makes the canvas UI non-responsive.
+-   [ ] It's slooooow!
+-   [ ] Security. What security!?

@@ -39,10 +39,10 @@ class ServerHeader extends React.Component {
 				{direct ? (
 					<div className="centered">Direct Messages</div>
 				) : (
-					<span className="no-display text">{server.name}</span>
+					<span className="text">{server.name}</span>
 				)}
 				{!direct && (
-					<span className="no-display menu">
+					<span className="menu">
 						<Popup
 							on="click"
 							style={{ padding: 0 }}

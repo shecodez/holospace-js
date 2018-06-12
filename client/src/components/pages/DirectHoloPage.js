@@ -45,7 +45,7 @@ class DirectHoloPage extends React.Component {
 
 		return (
 			<div className="direct-holo-page">
-				<MainLayout page="direct">
+				<MainLayout direct>
 					<div
 						ref={element => {
 							this.canvasArea = element;

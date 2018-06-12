@@ -48,12 +48,20 @@ class MemberList extends React.Component {
 		return (
 			<div className="member-list">
 				<div style={{ padding: 24 }}>
-					<p>Online</p>
-					{online}
+					{online.length > 0 && (
+						<div className="online">
+							<p>Online</p>
+							{online}
+						</div>
+					)}
 
 					<br />
-					<p>Offline</p>
-					{offline}
+					{offline.length > 0 && (
+						<div className="offline">
+							<p>Offline</p>
+							{offline}
+						</div>
+					)}
 				</div>
 			</div>
 		);

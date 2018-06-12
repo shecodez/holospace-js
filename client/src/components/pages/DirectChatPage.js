@@ -7,7 +7,7 @@ import ChatRoom from "../chat/ChatRoom";
 const DirectChatPage = () => {
 	return (
 		<div className="direct-chat-page">
-			<MainLayout page={"direct"}>
+			<MainLayout direct>
 				<ChatRoom />
 			</MainLayout>
 		</div>
