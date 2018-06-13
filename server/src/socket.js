@@ -214,7 +214,7 @@ exports = module.exports = function(io) {
 			clients[socket.channel][socket.id] || {};
 		clients[socket.channel][socket.id] = { ...newClient };
 
-		setUserOnline(socket.holoTag, true);
+		// setUserOnline(socket.holoTag, true);
 		console.log("add", JSON.stringify(clients, null, "\t"));
 	};
 
@@ -223,11 +223,11 @@ exports = module.exports = function(io) {
 		console.log("remove", JSON.stringify(clients, null, "\t"));
 	};
 
-	/* TODO: io.sockets.emit("user:online", { 
-		username: user.username, pin: user.pin, online: user.online 
+	/* TODO: io.sockets.emit("presence:update", { 
+		user.email, online: user.online 
 	}); */
 	const setUserOnline = (holoTag, online) => {
-		if (holoTag) {
+		if (holoTag && holoTag !== undefined && holoTag !== null) {
 			const username = holoTag.slice(0, -5);
 			const pin = holoTag.slice(-4);
 			db.User.findOneAndUpdate(
@@ -250,11 +250,13 @@ exports = module.exports = function(io) {
 							joined: user.createdAt
 						}
 					});
-					console.log(`${holoTag}: ${online}`);
+					console.log(`${holoTag}: online--${online}`);
 				})
 				.catch(err => {
 					console.log(err);
 				});
+		} else {
+			console.log("err @ setUserOnline holoTag: ", holoTag);
 		}
 	};
 };

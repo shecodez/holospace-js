@@ -12,18 +12,34 @@ import translations from "./translations/translations";
 import Routes from "./components/routes/Routes";
 
 class App extends React.Component {
+	state = {
+		socket: null
+	};
+
 	componentDidMount() {
 		if (this.props.isAuthenticated) {
-			const user = this.props.fetchCurrentUser();
-
-			this.socket = io();
-			this.socket.emit("user:init", {
-				iconURL: user.avatar,
-				userTag: `${user.username}#${user.pin}`
-			});
-			this.props.setSocket(this.socket);
+			this.props.fetchCurrentUser();
 		}
 	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.user.loaded && this.state.socket === null) {
+			this.initSocket(nextProps.user);
+		}
+		// console.log("cwrp");
+	}
+
+	initSocket = user => {
+		if (user) {
+			const socket = io();
+			socket.emit("user:init", {
+				icon: user.avatar,
+				holoTag: `${user.username}#${user.pin}`
+			});
+			this.props.setSocket(socket);
+			this.setState({ socket });
+		}
+	};
 
 	render() {
 		const { loaded, lang } = this.props;
@@ -50,10 +66,14 @@ App.propTypes = {
 
 function mapStateToProps(state) {
 	return {
+		user: state.user,
 		isAuthenticated: !!state.user.email,
 		loaded: state.user.loaded,
 		lang: state.locale.lang
 	};
 }
 
-export default connect(mapStateToProps, { fetchCurrentUser, setSocket })(App);
+export default connect(mapStateToProps, {
+	fetchCurrentUser,
+	setSocket
+})(App);

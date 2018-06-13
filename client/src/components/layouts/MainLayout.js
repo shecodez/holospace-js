@@ -4,13 +4,15 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import {
 	fetchMemberServers,
-	fetchServerMembers
+	fetchServerMembers,
 	// fetchFriends
+	updateMember
 } from "./../../actions/memberships";
 import {
 	fetchServerChannels,
 	fetchDirectChannels
 } from "./../../actions/channels";
+import { updateUser } from "./../../actions/users";
 
 import ChannelSidebar from "../channel/ChannelSidebar";
 import ChannelHeader from "../channel/ChannelHeader";
@@ -40,10 +42,7 @@ class MainLayout extends React.Component {
 			// this.props.fetchFriends();
 		}
 		window.addEventListener("resize", this.onWindowResize);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("resize", this.onWindowResize);
+		this.props.socket.on("user:update", this.updateOnline);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -54,6 +53,22 @@ class MainLayout extends React.Component {
 
 		this.setState({ serverId: nextProps.match.params.serverId });
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.onWindowResize);
+		// setCurrentUserOffline?
+		console.log("MainLayout CWUM");
+	}
+
+	updateOnline = data => {
+		if (this.props.user.email === data.user.email) {
+			this.props.updateUser(data.user);
+			this.props.updateMember(data.user);
+		} else {
+			this.props.updateMember(data.user);
+		}
+		// console.log(data.user);
+	};
 
 	togglec2 = () => {
 		this.setState(
@@ -110,7 +125,7 @@ class MainLayout extends React.Component {
 		)
 			serverOwner = true;
 
-		const { users, profile, holospace, direct } = this.props;
+		const { profile, direct } = this.props;
 
 		const { c2collapsed, c4collapsed } = this.state;
 		const _c2collapsed = c2collapsed ? " c2-collapsed" : "";
@@ -213,9 +228,10 @@ MainLayout.propTypes = {
 			member: PropTypes.object
 		})
 	).isRequired,
-
-	// socket: PropTypes.shape({}).isRequired,
-	children: PropTypes.node.isRequired
+	children: PropTypes.node.isRequired,
+	// socket: PropTypes.shape({}).isRequired
+	updateUser: PropTypes.func.isRequired,
+	updateMember: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -229,7 +245,8 @@ function mapStateToProps(state, props) {
 		channel: state.channels.find(
 			channel => channel._id === props.match.params.channelId
 		),
-		members: state.memberships
+		members: state.memberships,
+		socket: state.socket
 	};
 }
 
@@ -238,6 +255,8 @@ export default withRouter(
 		fetchMemberServers,
 		fetchServerChannels,
 		fetchServerMembers,
-		fetchDirectChannels
+		fetchDirectChannels,
+		updateUser,
+		updateMember
 	})(MainLayout)
 );

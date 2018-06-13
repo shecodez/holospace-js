@@ -9,6 +9,7 @@ import { updateChatHistory } from "./../../actions/messages";
 // import { messages } from "../../utils/mock";
 
 import ChatMessage from "./ChatMessage";
+import ImageBG from "../layouts/ImageBG";
 
 class ChatHistory extends React.Component {
 	constructor(props) {
@@ -81,7 +82,7 @@ class ChatHistory extends React.Component {
 						)}
 					</div>
 				) : (
-					<div>HoloSpace</div>
+					<ImageBG />
 				)}
 			</div>
 		);

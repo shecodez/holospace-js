@@ -3,7 +3,7 @@ import {
 	MESSAGE_CREATED,
 	MESSAGE_UPDATED,
 	MESSAGE_RECEIVED
-} from '../actionTypes';
+} from "../actionTypes";
 
 export default function messages(state = [], action = {}) {
 	switch (action.type) {

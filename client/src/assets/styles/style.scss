@@ -83,8 +83,9 @@ body > #root > .App {
 @import "./user/UserHeader";
 @import "./user/User";
 @import "./user/UserCard";
-//-- Layout -------------------------------------------
-@import "./layout/MainLayout";
+//-- Layouts ------------------------------------------
+@import "./layouts/MainLayout";
+@import "./layouts/ImageBG";
 //-- Server -------------------------------------------
 @import "./server/ServerHeader";
 @import "./server/ServerList";
