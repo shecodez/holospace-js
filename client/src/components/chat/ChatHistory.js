@@ -17,12 +17,10 @@ class ChatHistory extends React.Component {
 		this.state = {};
 	}
 
-	/* componentDidMount() {
-		const { socket } = this.props;
-		if (socket) {
-			socket.on("message:recv", this.addMessage);
-		} 
-	} */
+	componentDidMount() {
+		this.props.socket.on("message:recv", this.addMessage);
+		 
+	} 
 
 	componentDidUpdate() {
 		if (this.scrolled) return;
@@ -99,20 +97,24 @@ ChatHistory.propTypes = {
 			message: PropTypes.object
 		})
 	).isRequired,
-
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			channelId: PropTypes.string
+		})
+	}).isRequired,
 	channel: PropTypes.shape({
 		name: PropTypes.string.isRequired
 	}),
-	/* socket: PropTypes.shape({
+	socket: PropTypes.shape({
 		on: PropTypes.func
-	}).isRequired, */
+	}).isRequired,
 	updateChatHistory: PropTypes.func.isRequired
 };
 
-/* function mapStateToProps(state) {
+function mapStateToProps(state) {
 	return {
 		socket: state.socket
 	};
-} */
+}
 
-export default withRouter(connect(null, { updateChatHistory })(ChatHistory));
+export default withRouter(connect(mapStateToProps, { updateChatHistory })(ChatHistory));

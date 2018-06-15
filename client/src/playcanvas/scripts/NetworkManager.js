@@ -1,8 +1,8 @@
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 const pc = window.pc;
 
-export const NetworkManagerScript = channel => {
+export const NetworkManagerScript = (channel, socket) => {
 	const Network = pc.createScript("network");
 
 	Network.id = null;
@@ -12,7 +12,7 @@ export const NetworkManagerScript = channel => {
 	Network.prototype.initialize = function() {
 		this.holoSpace = this.app.root.findByName("HoloSpace").script.holoSpace;
 
-		const socket = io.connect("https://ten-forward.glitch.me");
+		// const socket = io.connect("https://ten-forward.glitch.me");
 		Network.socket = socket;
 
 		// get channel's terrain.json from server
@@ -39,7 +39,7 @@ export const NetworkManagerScript = channel => {
 	};
 
 	Network.prototype.join = function() {
-		Network.socket.emit("player:init", channel);
+		Network.socket.emit("player:init", channel._id);
 	};
 
 	Network.prototype.initPlayers = function(data) {

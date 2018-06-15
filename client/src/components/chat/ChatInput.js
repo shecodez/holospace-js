@@ -11,18 +11,17 @@ class ChatInput extends React.Component {
 		typingList: []
 	};
 
-	/* componentDidMount() {
+	componentDidMount() {
 		const { socket } = this.props;
 
 		if (socket) {
 			socket.on('user:typing', this.renderWhosTyping);
 			socket.on('stop:typing', this.updateWhosTyping);
 		}
-	} */
+	}
 
 	submit = data => {
-		// const { socket } = this.props;
-		this.props.createMessage(this.addChannelIdToMessage(data) /*, socket*/);
+		this.props.createMessage(this.addChannelIdToMessage(data) , this.props.socket);
 	};
 
 	addChannelIdToMessage = data => {
@@ -33,7 +32,7 @@ class ChatInput extends React.Component {
 		return message;
 	};
 
-	/* 
+	 
 	sendTyping = (typing) => {
 		const { user, socket, channel } = this.props;
 
@@ -51,7 +50,7 @@ class ChatInput extends React.Component {
 	    });
 		}
 	};
-	*/
+	
 	renderWhosTyping = data => {
 		const typers = this.state.typingList;
 
@@ -108,10 +107,10 @@ ChatInput.propTypes = {
 		name: PropTypes.string,
 		type: PropTypes.string
 	}).isRequired,
-	/*socket: PropTypes.shape({
+	socket: PropTypes.shape({
 		on: PropTypes.func,
 		emit: PropTypes.func
-	}).isRequired,*/
+	}).isRequired,
 	user: PropTypes.shape({
 		username: PropTypes.string.isRequired,
 		pin: PropTypes.number.isRequired
@@ -120,8 +119,8 @@ ChatInput.propTypes = {
 
 function mapStateToProps(state) {
 	return {
-		user: state.user
-		// socket: state.socket
+		user: state.user,
+		socket: state.socket
 	};
 }
 

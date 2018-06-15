@@ -24,9 +24,8 @@ class ChatMessage extends React.Component {
 	};
 
 	submit = data => {
-		//const { socket } = this.props;
 		this.props
-			.updateMessage(data /* , socket */)
+			.updateMessage(data, this.props.socket)
 			.then(() => this.toggleModal());
 	};
 
@@ -131,16 +130,14 @@ ChatMessage.propTypes = {
 		username: PropTypes.string.isRequired,
 		pin: PropTypes.number.isRequired
 	}).isRequired,
-	/* socket: PropTypes.shape({
-		on: PropTypes.func
-	}).isRequired, */
+	socket: PropTypes.shape({}).isRequired,
 	updateMessage: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
-		user: state.user
-		//socket: state.socket
+		user: state.user,
+		socket: state.socket
 	};
 }
 

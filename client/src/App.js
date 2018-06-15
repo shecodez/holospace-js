@@ -1,45 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import io from "socket.io-client";
 import Loader from "react-loader";
 import { IntlProvider } from "react-intl";
 import { connect } from "react-redux";
 import { fetchCurrentUser } from "./actions/users";
-import { setSocket } from "./actions/socket";
 
-import translations from "./translations/translations";
+import translations from "./i18n/translations";
 
 import Routes from "./components/routes/Routes";
 
 class App extends React.Component {
-	state = {
-		socket: null
-	};
+	constructor(props) {
+		super(props);
+
+		this.state = {};
+	}
 
 	componentDidMount() {
 		if (this.props.isAuthenticated) {
 			this.props.fetchCurrentUser();
 		}
 	}
-
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.user.loaded && this.state.socket === null) {
-			this.initSocket(nextProps.user);
-		}
-		// console.log("cwrp");
-	}
-
-	initSocket = user => {
-		if (user) {
-			const socket = io();
-			socket.emit("user:init", {
-				icon: user.avatar,
-				holoTag: `${user.username}#${user.pin}`
-			});
-			this.props.setSocket(socket);
-			this.setState({ socket });
-		}
-	};
 
 	render() {
 		const { loaded, lang } = this.props;
@@ -60,8 +41,7 @@ App.propTypes = {
 	isAuthenticated: PropTypes.bool.isRequired,
 	fetchCurrentUser: PropTypes.func.isRequired,
 	loaded: PropTypes.bool.isRequired,
-	lang: PropTypes.string.isRequired,
-	setSocket: PropTypes.func.isRequired
+	lang: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
@@ -74,6 +54,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-	fetchCurrentUser,
-	setSocket
+	fetchCurrentUser
 })(App);

@@ -1,109 +1,119 @@
 // credit: https://codepen.io/saransh/pen/BKJun
 
 @function multiple-box-shadow ($numOfStars) {
-  $value: '#{random(2000)}px #{random(2000)}px #FFF';
-  @for $i from 2 through $numOfStars {
-    $value: '#{$value}, #{random(2000)}px #{random(2000)}px #FFF';
-  }
-  @return unquote($value);
+	$value: "#{random(2000)}px #{random(2000)}px #FFF";
+	@for $i from 2 through $numOfStars {
+		$value: "#{$value}, #{random(2000)}px #{random(2000)}px #FFF";
+	}
+	@return unquote($value);
 }
+
+$white: #a2aab2;
 
 $shadows-small: multiple-box-shadow(700);
 $shadows-medium: multiple-box-shadow(200);
 $shadows-large: multiple-box-shadow(100);
 
 .home-page {
-  height: 100vh;
-  width: 100vw;
-  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-  overflow: hidden;
+	height: 100vh;
+	width: 100vw;
+	background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+	overflow: hidden;
 
-  .some-stars {
-    width: 2px;
-    height: 2px;
-    background: transparent;
-    box-shadow: $shadows-medium;
-    animation: parallaxStar 100s linear infinite;
+	.some-stars {
+		width: 2px;
+		height: 2px;
+		background: transparent;
+		box-shadow: $shadows-medium;
+		animation: parallaxStar 100s linear infinite;
 
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 2px;
-      height: 2px;
-      background: transparent;
-      box-shadow: $shadows-medium;
-    }
-  }
+		&:after {
+			content: " ";
+			position: absolute;
+			top: 2000px;
+			width: 2px;
+			height: 2px;
+			background: transparent;
+			box-shadow: $shadows-medium;
+		}
+	}
 
-  .stars {
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: $shadows-small;
-    animation: parallaxStar 50s linear infinite;
+	.stars {
+		width: 1px;
+		height: 1px;
+		background: transparent;
+		box-shadow: $shadows-small;
+		animation: parallaxStar 50s linear infinite;
 
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 1px;
-      height: 1px;
-      background: transparent;
-      box-shadow: $shadows-small;
-    }
-  }
+		&:after {
+			content: " ";
+			position: absolute;
+			top: 2000px;
+			width: 1px;
+			height: 1px;
+			background: transparent;
+			box-shadow: $shadows-small;
+		}
+	}
 
-  .moar-stars {
-    width: 3px;
-    height: 3px;
-    background: transparent;
-    box-shadow: $shadows-large;
-    animation: parallaxStar 150s linear infinite;
+	.moar-stars {
+		width: 3px;
+		height: 3px;
+		background: transparent;
+		box-shadow: $shadows-large;
+		animation: parallaxStar 150s linear infinite;
 
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 3px;
-      height: 3px;
-      background: transparent;
-      box-shadow: $shadows-large;
-    }
-  }
+		&:after {
+			content: " ";
+			position: absolute;
+			top: 2000px;
+			width: 3px;
+			height: 3px;
+			background: transparent;
+			box-shadow: $shadows-large;
+		}
+	}
 
-  .title {
-    margin-top: 1rem;
-    text-align: center;
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 9;
-    color: white;
-    text-transform: uppercase;
-    background: -webkit-linear-gradient(white, #38495a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+	.content-title {
+		font-size: 4em !important;
+		text-align: center;
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 9;
+		text-transform: uppercase;
+		color: $white;
+		background: -webkit-linear-gradient(white, #38495a);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 
-  .social-icons {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0;
-    z-index: 9;
-    button {
-      border-radius: 0 !important;
-    }
-  }
+		.sub.header {
+			color: $white;
+			background: -webkit-linear-gradient(white, #38495a);
+			background-clip: text;
+			-webkit-background-clip: text;
+		}
+	}
+
+	.social-icons {
+		position: fixed;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 0;
+		z-index: 9;
+		button {
+			border-radius: 0 !important;
+		}
+	}
 }
 
 @keyframes parallaxStar {
-  from {
-    transform: translateY(0px);
-  }
-  to {
-    transform: translateY(-2000px);
-  }
+	from {
+		transform: translateY(0px);
+	}
+	to {
+		transform: translateY(-2000px);
+	}
 }

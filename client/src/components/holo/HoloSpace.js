@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
 	BillboardScript,
 	FpmControllerScript,
@@ -23,16 +24,30 @@ const assets = [
 class HoloSpace extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			width: 0,
+			height: 0
+		};
 	}
 
 	componentDidMount() {
 		this.createApp();
 	}
 
-	componentWillUnmount() {
+	/* componentWillReceiveProps(nextProps) {
+		const { width, height } = this.state;
+
+		if (nextProps.width !== width || nextProps.height !== height) {
+			this.setState(
+				{ width: nextProps.width, height: nextProps.height },
+				() => pc.app.resizeCanvas(width, height)
+			);
+		}
+	} */
+
+	/* componentWillUnmount() {
 		window.removeEventListener("resize");
-	}
+	} */
 
 	createApp = () => {
 		const canvas = this.canvas;
@@ -47,10 +62,10 @@ class HoloSpace extends React.Component {
 		app.start();
 
 		// fill the available space at full resolution
-		app.setCanvasFillMode(pc.FILLMODE_NONE); //FILLMODE_FILL_WINDOW
+		app.setCanvasFillMode(pc.FILLMODE_NONE); // FILLMODE_FILL_WINDOW
 		app.setCanvasResolution(pc.RESOLUTION_AUTO);
 
-		const { width, height } = this.props;
+		const { width, height, channel, socket } = this.props;
 		app.resizeCanvas(width, height);
 		// ensure canvas is resized when window changes size
 		/* window.addEventListener("resize", () => {
@@ -60,7 +75,7 @@ class HoloSpace extends React.Component {
 		// Load app Assets
 		let count = 0;
 		const onLoadComplete = this.onLoadComplete;
-		app.assets.on("load", function() {
+		app.assets.on("load", () => {
 			count += 1;
 			if (count === assets.length) {
 				onLoadComplete();
@@ -100,7 +115,7 @@ class HoloSpace extends React.Component {
 		BillboardScript();
 		FpmControllerScript();
 		HoloSpaceManagerScript();
-		NetworkManagerScript("c3"); // TODO: change to this.props.channel
+		NetworkManagerScript(channel, socket);
 		TextManagerScript();
 		UserInterfaceScript();
 
@@ -127,7 +142,8 @@ class HoloSpace extends React.Component {
 			}
 		}
 
-		const UI = this.createHoloSpaceUI();
+		const { owner, channel } = this.props;
+		const UI = this.createHoloSpaceUI(`${owner.username}'s ${channel.name}`);
 		pc.app.root.addChild(UI);
 	};
 
@@ -137,7 +153,7 @@ class HoloSpace extends React.Component {
 			anchor: new pc.Vec4(0.5, 0.5, 0.5, 0.5),
 			pivot: new pc.Vec2(0.5, 0.5),
 			type: pc.ELEMENTTYPE_TEXT,
-			text: text,
+			text,
 			fontSize: size || 32,
 			fontAsset: assets[0],
 			color: new pc.Color(0.65, 0.65, 0.65),
@@ -152,7 +168,7 @@ class HoloSpace extends React.Component {
 			anchor: new pc.Vec4(0.5, 0.5, 0.5, 0.5),
 			pivot: new pc.Vec2(0.5, 0.5),
 			type: pc.ELEMENTTYPE_TEXT,
-			text: text,
+			text,
 			fontSize: size || 32,
 			fontAsset: assets[0],
 			useInput: true,
@@ -177,7 +193,7 @@ class HoloSpace extends React.Component {
 		return icon;
 	};
 
-	createHoloSpaceUI = () => {
+	createHoloSpaceUI = (channel) => {
 		const UI = new pc.Entity();
 		UI.name = "UI";
 		UI.addComponent("script");
@@ -194,12 +210,11 @@ class HoloSpace extends React.Component {
 		joinMenu.screen.referenceResolution = new pc.Vec2(1280, 720);
 
 		// Welcome to
-		const welcome = this.createLabel("Welcome", "Welcome!");
+		const welcome = this.createLabel("Welcome", "Welcome to");
 		welcome.setLocalPosition(0, 100, 0);
 		joinMenu.addChild(welcome);
 
-		// {`${server.owner_id.username}'s ${channel.name}`}
-		const programme = this.createLabel("Programme", "click below to");
+		const programme = this.createLabel("Programme", channel);
 		programme.setLocalPosition(0, 50, 0);
 		joinMenu.addChild(programme);
 
@@ -368,6 +383,22 @@ class HoloSpace extends React.Component {
 		);
 	}
 }
+
+HoloSpace.defaultProps = {
+	owner: { username: "???", pin: 0 },
+};
+
+HoloSpace.propTypes = {
+	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
+	owner: PropTypes.shape({
+		username: PropTypes.string
+	}),
+	channel: PropTypes.shape({
+		name: PropTypes.string
+	}).isRequired,
+	socket: PropTypes.shape({}).isRequired
+};
 
 export default HoloSpace;
 

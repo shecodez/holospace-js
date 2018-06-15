@@ -29,12 +29,6 @@ const TopNavigation = ({ isUser, lang, setLocale }) => (
 
 		<Menu.Menu position="right">
 			<Menu.Item>
-				<div className="search-btn icon">
-					<div className="circle" />
-					<div className="handle" />
-				</div>
-			</Menu.Item>
-			<Menu.Item>
 				<span className="text">
 					{isUser && (
 						<Link to="/@me">

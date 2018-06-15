@@ -35,7 +35,7 @@ const ChannelItem = ({ channel, current, accordion, presence }) => {
 };
 
 ChannelItem.defaultProps = {
-	presence: null,
+	presence: {},
 	accordion: false,
 	current: ""
 };
@@ -47,11 +47,7 @@ ChannelItem.propTypes = {
 		type: PropTypes.string.isRequired
 	}).isRequired,
 	accordion: PropTypes.bool,
-	presence: PropTypes.shape(
-		PropTypes.shape({
-			users: PropTypes.object
-		})
-	),
+	presence: PropTypes.shape({}),
 	current: PropTypes.string
 };
 

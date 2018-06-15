@@ -23,7 +23,7 @@ class Register extends React.Component {
 						<Grid.Column
 							className="logo-col" mobile={14} tablet={6} computer={3}>
 							<Responsive as={Segment} minWidth={768} className="logo-seg">
-								<Image src={logo} />
+								<Image src={logo} alt="holo-logo" />
 								<Header as="h2" color="violet" textAlign="center">
 									HoloSpace
 								</Header>

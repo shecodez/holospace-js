@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateChannel } from "./../../actions/channels";
-//import { fetchChannelSubscribers } from "./../../actions/subscriptions";
+// import { fetchChannelSubscribers } from "./../../actions/subscriptions";
 import { Icon, Modal } from "semantic-ui-react";
 
 import ChannelForm from "./../forms/ChannelForm";
@@ -18,19 +18,18 @@ class Channel extends React.Component {
 		};
 	}
 
-	/* componentDidMount() {
+	componentDidMount() {
 		const { channel, socket, match } = this.props;
-
 		if (match.params.channelId === channel._id) {
 			socket.emit('channel:join', channel._id);
-
-			if (channel.direct) this.fetchChannelSubscribers(channel._id);
 		}
-    }
+	}
     
     componentWillUnmount() {
-        const { channel, socket } = this.props;
-        socket.emit('channel:left', channel._id);
+		const { channel, socket, match } = this.props;
+		if (match.params.channelId === channel._id) {
+			socket.emit('channel:left', channel._id);
+		}
         // console.log(`socket.emit(channel:left, ${channel._id})`);
     }
 
@@ -38,7 +37,7 @@ class Channel extends React.Component {
 		const { channel, socket } = this.props;
 		socket.emit('channel:switch', channel._id);
 		// console.log(`socket.emit(channel:switch, ${channel._id})`);
-	}; */
+	};
 
 	submit = data => {
 		this.props.updateChannel(data).then(() => this.toggleModal());
@@ -68,12 +67,12 @@ class Channel extends React.Component {
 		const { open } = this.state;
 		const { channel, match, server, user } = this.props;
 
-		let serverOwner = false;
+		let canEdit = false;
 		if (
 			user.username === server.owner_id.username &&
 			user.pin === server.owner_id.pin
 		)
-			serverOwner = true;
+			canEdit = true;
 
 		let url = "";
 		if (channel.direct) {
@@ -98,18 +97,18 @@ class Channel extends React.Component {
 								size="large"
 								name="group"
 							/>
-							<Link to={url}>
+							<Link to={url} onClick={this.setChannel}>
 								{this.listChannelSubscribers()}
 							</Link>
 						</span>
 					) : (
 						<span>
 							{channel.type === "Text" && <Icon name="hashtag" />}
-							<Link to={url}>{channel.name}</Link>
+							<Link to={url} onClick={this.setChannel}>{channel.name}</Link>
 						</span>
 					)}
 				</span>
-				{serverOwner && (
+				{canEdit && (
 					<span className="menu">
 						<Icon name="setting" onClick={this.toggleModal} />
 					</span>
@@ -146,14 +145,20 @@ Channel.propTypes = {
 	channel: PropTypes.shape({
 		_id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired
+		type: PropTypes.string.isRequired,
+		subscribers: PropTypes.array,
 	}).isRequired,
 	updateChannel: PropTypes.func.isRequired,
-	/*socket: PropTypes.shape({
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			channelId: PropTypes.string
+		})
+	}).isRequired,
+	socket: PropTypes.shape({
 		id: PropTypes.string,
 		on: PropTypes.func,
 		emit: PropTypes.func
-	}).isRequired,*/
+	}).isRequired,
 	user: PropTypes.shape({
 		username: PropTypes.string.isRequired,
 		pin: PropTypes.number.isRequired
@@ -164,7 +169,6 @@ Channel.propTypes = {
 			pin: PropTypes.number
 		})
 	})
-	//fetchChannelSubscribers: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -173,7 +177,7 @@ function mapStateToProps(state, props) {
 		server: state.servers.find(
 			server => server._id === props.match.params.serverId
 		),
-		subscribers: props.subscriptions
+		socket: state.socket
 	};
 }
 

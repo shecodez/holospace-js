@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Header, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 import { allowMic } from "./../../actions/permissions";
 import { removeLocalMediaStream } from "./../../actions/users";
 import { FormattedMessage } from "react-intl";
@@ -15,8 +15,8 @@ class VoipHeader extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.waitForMediaStream();
-		// this.props.socket.on("voice:recv", this.playAudio);
+		this.waitForMediaStream();
+		this.props.socket.on("voip:recv", this.playAudio);
 	}
 
 	// TODO: think of a better way to make this work
@@ -45,7 +45,7 @@ class VoipHeader extends React.Component {
 			data.blob = new Blob(this.chuncks, {
 				type: "audio/ogg; codecs=opus"
 			});
-			// socket.emit("voice:send", data);
+			socket.emit("voip:send", data);
 		};
 		mediaRecorder.start();
 
@@ -102,11 +102,11 @@ VoipHeader.propTypes = {
 		username: PropTypes.string.isRequired,
 		pin: PropTypes.number.isRequired
 	}).isRequired,
-	/* socket: PropTypes.shape({
+	socket: PropTypes.shape({
 		id: PropTypes.string,
 		on: PropTypes.func,
 		emit: PropTypes.func
-	}), */
+	}).isRequired,
 	allowMic: PropTypes.func.isRequired,
 	removeLocalMediaStream: PropTypes.func.isRequired
 };
@@ -114,8 +114,8 @@ VoipHeader.propTypes = {
 function mapStateToProps(state) {
 	return {
 		user: state.user,
-		permissions: state.permissions
-		// socket: state.socket
+		permissions: state.permissions,
+		socket: state.socket
 	};
 }
 

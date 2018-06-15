@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Accordion } from "semantic-ui-react";
 // import { channels, presence } from "../../utils/mock";
-import { presence } from "../../utils/mock";
 
 import AddChannel from "./AddChannel";
 import ChannelItem from "./ChannelItem";
@@ -12,17 +12,21 @@ class ChannelList extends React.Component {
 		presence: {}
 	};
 
-	/* componentDidMount() {
-		const { socket } = this.props;
-		if (socket)
-			socket.on('clients:update', this.updatePresence);
-	} */
+	componentDidMount() {
+		this.componentIsMounted = true;
+		this.props.socket.on("clients:update", this.updatePresence);
+	}
+
+	componentWillUnmount() {
+		this.componentIsMounted = false;
+	}
 
 	updatePresence = data => {
-		this.setState({ presence: data });
+		if (this.componentIsMounted) this.setState({ presence: data });
 	};
 
 	render() {
+		const { presence } = this.state;
 		const { channels, current, direct } = this.props;
 
 		const textChannels = [];
@@ -106,12 +110,27 @@ class ChannelList extends React.Component {
 	}
 }
 
+ChannelList.defaultProps = {
+	direct: false
+};
+
 ChannelList.propTypes = {
 	channels: PropTypes.arrayOf(
 		PropTypes.shape({
 			channel: PropTypes.object
 		})
-	).isRequired
+	).isRequired,
+	current: PropTypes.string.isRequired,
+	direct: PropTypes.bool,
+	socket: PropTypes.shape({
+		on: PropTypes.func
+	}).isRequired
 };
 
-export default ChannelList;
+function mapStateToProps(state) {
+	return {
+		socket: state.socket
+	};
+}
+
+export default connect(mapStateToProps, {})(ChannelList);

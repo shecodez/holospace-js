@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import io from "socket.io-client";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import {
@@ -13,6 +14,7 @@ import {
 	fetchDirectChannels
 } from "./../../actions/channels";
 import { updateUser } from "./../../actions/users";
+import { setSocket } from "../../actions/socket";
 
 import ChannelSidebar from "../channel/ChannelSidebar";
 import ChannelHeader from "../channel/ChannelHeader";
@@ -27,9 +29,17 @@ class MainLayout extends React.Component {
 			c2collapsed: props.profile || props.holospace ? true : false,
 			serverId: this.props.match.params.serverId,
 			c4collapsed: props.direct || props.holospace ? true : false,
-			defaultc2collapsed: props.profile || props.holospace ? true : false,
-			defaultc4collapsed: props.direct || props.holospace ? true : false
+			prevc2state: props.profile || props.holospace ? true : false,
+			prevc4state: props.direct || props.holospace ? true : false
 		};
+		this.socket = io("http://localhost:3000");
+	}
+
+	componentWillMount() {
+		const { user } = this.props;
+		if (user) {
+			this.initSocketUser(user);
+		}
 	}
 
 	componentDidMount() {
@@ -41,8 +51,10 @@ class MainLayout extends React.Component {
 			this.props.fetchDirectChannels();
 			// this.props.fetchFriends();
 		}
+
 		window.addEventListener("resize", this.onWindowResize);
-		this.props.socket.on("user:update", this.updateOnline);
+
+		this.socket.on("user:update", this.updateOnline);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -56,8 +68,17 @@ class MainLayout extends React.Component {
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this.onWindowResize);
-		// setCurrentUserOffline?
-		console.log("MainLayout CWUM");
+		// this.socket.close();
+	}
+
+	initSocketUser(user) {
+		if (user) {
+			this.socket.emit("user:init", {
+				icon: user.avatar,
+				holoTag: `${user.username}#${user.pin}`
+			});
+			this.props.setSocket(this.socket);
+		}
 	}
 
 	updateOnline = data => {
@@ -88,22 +109,22 @@ class MainLayout extends React.Component {
 		);
 	};
 
-	setPrevC2state = defaultc2collapsed => {
-		this.setState({ defaultc2collapsed });
+	setPrevC2state = prevc2state => {
+		this.setState({ prevc2state });
 	};
 
-	setPrevC4state = defaultc4collapsed => {
-		this.setState({ defaultc4collapsed });
+	setPrevC4state = prevc4state => {
+		this.setState({ prevc4state });
 	};
 
 	onWindowResize = () => {
-		const { defaultc2collapsed, defaultc4collapsed } = this.state;
+		const { prevc2state, prevc4state } = this.state;
 		if (window.innerWidth < 768) {
 			this.setState({ c2collapsed: true, c4collapsed: true });
 		} else if (window.innerWidth >= 768) {
 			this.setState({
-				c2collapsed: defaultc2collapsed,
-				c4collapsed: defaultc4collapsed
+				c2collapsed: prevc2state,
+				c4collapsed: prevc4state
 			});
 		}
 	};
@@ -188,7 +209,8 @@ class MainLayout extends React.Component {
 MainLayout.defaultProps = {
 	channelId: "",
 	server: { _id: "", name: "", owner_id: { username: "", pin: 0 } },
-	channel: { _id: "", name: "", topic: "", type: "" }
+	channel: { _id: "", name: "", topic: "", type: "" },
+	socket: null
 };
 
 MainLayout.propTypes = {
@@ -229,9 +251,12 @@ MainLayout.propTypes = {
 		})
 	).isRequired,
 	children: PropTypes.node.isRequired,
-	// socket: PropTypes.shape({}).isRequired
+	socket: PropTypes.shape({
+		on: PropTypes.func
+	}),
 	updateUser: PropTypes.func.isRequired,
-	updateMember: PropTypes.func.isRequired
+	updateMember: PropTypes.func.isRequired,
+	setSocket: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -252,6 +277,7 @@ function mapStateToProps(state, props) {
 
 export default withRouter(
 	connect(mapStateToProps, {
+		setSocket,
 		fetchMemberServers,
 		fetchServerChannels,
 		fetchServerMembers,

@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import MemberItem from "../member/MemberItem";
+import _ from "lodash";
+import Avatar from "../layouts/Avatar";
 
 const ChannelPresence = ({ presence }) => {
 	return (
 		<div className="channel-presence">
-			{presence.users.map(user => (
-				<MemberItem member={user} key={user.id} size="small" />
+			{_.toArray(presence).map(user => (
+				<div className="member" key={user.holoTag}>
+					<Avatar icon={user.icon} name={user.holoTag.slice(0, -5)} />
+					<span className="text">{user.holoTag.slice(0, -5)}</span>
+				</div>
 			))}
 		</div>
 	);

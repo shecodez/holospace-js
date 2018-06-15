@@ -11,7 +11,7 @@ const HomePage = () => (
 		<div className="stars" />
 		<div className="moar-stars" />
 
-		<Header as="h1" className="title" size="huge">
+		<Header as="h1" className="content-title" size="huge">
 			HoloSpace
 			<Header.Subheader>The final chat teir</Header.Subheader>
 		</Header>

@@ -68,9 +68,7 @@ exports = module.exports = function(io) {
 		// Manage HoloSpace
 		//--------------------------------------------------------------------
 		socket.on("player:init", function(channel) {
-			console.log(
-				`${socket.holoTag} init holo channel: ${socket.channel}`
-			);
+			console.log(`${socket.holoTag} init holo channel: ${channel}`);
 
 			const newPlayer = new Player(socket);
 			// players[socket.id] = newPlayer;
@@ -97,7 +95,7 @@ exports = module.exports = function(io) {
 		});
 
 		socket.on("position:update", function(data) {
-			if (!clients[socket.channel][data.id]) return;
+			if (!clients[socket.channel]) return;
 			clients[socket.channel][data.id].position = [
 				data.x,
 				data.y,
@@ -109,7 +107,7 @@ exports = module.exports = function(io) {
 		});
 
 		socket.on("rotation:update", function(data) {
-			if (!clients[socket.channel][data.id]) return;
+			if (!clients[socket.channel]) return;
 			clients[socket.channel][data.id].rotation = [
 				data.x,
 				data.y,
