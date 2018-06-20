@@ -32,7 +32,7 @@ class UserHeader extends React.Component {
 					style={{ padding: 0 }}
 					trigger={
 						<div className="user">
-							<Avatar icon={user.avatar} name={user.username} />
+							<Avatar icon={user.icon} name={user.username} />
 							<span
 								className={`status online--${user.online} ${
 									user.status

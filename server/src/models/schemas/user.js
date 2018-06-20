@@ -5,18 +5,21 @@ import uniqueValidator from "mongoose-unique-validator";
 
 // TODO: avatar will be a ref to the avatar model
 const schema = new mongoose.Schema(
-	{
-		//icon : {},
-		avatar: {
+	{		
+		/* avatar: {
 			type: String,
 			default: ""
-		},
+		},*/
 		email: {
 			type: String,
 			lowercase: true,
 			index: true,
 			required: true,
 			unique: true
+		},
+		icon : {
+			type: String,
+			default: ""
 		},
 		username: {
 			type: String,
@@ -90,7 +93,7 @@ schema.methods.generatePasswordResetUrl = function generatePasswordResetUrl() {
 schema.methods.generateJWT = function generateJWT() {
 	return jwt.sign(
 		{
-			avatar: this.avatar,
+			icon: this.icon,
 			email: this.email,
 			username: this.username,
 			pin: this.pin,
@@ -125,7 +128,7 @@ schema.methods.generatePin = function generatePin() {
 schema.methods.toAuthJSON = function toAuthJSON() {
 	return {
 		email: this.email,
-		avatar: this.avatar,
+		icon: this.icon,
 		username: this.username,
 		pin: this.pin,
 		online: this.online,

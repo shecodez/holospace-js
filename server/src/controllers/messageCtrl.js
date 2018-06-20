@@ -9,7 +9,7 @@ const messageController = {};
 		.equals(false)
 		.populate({
 			path: 'author_id',
-			select: 'avatar username pin -_id'
+			select: 'icon username pin -_id'
 		})
 		.then(messages => {
 			return res.status(200).json(messages);
@@ -37,7 +37,7 @@ messageController.getChannelMessages = (req, res) => {
 		.equals(false)
 		.populate({
 			path: 'author_id',
-			select: 'avatar username pin -_id'
+			select: 'icon username pin -_id'
 		})
 		.then(messages => {
 			return res.status(200).json({ messages });
@@ -67,7 +67,7 @@ messageController.create = (req, res) => {
 			newMessage.populate(
 				{
 					path: 'author_id',
-					select: 'avatar username pin -_id'
+					select: 'icon username pin -_id'
 				},
 				(err, populatedMessage) => {
 					return res.status(200).json({ message: populatedMessage });
@@ -94,7 +94,7 @@ messageController.update = (req, res) => {
 			updatedMessage.populate(
 				{
 					path: 'author_id',
-					select: 'avatar username pin -_id'
+					select: 'icon username pin -_id'
 				},
 				(err, populatedMessage) => {
 					return res.status(200).json({ message: populatedMessage });

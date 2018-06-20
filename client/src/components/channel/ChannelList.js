@@ -36,7 +36,7 @@ class ChannelList extends React.Component {
 		if (channels) {
 			channels.forEach(channel => {
 				switch (channel.type) {
-					case "Voice":
+					case "VoIP":
 						voipChannels.push(
 							<ChannelItem
 								key={channel._id}
@@ -49,7 +49,7 @@ class ChannelList extends React.Component {
 
 						break;
 
-					case "VR":
+					case "Holo":
 						holoChannels.push(
 							<ChannelItem
 								key={channel._id}

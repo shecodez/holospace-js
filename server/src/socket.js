@@ -238,7 +238,7 @@ exports = module.exports = function(io) {
 				.then(user => {
 					io.sockets.emit("user:update", {
 						user: {
-							avatar: user.avatar,
+							icon: user.icon,
 							email: user.email,
 							username: user.username,
 							pin: user.pin,

@@ -85,7 +85,7 @@ const getChannelSubscribers = channelId => {
 			.equals(false)
 			.populate({
 				path: 'subscriber_id',
-				select: 'avatar username pin -_id',
+				select: 'icon username pin -_id',
 				match: {
 					isDeleted: false
 				}
@@ -111,7 +111,7 @@ subscriptionController.getChannelSubscribers = (req, res) => {
 		.equals(false)
 		.populate({
 			path: 'subscriber_id',
-			select: 'avatar username pin -_id',
+			select: 'icon username pin -_id',
 			match: {
 				isDeleted: false
 			}

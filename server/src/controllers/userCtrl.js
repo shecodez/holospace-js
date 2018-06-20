@@ -14,7 +14,7 @@ userController.getAll = (req, res) => {
 			foundUsers.filter(function(user) {
 				users.push({
 					title: `${user.username}#${user.pin}`,
-					image: user.avatar
+					image: user.icon
 				});
 			});
 		});
@@ -61,7 +61,7 @@ userController.register = (req, res) => {
 userController.current = (req, res) => {
 	return res.status(200).json({
 		user: {
-			avatar: req.currentUser.avatar,
+			icon: req.currentUser.icon,
 			email: req.currentUser.email,
 			username: req.currentUser.username,
 			pin: req.currentUser.pin,
@@ -75,13 +75,13 @@ userController.current = (req, res) => {
 // TODO: handle change password and
 // only allow username to change once
 userController.update = (req, res) => {
-	const { avatar, email, status } = req.body.user;
+	const { icon, email, status } = req.body.user;
 	db.User.findByIdAndUpdate(
 		req.currentUser._id,
 		// Validations
 		{
 			$set: {
-				avatar: avatar,
+				icon: icon,
 				email: email,
 				status: status
 			}

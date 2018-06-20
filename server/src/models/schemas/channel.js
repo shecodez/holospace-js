@@ -17,13 +17,14 @@ const schema = new Schema({
   },
   type: {
     type: String,
-    enum: ['Text', 'Voice', 'VR'],
+    enum: ['Text', 'VoIP', 'Holo'],
     default: 'Text'
   },
   direct: {
     type: Boolean,
     default: false
   },
+  // TODO: change to owner_id (a server owns public channels, a user owns direct channels)
   server_id: {
     type: Schema.ObjectId,
     ref: 'Server'

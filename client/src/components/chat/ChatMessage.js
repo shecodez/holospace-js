@@ -52,7 +52,7 @@ class ChatMessage extends React.Component {
 
 				<List.Item>
 					<Avatar
-						icon={message.author_id.avatar}
+						icon={message.author_id.icon}
 						name={message.author_id.username}
 					/>
 

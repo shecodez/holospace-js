@@ -48,7 +48,7 @@ membershipController.getServerMembers = (req, res) => {
 		.equals(false)
 		.populate({
 			path: 'member_id',
-			select: 'avatar username pin email online status -_id',
+			select: 'icon username pin email online status -_id',
 			match: {
 				isDeleted: false
 			}
@@ -66,7 +66,7 @@ membershipController.getServerMembers = (req, res) => {
 					email: membership.member_id.email,
 					online: membership.member_id.online,
 					status: membership.member_id.status,
-					avatar: membership.member_id.avatar,
+					icon: membership.member_id.icon,
 					joined: membership.createdAt
 				};
 				members.push(member);
@@ -97,7 +97,7 @@ membershipController.getMutualMembers = (req, res) => {
 				.equals(false)
 				.populate({
 					path: 'member_id',
-					select: 'avatar username pin -_id',
+					select: 'icon username pin -_id',
 					match: {
 						isDeleted: false
 					}
@@ -110,7 +110,7 @@ membershipController.getMutualMembers = (req, res) => {
 							title: `${membership.member_id.username}#${
 								membership.member_id.pin
 							}`,
-							image: membership.member_id.avatar
+							image: membership.member_id.icon
 						};
 						if (!members.some(e => e.title === member.title))
 							members.push(member);
@@ -197,7 +197,7 @@ membershipController.create = (req, res) => {
 											.populate({
 												path: 'member_id',
 												select:
-													'avatar username pin email online status createdAt -_id',
+													'icon username pin email online status createdAt -_id',
 												match: {
 													isDeleted: false
 												}
@@ -208,7 +208,7 @@ membershipController.create = (req, res) => {
 												populatedMembership.member_id = doc.member_id;
 								      })
 									);
-									// populate member_id (avatar username pin email online status joined -_id)
+									// populate member_id (icon username pin email online status joined -_id)
 									promises.push(
 										newMembership
 											.populate({

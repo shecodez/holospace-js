@@ -38,7 +38,7 @@ class ChannelHeader extends React.Component {
 					<span className="current-channel">
 						<span className="name">
 							{channel.type === "Text" && <Icon name="hashtag" />}
-							{channel.type === "VR" && <Icon name="rocket" />}
+							{channel.type === "Holo" && <Icon name="rocket" />}
 							{channel.direct
 								? this.listChannelSubscribers()
 								: channel.name}

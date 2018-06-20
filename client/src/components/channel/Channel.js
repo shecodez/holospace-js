@@ -21,21 +21,21 @@ class Channel extends React.Component {
 	componentDidMount() {
 		const { channel, socket, match } = this.props;
 		if (match.params.channelId === channel._id) {
-			socket.emit('channel:join', channel._id);
+			socket.emit("channel:join", channel._id);
 		}
 	}
-    
-    componentWillUnmount() {
+
+	componentWillUnmount() {
 		const { channel, socket, match } = this.props;
 		if (match.params.channelId === channel._id) {
-			socket.emit('channel:left', channel._id);
+			socket.emit("channel:left", channel._id);
 		}
-        // console.log(`socket.emit(channel:left, ${channel._id})`);
-    }
+		// console.log(`socket.emit(channel:left, ${channel._id})`);
+	}
 
-    setChannel = () => {
+	setChannel = () => {
 		const { channel, socket } = this.props;
-		socket.emit('channel:switch', channel._id);
+		socket.emit("channel:switch", channel._id);
 		// console.log(`socket.emit(channel:switch, ${channel._id})`);
 	};
 
@@ -77,12 +77,12 @@ class Channel extends React.Component {
 		let url = "";
 		if (channel.direct) {
 			// url = `/direct/channels/${channel._id}`;
-			url = `/direct/channels${channel.type === "VR" ? "/holo/" : "/"}${
+			url = `/direct/channels${channel.type === "Holo" ? "/holo/" : "/"}${
 				channel._id
 			}`;
 		} else {
 			url = `/channels/${match.params.serverId}${
-				channel.type === "VR" ? "/holo/" : "/"
+				channel.type === "Holo" ? "/holo/" : "/"
 			}${channel._id}`;
 		}
 
@@ -104,7 +104,9 @@ class Channel extends React.Component {
 					) : (
 						<span>
 							{channel.type === "Text" && <Icon name="hashtag" />}
-							<Link to={url} onClick={this.setChannel}>{channel.name}</Link>
+							<Link to={url} onClick={this.setChannel}>
+								{channel.name}
+							</Link>
 						</span>
 					)}
 				</span>
@@ -146,7 +148,7 @@ Channel.propTypes = {
 		_id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
-		subscribers: PropTypes.array,
+		subscribers: PropTypes.array
 	}).isRequired,
 	updateChannel: PropTypes.func.isRequired,
 	match: PropTypes.shape({

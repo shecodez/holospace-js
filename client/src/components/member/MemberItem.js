@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Icon, Popup } from "semantic-ui-react";
 
 import UserCard from "./../user/UserCard";
@@ -15,7 +16,7 @@ const MemberItem = ({ member, owner }) => {
 				style={{ padding: 0 }}
 				trigger={
 					<div className="user">
-						<Avatar icon={member.avatar} name={member.username} />
+						<Avatar icon={member.icon} name={member.username} />
 						<span
 							className={`status online--${member.online} ${
 								member.status
@@ -39,6 +40,22 @@ const MemberItem = ({ member, owner }) => {
 				)}
 		</div>
 	);
+};
+
+MemberItem.defaultProps = {
+	owner: { username: " ", pin: 0 }
+};
+
+MemberItem.propTypes = {
+	member: PropTypes.shape({
+		avatar: PropTypes.string,
+		username: PropTypes.string,
+		online: PropTypes.bool
+	}).isRequired,
+	owner: PropTypes.shape({
+		username: PropTypes.string,
+		pin: PropTypes.string
+	})
 };
 
 export default MemberItem;
