@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import { Icon, Popup, Modal } from "semantic-ui-react";
 import { updateServer } from "./../../actions/servers";
 
@@ -37,7 +38,12 @@ class ServerHeader extends React.Component {
 		return (
 			<div className="c2t server-header">
 				{direct ? (
-					<div className="centered">Direct Messages</div>
+					<div className="centered">
+						<FormattedMessage
+							id="server.ServerHeader.directMessages"
+							defaultMessage="Direct Messages"
+						/>
+					</div>
 				) : (
 					<span className="text">{server.name}</span>
 				)}
@@ -67,7 +73,12 @@ class ServerHeader extends React.Component {
 				)}
 
 				<Modal size={"small"} open={open} onClose={this.toggleModal}>
-					<Modal.Header>Update Server</Modal.Header>
+					<Modal.Header>
+						<FormattedMessage
+							id="server.ServerHeader.updateServer"
+							defaultMessage="Update Server"
+						/>
+					</Modal.Header>
 					<Modal.Content>
 						<ServerForm server={server} submit={this.submit} />
 					</Modal.Content>

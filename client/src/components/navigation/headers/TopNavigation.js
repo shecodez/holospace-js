@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Menu, Dropdown, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import * as actions from "./../../../actions/locale";
 import { FormattedMessage } from "react-intl";
+import { Menu, Dropdown, Header, Icon } from "semantic-ui-react";
+import * as actions from "./../../../actions/locale";
 
 const languageOptions = [
 	{ key: "en", value: "en", flag: "us", text: "EN" },

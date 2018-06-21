@@ -21,7 +21,7 @@ const ProfileButton = () => (
 			}
 			content={
 				<FormattedMessage
-					id="buttons.ProfileButton.userProfile"
+					id="buttons.ProfileBtn.userProfile"
 					defaultMessage="User Profile"
 				/>
 			}

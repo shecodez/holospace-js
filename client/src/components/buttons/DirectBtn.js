@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 const DirectBtn = () => (
 	<div>
@@ -18,7 +19,12 @@ const DirectBtn = () => (
 					className="btn"
 				/>
 			}
-			content={"Direct Message"}
+			content={
+				<FormattedMessage
+					id="buttons.DirectBtn.directMessage"
+					defaultMessage="Direct Message"
+				/>
+			}
 		/>
 	</div>
 );

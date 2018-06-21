@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
+import { FormattedMessage } from "react-intl";
 import { List, Divider, Icon, Modal } from "semantic-ui-react";
 import { updateMessage } from "./../../actions/messages";
-import { FormattedMessage } from "react-intl";
 
 import Avatar from "../layouts/Avatar";
 import MessageForm from "../forms/MessageForm";
@@ -69,7 +69,12 @@ class ChatMessage extends React.Component {
 								<div key={block._id} className="block">
 									{block.body}
 									{block.createdAt !== block.updatedAt && (
-										<small className="edited">edited</small>
+										<small className="edited">
+											<FormattedMessage
+												id="chat.ChatMessage.edited"
+												defaultMessage="edited"
+											/>
+										</small>
 									)}
 									{canEdit && (
 										<Icon

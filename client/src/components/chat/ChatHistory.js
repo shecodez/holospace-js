@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import moment from "moment";
+import { FormattedMessage } from "react-intl";
 import { List, Header, Divider } from "semantic-ui-react";
 import { createMessageBlocks } from "../../utils/createMessageBlocks";
 import { updateChatHistory } from "./../../actions/messages";
@@ -19,8 +20,7 @@ class ChatHistory extends React.Component {
 
 	componentDidMount() {
 		this.props.socket.on("message:recv", this.addMessage);
-		 
-	} 
+	}
 
 	componentDidUpdate() {
 		if (this.scrolled) return;
@@ -66,7 +66,10 @@ class ChatHistory extends React.Component {
 				{this.props.match.params.channelId ? (
 					<div>
 						{messages.length === 0 ? (
-							<p>No messages yet</p>
+							<FormattedMessage
+								id="chat.ChatHistory.noMessages"
+								defaultMessage="No messages"
+							/>
 						) : (
 							<List>
 								<Header inverted>
@@ -117,4 +120,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, { updateChatHistory })(ChatHistory));
+export default withRouter(
+	connect(mapStateToProps, { updateChatHistory })(ChatHistory)
+);

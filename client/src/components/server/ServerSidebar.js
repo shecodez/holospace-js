@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
 
 import AddServerBtn from "./AddServerBtn";
 import ProfileBtn from "../buttons/ProfileBtn";
@@ -9,7 +10,12 @@ import ServerList from "./ServerList";
 const ServerSidebar = ({ servers, current, direct }) => (
 	<div className="col c1 centered server-sidebar">
 		{direct ? <ProfileBtn /> : <DirectBtn />}
-		<div>Servers</div>
+		<div>
+			<FormattedMessage
+				id="server.ServerSidebar.servers"
+				defaultMessage="Servers"
+			/>
+		</div>
 		<ServerList servers={servers} current={current} />
 		<AddServerBtn />
 	</div>

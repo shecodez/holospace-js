@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import { Icon, Modal } from "semantic-ui-react";
 import { updateChannel } from "./../../actions/channels";
 // import { fetchChannelSubscribers } from "./../../actions/subscriptions";
-import { Icon, Modal } from "semantic-ui-react";
 
 import ChannelForm from "./../forms/ChannelForm";
 import DirectChannelForm from "../forms/DirectChannelForm";
@@ -117,7 +118,19 @@ class Channel extends React.Component {
 				)}
 
 				<Modal size={"small"} open={open} onClose={this.toggleModal}>
-					<Modal.Header>Update Channel</Modal.Header>
+					<Modal.Header>
+						{channel.direct ? (
+							<FormattedMessage
+								id="channel.Channel.updateDirect"
+								defaultMessage="Update Direct Channel"
+							/>
+						) : (
+							<FormattedMessage
+								id="channel.Channel.updateChannel"
+								defaultMessage="Update Channel"
+							/>
+						)}
+					</Modal.Header>
 					<Modal.Content>
 						{channel.direct ? (
 							<DirectChannelForm

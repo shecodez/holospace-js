@@ -98,7 +98,8 @@ export const NetworkManagerScript = (channel, socket) => {
 	};
 
 	Network.prototype.removePlayer = function(id) {
-		if (!this.player[id]) return;
+		if (!this.players[id]) return;
+
 		if (this.players[id].entity && this.players[id].entity !== undefined) {
 			this.players[id].entity.destroy();
 		}

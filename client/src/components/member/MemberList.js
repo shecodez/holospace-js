@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import MemberItem from "./MemberItem";
 
@@ -50,7 +51,12 @@ class MemberList extends React.Component {
 				<div style={{ padding: 24 }}>
 					{online.length > 0 && (
 						<div className="online">
-							<p>Online</p>
+							<p>
+								<FormattedMessage
+									id="member.MemberList.online"
+									defaultMessage="Online"
+								/>
+							</p>
 							{online}
 						</div>
 					)}
@@ -58,7 +64,12 @@ class MemberList extends React.Component {
 					<br />
 					{offline.length > 0 && (
 						<div className="offline">
-							<p>Offline</p>
+							<p>
+								<FormattedMessage
+									id="member.MemberList.offline"
+									defaultMessage="Offline"
+								/>
+							</p>
 							{offline}
 						</div>
 					)}

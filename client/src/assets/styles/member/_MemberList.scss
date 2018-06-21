@@ -3,6 +3,12 @@
 	height: 0;
 	overflow-y: auto;
 
+	p {
+		white-space: nowrap;
+		overflow: hidden;
+		//text-overflow: ellipsis;
+	}
+
 	.online {
 		.avatar {
 			filter: none;

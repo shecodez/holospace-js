@@ -2,17 +2,21 @@ export default {
 	en: {
 		"alerts.ConfirmEmailReminder.message":
 			"Please, verify your email address.",
-		"buttons.DMsgButton.directMessage": "Direct Message",
-		"buttons.ProfileButton.userProfile": "User Profile",
-		"channels.AddChannel.createChannel": "Create New Channel",
-		"channels.ChannelListItem.updateChannel": "Update Channel",
-		"channels.DirectChannelListItem.updateDirectChannel":
-			"Update Direct Channel",
-		"voip.VoipHeader.voiceConnected": "Voice Connected",
+
+		"buttons.DirectBtn.directMessage": "Direct Message",
+		"buttons.ProfileBtn.userProfile": "User Profile",
+
+		"channel.AddChannel.channels": "Channels",
+		"channel.AddChannel.createChannel": "Create New Channel",
+		"channel.AddChannel.createDirect": "Create Direct Channel",
+		"channel.Channel.updateChannel": "Update Channel",
+		"channel.Channel.updateDirect": "Update Direct Channel",
+
 		"chat.ChatMessage.edited": "edited",
 		"chat.ChatMessage.editMessage": "Edit Message",
-		"chat.ChatsHistory.noMessages": "No Messages",
+		"chat.ChatHistory.noMessages": "No Messages",
 		"chat.IsTypingList.isTyping...": "is typing...",
+
 		"forms.name": "Name",
 		"forms.topic": "Topic",
 		"forms.selectUsersHeader": "Select users to create your channel",
@@ -26,6 +30,15 @@ export default {
 		"forms.confirmation": "Confirmation",
 		"forms.reset": "Reset",
 		"forms.iconURL": "IconURL",
+
+		"holo.HoloSpace.welcome": "Welcome to",
+		"holo.HoloSpace.join": "Join this HoloSpace",
+
+		"member.MemberSidebar.members": "Members",
+		"member.MemberSidebar.friends": "Friends",
+		"member.MemberList.online": "Online",
+		"member.MemberList.offline": "Offline",
+
 		"headers.TopNavigation.menu": "Menu",
 		"headers.TopNavigation.openApp": "Open App",
 		"headers.TopNavigation.login": "Log In",
@@ -33,9 +46,7 @@ export default {
 		"headers.TopNavigation.langDropdown.japanese": "JP",
 		"headers.ProfileHeader.customize@me": "Customize @me",
 		"headers.ProfileHeader.friendsList": "Friends List",
-		"members.Members.members": "Members",
-		"members.Members.online": "Online",
-		"members.Members.offline": "Offline",
+
 		"pages.ConfirmationPage.resending...": "Resending...",
 		"pages.ConfirmationPage.validating...": "Validating...",
 		"pages.ConfirmationPage.successResendMsg":
@@ -56,25 +67,34 @@ export default {
 		"pages.ResetPasswordPage.resetPassword": "Reset your Password",
 		"pages.ResetPasswordPage.resendPassword":
 			"Enter your email address below, to issue another password reset request.",
-		"servers.AddServer.createServer": "Create New Server",
-		"servers.CurrentServer.updateServer": "Update Server",
-		"servers.Servers.servers": "Servers",
-		"users.UserSettings.logout": "Logout"
+
+		"server.AddServer.createServer": "Create New Server",
+		"server.ServerHeader.directMessages": "Direct Messages",
+		"server.ServerHeader.updateServer": "Update Server",
+		"server.ServerSidebar.servers": "Servers",
+
+		"users.UserSettings.logout": "Logout",
+
+		"voip.VoipHeader.voiceConnected": "Voice Connected"
 	},
 	ja: {
 		"alerts.ConfirmEmailReminder.message":
 			"メールアドレスの確認してください。",
-		"buttons.DMsgButton.directMessage": "ダイレクトメッセージ",
-		"buttons.ProfileButton.userProfile": "ユーザープロフィール",
-		"channels.AddChannel.createChannel": "新しいチャンネルを作成する",
-		"channels.ChannelListItem.updateChannel": "チャンネルの更新",
-		"channels.DirectChannelListItem.updateDirectChannel":
-			"ダイレクトメッセージの更新",
-		"voip.VoipHeader.voiceConnected": "ボイスコネクション",
+
+		"buttons.DirectBtn.directMessage": "ダイレクトメッセージ",
+		"buttons.ProfileBtn.userProfile": "ユーザープロフィール",
+
+		"channel.AddChannel.channels": "チャンネル",
+		"channel.AddChannel.createDirect": "ダイレクトチャネルを作成する",
+		"channel.AddChannel.createChannel": "新しいチャンネルを作成する",
+		"channel.Channel.updateChannel": "チャンネルの更新",
+		"channel.Channel.updateDirect": "ダイレクトメッセージの更新",
+
 		"chat.ChatMessage.edited": "「編集」",
 		"chat.ChatMessage.editMessage": "メッセージを編集する",
-		"chat.ChatsHistory.noMessages": "メッセージなし",
+		"chat.ChatHistory.noMessages": "メッセージなし",
 		"chat.IsTypingList.isTyping...": "～タイピング",
+
 		"forms.name": "名前",
 		"forms.topic": "トピック",
 		"forms.selectUsersHeader": "チャンネルのユーザーを選択",
@@ -88,6 +108,15 @@ export default {
 		"forms.confirmation": "パスワードを認証する",
 		"forms.reset": "リセット",
 		"forms.iconURL": "アイコンURL",
+
+		"holo.HoloSpace.welcome": "ようこそ",
+		"holo.HoloSpace.join": "このHoloSpaceに入る",
+
+		"member.MemberSidebar.members": "メンバー",
+		"member.MemberSidebar.friends": "友達リスト",
+		"member.MemberList.online": "オンライン",
+		"member.MemberList.offline": "オフライン",
+
 		"headers.TopNavigation.menu": "メニュー",
 		"headers.TopNavigation.openApp": "アプリを開く",
 		"headers.TopNavigation.login": "ログイン",
@@ -95,9 +124,7 @@ export default {
 		"headers.TopNavigation.langDropdown.japanese": "日本語",
 		"headers.ProfileHeader.customize@me": "カスタマイズ @me",
 		"headers.ProfileHeader.friendsList": "友達たち",
-		"members.Members.members": "メンバー",
-		"members.Members.online": "オンライン",
-		"members.Members.offline": "オフライン",
+
 		"pages.ConfirmationPage.resending...": "再送します...",
 		"pages.ConfirmationPage.validating...": "検証する...",
 		"pages.ConfirmationPage.successResendMsg":
@@ -118,9 +145,14 @@ export default {
 		"pages.ResetPasswordPage.resetPassword": "パスワードを再設定する",
 		"pages.ResetPasswordPage.resendPassword":
 			"メールアドレスを入力してください。",
-		"servers.AddServer.createServer": "新しいサーバを作成する",
-		"servers.CurrentServer.updateServer": "サーバの更新",
-		"servers.Servers.servers": "サーバー",
-		"users.UserSettings.logout": "ログアウト"
+
+		"server.AddServer.createServer": "新しいサーバを作成する",
+		"server.ServerHeader.directMessages": "ダイレクトメッセージ",
+		"server.ServerHeader.updateServer": "サーバの更新",
+		"server.ServerSidebar.servers": "サーバー",
+
+		"users.UserSettings.logout": "ログアウト",
+
+		"voip.VoipHeader.voiceConnected": "ボイスコネクション"
 	}
 };

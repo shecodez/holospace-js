@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Icon, Modal } from "semantic-ui-react";
+import { FormattedMessage } from "react-intl";
 import { createChannel } from "./../../actions/channels";
 
 // components
@@ -72,7 +73,13 @@ class AddChannel extends React.Component {
 
 		return (
 			<span className="add-channel">
-				<span className="text">{`${this.props.type} Channels`}</span>
+				<span className="text">
+					{`${this.props.type}`}{" "}
+					<FormattedMessage
+						id="channel.AddChannel.channels"
+						defaultMessage="Channels"
+					/>
+				</span>
 				{(canAdd || direct) && (
 					<span className="menu">
 						<Icon name="add" onClick={this.toggleModal} />
@@ -81,7 +88,18 @@ class AddChannel extends React.Component {
 
 				<Modal size={"small"} open={open} onClose={this.toggleModal}>
 					<Modal.Header>
-						{`Create new ${this.props.type} Channel`}
+						{direct ? (
+							<FormattedMessage
+								id="channel.AddChannel.createDirect"
+								defaultMessage="Create Direct Channel"
+							/>
+						) : (
+							<FormattedMessage
+								id="channel.AddChannel.createChannel"
+								defaultMessage="Create New Channel"
+							/>
+						)}
+						{`: ${this.props.type}`}
 					</Modal.Header>
 					<Modal.Content>
 						{direct ? (

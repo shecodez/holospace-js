@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import _ from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import _ from "lodash";
 import {
 	Form,
 	Button,
@@ -11,30 +11,32 @@ import {
 	Segment,
 	Header,
 	Search
-} from 'semantic-ui-react';
-import { FormattedMessage } from 'react-intl';
+} from "semantic-ui-react";
+import { FormattedMessage } from "react-intl";
 
 // import placeholder from './../../assets/images/favicon-32x32.png';
 
 // components
-import InlineError from './../alerts/InlineError';
+import InlineError from "./../alerts/InlineError";
 
 class DirectChannelForm extends React.Component {
 	state = {
 		data: {
 			_id: this.props.channel ? this.props.channel._id : null,
-			name: this.props.channel ? this.props.channel.name : 'direct',
-			topic: this.props.channel ? this.props.channel.topic : '',
-			type: this.props.channel ? this.props.channel.type : this.props.type,
+			name: this.props.channel ? this.props.channel.name : "direct",
+			topic: this.props.channel ? this.props.channel.topic : "",
+			type: this.props.channel
+				? this.props.channel.type
+				: this.props.type,
 			direct: this.props.channel ? this.props.channel.direct : true,
 			selectedUsers: [
 				{
 					title: `${this.props.user.username}#${this.props.user.pin}`,
-					image: this.props.user.avatar
+					image: this.props.user.icon
 				}
 			]
 		},
-		query: '',
+		query: "",
 		searchOptions: {},
 		results: [],
 		serverMembers: [],
@@ -60,7 +62,7 @@ class DirectChannelForm extends React.Component {
 			subscribers.filter(subscriber =>
 				selectedUsers.push({
 					title: `${subscriber.username}#${subscriber.pin}`,
-					image: subscriber.avatar
+					image: subscriber.icon
 				})
 			);
 			this.setState({ data: { ...this.state.data, selectedUsers } });
@@ -92,7 +94,7 @@ class DirectChannelForm extends React.Component {
 	};
 
 	resetComponent = () =>
-		this.setState({ searchLoading: false, results: [], query: '' });
+		this.setState({ searchLoading: false, results: [], query: "" });
 
 	handleResultSelect = (e, { result }) => {
 		this.setState({ query: result.title });
@@ -106,7 +108,7 @@ class DirectChannelForm extends React.Component {
 		setTimeout(() => {
 			if (this.state.query.length < 1) return this.resetComponent();
 
-			const re = new RegExp(_.escapeRegExp(this.state.query), 'i');
+			const re = new RegExp(_.escapeRegExp(this.state.query), "i");
 			const isMatch = result => re.test(result.title);
 
 			this.setState({
@@ -146,10 +148,10 @@ class DirectChannelForm extends React.Component {
 
 	validate = data => {
 		const errors = {};
-		if (!data.name) errors.name = 'Cannot be blank';
-		if (data.name.length > 50) errors.name = 'Channel name too long';
+		if (!data.name) errors.name = "Cannot be blank";
+		if (data.name.length > 50) errors.name = "Channel name too long";
 		if (data.selectedUsers.length <= 1)
-			errors.selectedUsers = 'Add more peeps to your group';
+			errors.selectedUsers = "Add more peeps to your group";
 		return errors;
 	};
 
@@ -174,14 +176,23 @@ class DirectChannelForm extends React.Component {
 		const i = selected.indexOf(user);
 		if (i >= 0) {
 			selected.splice(i, 1);
-			this.setState({ data: { ...this.state.data, selectedUsers: selected } });
+			this.setState({
+				data: { ...this.state.data, selectedUsers: selected }
+			});
 		}
 	};
 
 	render() {
 		const { user } = this.props;
-		const { data, errors, loading, query, results, serverMembers } = this.state;
-		const buttonText = data._id ? 'Update' : 'Create';
+		const {
+			data,
+			errors,
+			loading,
+			query,
+			results,
+			serverMembers
+		} = this.state;
+		const buttonText = data._id ? "Update" : "Create";
 
 		return (
 			<Form
@@ -191,7 +202,9 @@ class DirectChannelForm extends React.Component {
 			>
 				{errors.global && (
 					<Message negative>
-						<Message.Header>Oops, something went wrong!</Message.Header>
+						<Message.Header>
+							Oops, something went wrong!
+						</Message.Header>
 						<p>{errors.global}</p>
 					</Message>
 				)}
@@ -264,7 +277,10 @@ class DirectChannelForm extends React.Component {
 							>
 								<img src={member.image} alt="userIcon" />
 								{member.title}
-								<Icon name="delete" onClick={() => this.selectUser(member)} />
+								<Icon
+									name="delete"
+									onClick={() => this.selectUser(member)}
+								/>
 							</Label>
 						))}
 				</Segment>
@@ -283,16 +299,21 @@ class DirectChannelForm extends React.Component {
 								<Label image key={member.title}>
 									<img src={member.image} alt="userIcon" />
 									{member.title}
-									{`${user.username}#${user.pin}` !== member.title && (
+									{`${user.username}#${user.pin}` !==
+										member.title && (
 										<Icon
 											name="delete"
-											onClick={() => this.removeUser(member)}
+											onClick={() =>
+												this.removeUser(member)
+											}
 										/>
 									)}
 								</Label>
 							))}
 					</Segment>
-					{errors.selectedUsers && <InlineError text={errors.selectedUsers} />}
+					{errors.selectedUsers && (
+						<InlineError text={errors.selectedUsers} />
+					)}
 				</Form.Field>
 
 				<Button color="violet">{`${buttonText} Direct Channel`}</Button>
@@ -318,7 +339,7 @@ DirectChannelForm.propTypes = {
 		subscribers: PropTypes.arrayOf(PropTypes.shape({}))
 	}),
 	user: PropTypes.shape({
-		avatar: PropTypes.string,
+		icon: PropTypes.string,
 		username: PropTypes.string,
 		pin: PropTypes.number
 	})

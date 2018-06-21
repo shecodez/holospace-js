@@ -7,6 +7,7 @@ exports = module.exports = function(io) {
 		this.id = socket.id;
 		this.holoTag = socket.holoTag || socket.id;
 		this.icon = socket.icon;
+		// this.channel = socket.channel || "Unknown";
 	}
 
 	function Player(socket) {
@@ -15,6 +16,7 @@ exports = module.exports = function(io) {
 		this.position = [0, 0, 0];
 		this.rotation = [0, 0, 0];
 		this.entity = null;
+		// this.channel = socket.channel || "Unknown";
 	}
 
 	io.on("connection", socket => {
