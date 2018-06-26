@@ -54,7 +54,7 @@ MemberItem.propTypes = {
 	}).isRequired,
 	owner: PropTypes.shape({
 		username: PropTypes.string,
-		pin: PropTypes.string
+		pin: PropTypes.number
 	})
 };
 

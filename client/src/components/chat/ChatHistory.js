@@ -56,6 +56,13 @@ class ChatHistory extends React.Component {
 			/>
 		));
 
+		const t = msg => (
+			<FormattedMessage
+				id={`chat.ChatHistory.${msg.toLowerCase()}`}
+				defaultMessage={msg}
+			/>
+		);
+
 		return (
 			<div
 				className="chat-history"
@@ -73,7 +80,7 @@ class ChatHistory extends React.Component {
 						) : (
 							<List>
 								<Header inverted>
-									Welcome to {channel.name}!
+									{t("Welcome")} {channel.name}!
 								</Header>
 								<Divider horizontal inverted>
 									{moment(messages[0].createdAt).calendar()}

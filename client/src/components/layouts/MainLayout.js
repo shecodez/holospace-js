@@ -21,6 +21,7 @@ import ChannelHeader from "../channel/ChannelHeader";
 import MemberSidebar from "../member/MemberSidebar";
 import ServerSidebar from "../server/ServerSidebar";
 import ConfirmEmailReminder from "../alerts/ConfirmEmailReminder";
+import ModelSidebar from "../user/ModelSidebar";
 
 class MainLayout extends React.Component {
 	constructor(props) {
@@ -169,13 +170,17 @@ class MainLayout extends React.Component {
 					<div
 						className={`grid-row ${full}${_c2collapsed}${_c4collapsed}`}
 					>
-						<ChannelSidebar
-							channels={channels}
-							current={channel._id}
-							server={server}
-							owner={serverOwner}
-							direct={direct}
-						/>
+						{profile ? (
+							<ModelSidebar />
+						) : (
+							<ChannelSidebar
+								channels={channels}
+								current={channel._id}
+								server={server}
+								owner={serverOwner}
+								direct={direct}
+							/>
+						)}
 
 						<div className="col c3">
 							<ChannelHeader

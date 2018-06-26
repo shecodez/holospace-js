@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import {
 	Button,
 	Modal,
@@ -38,21 +39,39 @@ class AddServerBtn extends React.Component {
 	};
 
 	toggleJoinServerModal = open => {
-		this.setState({ joinServer: open });
+		this.setState({ join: open });
 	};
 
 	render() {
 		const { open, add, join } = this.state;
 
+		const t = msg => (
+			<FormattedMessage
+				id={`server.AddServerBtn.${msg.toLowerCase()}`}
+				defaultMessage={msg}
+			/>
+		);
+
+		const t2 = (id, msg) => (
+			<FormattedMessage
+				id={`server.AddServerBtn.${id
+					.charAt(0)
+					.toLowerCase()}${id.slice(1)}`}
+				defaultMessage={msg}
+			/>
+		);
+
 		const header = (action, icon, color, subheader, onClick) => (
 			<Segment basic>
 				<Header as="h2" icon textAlign="center">
 					<Icon name={icon} circular />
-					{action}
-					<Header.Subheader>{subheader}</Header.Subheader>
+					{t(action)}
+					<Header.Subheader>
+						{t2(`${action}Subheader`, subheader)}
+					</Header.Subheader>
 				</Header>
 				<Button color={color} onClick={onClick}>
-					{`${action} a Server`}
+					{t2(`${action}Btn`, `${action} a Server`)}
 				</Button>
 			</Segment>
 		);
@@ -80,7 +99,10 @@ class AddServerBtn extends React.Component {
 				<Modal size={"tiny"} open={open} onClose={this.toggleModal}>
 					<Modal.Content style={{ textAlign: "center" }}>
 						<Header as="h3" color="violet">
-							What happens in HoloSpace, stays in HoloSpace
+							{t2(
+								"phrase",
+								"What happens in HoloSpace, stays in HoloSpace"
+							)}
 						</Header>
 						<Segment>
 							<Grid columns={2} relaxed>
@@ -95,7 +117,7 @@ class AddServerBtn extends React.Component {
 								</Grid.Column>
 
 								<Divider vertical style={{ left: "50%" }}>
-									Or
+									{t("Or")}
 								</Divider>
 
 								<Grid.Column>

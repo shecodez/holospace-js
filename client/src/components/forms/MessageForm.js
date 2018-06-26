@@ -1,9 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+	defineMessages,
+	injectIntl,
+	intlShape
+	// FormattedMessage
+} from "react-intl";
 import { Input, Icon, Label } from "semantic-ui-react";
 
 // components
 import InlineError from "../alerts/InlineError";
+
+const msgType = defineMessages({
+	message: {
+		id: "forms.message",
+		defaultMessage: "Message"
+	},
+	direct: {
+		id: "forms.direct",
+		defaultMessage: "Direct"
+	}
+});
 
 class MessageForm extends React.Component {
 	state = {
@@ -81,6 +98,8 @@ class MessageForm extends React.Component {
 
 	render() {
 		const { data, errors } = this.state;
+		const { placeholder, direct } = this.props;
+		const { formatMessage } = this.props.intl;
 
 		return (
 			<form className="form message-form" onSubmit={this.onSubmit}>
@@ -90,7 +109,9 @@ class MessageForm extends React.Component {
 						size="large"
 						labelPosition="right"
 						type="text"
-						placeholder={this.props.placeholder}
+						placeholder={`${
+							direct ? formatMessage(msgType.direct) : ""
+						}${formatMessage(msgType.message)} ${placeholder}`}
 					>
 						<Label basic>
 							<Icon name="add circle" />
@@ -114,7 +135,9 @@ class MessageForm extends React.Component {
 					<Input
 						fluid
 						type="text"
-						placeholder={this.props.placeholder}
+						placeholder={`${formatMessage(
+							msgType.message
+						)} ${placeholder}`}
 					/>
 				)}
 
@@ -125,6 +148,7 @@ class MessageForm extends React.Component {
 }
 
 MessageForm.defaultProps = {
+	direct: false,
 	noLabels: false,
 	message: null,
 	sendTyping: null,
@@ -132,6 +156,7 @@ MessageForm.defaultProps = {
 };
 
 MessageForm.propTypes = {
+	direct: PropTypes.bool,
 	noLabels: PropTypes.bool,
 	submit: PropTypes.func.isRequired,
 	placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -139,7 +164,8 @@ MessageForm.propTypes = {
 		_id: PropTypes.string,
 		body: PropTypes.string
 	}),
-	sendTyping: PropTypes.func
+	sendTyping: PropTypes.func,
+	intl: intlShape.isRequired
 };
 
-export default MessageForm;
+export default injectIntl(MessageForm);

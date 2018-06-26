@@ -18,6 +18,7 @@ import { FormattedMessage } from "react-intl";
 
 // components
 import InlineError from "./../alerts/InlineError";
+import Avatar from "../layouts/Avatar";
 
 class DirectChannelForm extends React.Component {
 	state = {
@@ -116,8 +117,8 @@ class DirectChannelForm extends React.Component {
 				results: _.filter(this.state.searchOptions, isMatch)
 			});
 			/* this.setState({
-        serverMembers: _.filter(this.state.serverMembers, isMatch)
-      }); */
+        		serverMembers: _.filter(this.state.serverMembers, isMatch)
+      		}); */
 		}, 500);
 	};
 
@@ -275,7 +276,11 @@ class DirectChannelForm extends React.Component {
 								key={member.title}
 								onClick={() => this.selectUser(member)}
 							>
-								<img src={member.image} alt="userIcon" />
+								{/* <img src={member.image} alt="userIcon" /> */}
+								<Avatar
+									icon={member.image}
+									name={member.title}
+								/>
 								{member.title}
 								<Icon
 									name="delete"
@@ -297,7 +302,11 @@ class DirectChannelForm extends React.Component {
 						{data.selectedUsers &&
 							data.selectedUsers.map(member => (
 								<Label image key={member.title}>
-									<img src={member.image} alt="userIcon" />
+									{/* <img src={member.image} alt="userIcon" /> */}
+									<Avatar
+										icon={member.image}
+										name={member.title}
+									/>
 									{member.title}
 									{`${user.username}#${user.pin}` !==
 										member.title && (

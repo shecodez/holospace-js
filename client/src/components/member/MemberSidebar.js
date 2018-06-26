@@ -11,8 +11,9 @@ class MemberSidebar extends React.Component {
 		this.props.toggle();
 	};
 
+	// TODO: make VoIP Header slide left when hovered over if menu is collapsed.
 	render() {
-		const { header, users, current, owner } = this.props;
+		const { header, users, current, owner, collapsed } = this.props;
 
 		const t = msg => (
 			<FormattedMessage
@@ -28,16 +29,14 @@ class MemberSidebar extends React.Component {
 						className="trigger"
 						name="outdent"
 						onClick={this.toggle}
-						flipped={
-							this.props.collapsed ? undefined : "horizontally"
-						}
+						flipped={collapsed ? undefined : "horizontally"}
 					/>
 					<span className="no-display">{t(header)}</span>
 				</div>
 
 				<MemberList members={users} owner={owner} />
 
-				<UserHeader user={current} />
+				<UserHeader user={current} collapsed={collapsed} />
 			</div>
 		);
 	}

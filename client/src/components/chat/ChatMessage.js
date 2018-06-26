@@ -121,7 +121,7 @@ ChatMessage.propTypes = {
 	prevDate: PropTypes.string.isRequired,
 	message: PropTypes.shape({
 		author_id: PropTypes.shape({
-			avatar: PropTypes.string.isRequired,
+			icon: PropTypes.string,
 			username: PropTypes.string.isRequired
 		}).isRequired,
 		blocks: PropTypes.arrayOf(

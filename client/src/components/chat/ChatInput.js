@@ -15,13 +15,16 @@ class ChatInput extends React.Component {
 		const { socket } = this.props;
 
 		if (socket) {
-			socket.on('user:typing', this.renderWhosTyping);
-			socket.on('stop:typing', this.updateWhosTyping);
+			socket.on("user:typing", this.renderWhosTyping);
+			socket.on("stop:typing", this.updateWhosTyping);
 		}
 	}
 
 	submit = data => {
-		this.props.createMessage(this.addChannelIdToMessage(data) , this.props.socket);
+		this.props.createMessage(
+			this.addChannelIdToMessage(data),
+			this.props.socket
+		);
 	};
 
 	addChannelIdToMessage = data => {
@@ -32,25 +35,24 @@ class ChatInput extends React.Component {
 		return message;
 	};
 
-	 
-	sendTyping = (typing) => {
+	sendTyping = typing => {
 		const { user, socket, channel } = this.props;
 
 		if (typing) {
-			socket.emit('user:typing', {
-	      channel: channel._id,
-	      holoTag: `${user.username}#${user.pin}`
-	    });
+			socket.emit("user:typing", {
+				channel: channel._id,
+				holoTag: `${user.username}#${user.pin}`
+			});
 		}
 
 		if (!typing) {
-			socket.emit('stop:typing', {
-	      channel: channel._id,
-	      holoTag: `${user.username}#${user.pin}`
-	    });
+			socket.emit("stop:typing", {
+				channel: channel._id,
+				holoTag: `${user.username}#${user.pin}`
+			});
 		}
 	};
-	
+
 	renderWhosTyping = data => {
 		const typers = this.state.typingList;
 
@@ -82,15 +84,10 @@ class ChatInput extends React.Component {
 					submit={this.submit}
 					sendTyping={this.sendTyping}
 					channelId={channel._id}
-					placeholder={
-						channel.direct
-							? `Direct Message ${
-									channel.type === "Text" ? "# " : ""
-								}${channel.name}`
-							: `Message ${channel.type === "Text" ? "# " : ""}${
-									channel.name
-								}`
-					}
+					direct={channel.direct}
+					placeholder={`${channel.type === "Text" ? "# " : ""}${
+						channel.name
+					}`}
 				/>
 				{typingList.length === 0 ? null : (
 					<IsTypingList typers={typingList} />

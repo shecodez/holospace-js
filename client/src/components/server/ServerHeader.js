@@ -21,9 +21,9 @@ class ServerHeader extends React.Component {
 		});
 	};
 
-	openServerInvitation = () => {
+	toggleServerInvite = () => {
 		this.setState({
-			inviteToServer: true
+			inviteToServer: !this.state.inviteToServer
 		});
 	};
 
@@ -47,7 +47,7 @@ class ServerHeader extends React.Component {
 				) : (
 					<span className="text">{server.name}</span>
 				)}
-				{!direct && (
+				{server._id && (
 					<span className="menu">
 						<Popup
 							on="click"
@@ -58,7 +58,7 @@ class ServerHeader extends React.Component {
 									isOwner={owner}
 									toggleEditModal={this.toggleModal}
 									serverName={server.name}
-									inviteToServer={this.openServerInvitation}
+									inviteToServer={this.toggleServerInvite}
 								/>
 							}
 						/>
@@ -67,8 +67,10 @@ class ServerHeader extends React.Component {
 
 				{inviteToServer && (
 					<ServerInvitation
+						open={inviteToServer}
 						serverName={server.name}
 						serverId={server._id}
+						toggle={this.toggleServerInvite}
 					/>
 				)}
 

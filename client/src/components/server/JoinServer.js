@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import { Header, Icon, Modal } from "semantic-ui-react";
 import { createMembership } from "./../../actions/memberships";
 
@@ -37,15 +38,26 @@ class JoinServer extends React.Component {
 	render() {
 		const { isOpen } = this.state;
 
+		const t = (id, msg) => (
+			<FormattedMessage
+				id={`server.JoinServer.${id.charAt(0).toLowerCase()}${id.slice(
+					1
+				)}`}
+				defaultMessage={msg}
+			/>
+		);
+
 		return (
 			<Modal size={"tiny"} open={isOpen} onClose={this.toggleModal}>
 				<Modal.Content style={{ textAlign: "center" }}>
 					<Header as="h2" icon textAlign="center">
 						<Icon name="users" circular />
-						Join a Server
+						{t("joinHeader", "Join a Server")}
 						<Header.Subheader>
-							Enter an invite link below to become a member of an
-							existing server.
+							{t(
+								"joinSubheader",
+								"Enter an invite link below to become a member of an existing server."
+							)}
 						</Header.Subheader>
 					</Header>
 					<MembershipForm

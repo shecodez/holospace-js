@@ -83,6 +83,7 @@ body > #root > .App {
 @import "./user/UserHeader";
 @import "./user/User";
 @import "./user/UserCard";
+@import "./user/OnlineStatus";
 //-- Layouts ------------------------------------------
 @import "./layouts/MainLayout";
 @import "./layouts/ImageBG";
@@ -106,6 +107,8 @@ body > #root > .App {
 @import "./chat/IsTypingList";
 //-- VoIP --------------------------------------------
 // @import "./voip/VoipHeader";
+//-- Options -----------------------------------------
+@import "./options/ServerOptions";
 //-- Pages -------------------------------------------
 @import "./pages/homePage";
 @import "./pages/loginPage";

@@ -1,0 +1,10 @@
+.server-options {
+	.item {
+		i.icon {
+			line-height: inherit !important;
+			&:hover {
+				background-color: inherit !important;
+			}
+		}
+	}
+}

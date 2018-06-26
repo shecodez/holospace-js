@@ -1,0 +1,12 @@
+.online-status {
+	.item {
+		i.icon {
+			&:hover {
+				background-color: inherit !important;
+			}
+		}
+	}
+	.user-options {
+		text-align: center;
+	}
+}

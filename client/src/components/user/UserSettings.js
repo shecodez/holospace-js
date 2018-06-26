@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
-import { FormattedMessage } from 'react-intl';
-import * as actions from '../../actions/auth';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Button } from "semantic-ui-react";
+import { FormattedMessage } from "react-intl";
+import * as actions from "../../actions/auth";
 
 class UserSettings extends React.Component {
 	state = {};
@@ -15,7 +15,7 @@ class UserSettings extends React.Component {
 				{`${user.username}#${user.pin}`}
 				<Button color="red" inverted onClick={() => logout()}>
 					<FormattedMessage
-						id="users.UserSettings.logout"
+						id="user.UserSettings.logout"
 						defaultMessage="Logout"
 					/>
 				</Button>
