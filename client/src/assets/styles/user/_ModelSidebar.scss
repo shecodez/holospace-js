@@ -1,0 +1,15 @@
+.model-sidebar {
+	.preview-header {
+		height: 56px;
+		line-height: 56px;
+		padding: 0 24px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.customization {
+		flex: 1 1 auto;
+		height: 0;
+		overflow-y: auto;
+	}
+}

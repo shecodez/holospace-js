@@ -26,10 +26,25 @@ Now all that being said, **warning**: this project is very much so a WIP, and ha
 HoloSpace will be upon release _clunky_, but hopefully not as much as VR is currently today.
 I'm not a mechanical engineer but I have some hardware ideas that if possible could bring the system closer to what I imagine would be a true VR experience.
 
+## Visual log
+
+A log of HoloSpace's past, present, and future UI/UX.
+
+https://docs.google.com/document/d/1zozLKE7Dv8sgUz2AZNan7oehjOuZJTwvcOoFBV8vsc0/edit?usp=sharing
+
+### To-Dos
+
+-   [ ] Add notifications.
+-   [ ] Add ability to make calendar events with react-big-calendar.
+-   [ ] Add search feature.
+-   [ ] fix user online presence logic.
+-   [ ] Private DM support.
+
 ### Issues (I am aware of)
 
--   [ ] The VR channel chat room is currently just 3D and not VR ready yet.
--   [ ] Voice communication doesn't work well if at all.
--   [ ] Resizing the canvas in a VR channel makes the canvas UI non-responsive.
 -   [ ] It's slooooow!
+-   [ ] The Holo channel chat room is currently just 3D and not VR ready yet.
+-   [ ] Voice communication doesn't work well if at all.
+-   [ ] Resizing the app makes the canvas UI non-responsive.
 -   [ ] Security. What security!?
+-   [ ] Some of the assets stored in /public are not loading in Heroku.
