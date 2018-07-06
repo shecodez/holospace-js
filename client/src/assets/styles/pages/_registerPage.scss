@@ -1,31 +1,238 @@
+@media screen and (max-width: 480px) {
+	.register-container {
+		.logo-container {
+			visibility: hidden !important;
+			display: none !important;
+		}
+	}
+}
+
 .register-page {
-  height: 100vh;
-  background-image: url("./../../assets/images/signup_bg.gif");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
+	height: 100vh;
+	background-size: cover !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #222;
 
-  a {
-    color: #6435c9 !important;
-  }
+	.register-container {
+		display: flex;
+		overflow: hidden;
+		position: relative;
+		border-radius: 8px;
 
-  .grid {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0;
-  }
+		.form-container {
+			padding: 45px 30px;
+			box-sizing: border-box;
+			width: 400px;
+			margin-left: -400px;
+			overflow: hidden;
+			height: 0;
+			opacity: 0;
+			&.transition {
+				height: 470.6px;
+				transition: height 0.5s ease;
+			}
+			&.animate-in {
+				opacity: 1;
+				margin-left: 0;
+				transition: 0.5s ease;
+			}
+			&:before {
+				content: "";
+				background-size: cover !important;
+				box-shadow: inset 0 0 0 3000px rgba(40, 43, 48, 0.75);
+				filter: blur(10px);
+				position: absolute;
+				width: 150%;
+				height: 150%;
+				top: -50px;
+				left: -50px;
+			}
 
-  .logo-seg {
-    display: flex;
-	  align-items: center;
-    flex-direction: column;
-    background-color: rgba(255,255,255,0.9);
-  }
+			.register-form {
+				position: relative;
+				height: 100%;
+				h1 {
+					text-align: center;
+					text-transform: uppercase;
+					// margin-bottom: 25px;
+					font-weight: 700;
+					font-size: 20px;
+					color: #fff;
+					user-select: none;
+					opacity: 0;
+					left: -30px;
+					position: relative;
+					transition: 0.5s ease;
+					&.animate-in {
+						left: 0;
+						opacity: 1;
+					}
+				}
+				.form-div {
+					margin-bottom: 30px;
+					left: -25px;
+					opacity: 0;
+					transition: 0.5s ease;
+					position: relative;
+					&.animate-in {
+						opacity: 1;
+						left: 0;
+					}
+					&:last-child {
+						padding-top: 10px;
+						margin-bottom: 0;
+					}
 
-  .form-seg {
-    background-color: rgba(104,181,157,0.4);
-  }
+					label {
+						color: #aaa;
+						position: absolute;
+						top: 15px;
+						user-select: none;
+						transition: 0.2s ease;
+						font-size: inherit;
+						font-weight: inherit;
+						// display: block;
+					}
+
+					input:valid + label,
+					input:-webkit-autofill + label {
+						transform: translateY(-35px);
+						font-weight: 700;
+						font-size: 10px;
+						color: #aaa;
+						text-transform: uppercase;
+					}
+
+					input:focus + label {
+						transform: translateY(-35px);
+						font-weight: 700;
+						font-size: 10px;
+						color: #fff;
+						text-transform: uppercase;
+					}
+
+					input:not(:placeholder-shown):invalid + label {
+						transform: translateY(-35px);
+						font-weight: 700;
+						font-size: 10px;
+						// color: $error;
+						text-transform: uppercase;
+					}
+
+					input[type="text"],
+					input[type="password"],
+					input[type="email"] {
+						padding: 15px 0;
+						width: 100%;
+						border: none;
+						border-radius: 0;
+						box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+						background-color: transparent;
+						box-sizing: border-box;
+						color: #fff;
+						&:focus {
+							outline: none;
+							box-shadow: inset 0 -2px 0 #fff;
+						}
+						&:not(:placeholder-shown):invalid {
+							color: $error;
+							box-shadow: inset 0 -2px 0 $error;
+						}
+					}
+				}
+			}
+		}
+
+		.logo-container {
+			padding: 45px 35px;
+			box-sizing: border-box;
+			position: relative;
+			z-index: 2;
+			position: relative;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			transform: scale(0, 0);
+			&.transition {
+				transform: scale(1);
+				transition: 700ms ease;
+			}
+			img {
+				width: 150px;
+				margin-bottom: -5px;
+				display: block;
+				position: relative;
+				&:first-child {
+					width: 150px;
+				}
+			}
+			.text {
+				padding: 25px 0 10px 0;
+				margin-top: -70px;
+				opacity: 0;
+				&.animate-in {
+					margin-top: 0;
+					opacity: 1;
+					transition: 0.8s ease;
+				}
+			}
+			.logo {
+				position: relative;
+				top: -20px;
+				opacity: 0;
+				&.animate-in {
+					top: 0;
+					opacity: 1;
+					transition: 0.8s ease;
+				}
+			}
+			&:before {
+				content: "";
+				background-size: cover !important;
+				position: absolute;
+				top: -50px;
+				left: -50px;
+				width: 150%;
+				height: 150%;
+				filter: blur(10px);
+				box-shadow: inset 0 0 0 3000px rgba(255, 255, 255, 0.8);
+			}
+		}
+
+		.register-btn {
+			width: 100%;
+			box-sizing: border-box;
+			background: $primary;
+			border: none;
+			color: #fff;
+			padding: 15px 0;
+			border-radius: 3px;
+			cursor: pointer;
+			transition: 0.2s ease;
+			user-select: none;
+			&:hover {
+				background: darken(#6435c9, 5%);
+			}
+		}
+		.login {
+			color: #aaa;
+			font-size: 12px;
+			padding-top: 15px;
+			display: block;
+			a {
+				color: #fff;
+				text-decoration: none;
+				box-shadow: inset 0 -2px 0 transparent;
+				padding-bottom: 5px;
+				user-select: none;
+				&:hover {
+					box-shadow: inset 0 -2px 0 #fff;
+				}
+			}
+		}
+	}
 }

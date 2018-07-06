@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form, Button, Message, Header } from 'semantic-ui-react';
-import isEmail from 'validator/lib/isEmail';
-import { FormattedMessage } from 'react-intl';
-
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { Form, Message } from "semantic-ui-react";
+import isEmail from "validator/lib/isEmail";
+import { FormattedMessage } from "react-intl";
 
 // components
-import InlineError from './../alerts/InlineError';
+import InlineError from "./../alerts/InlineError";
 
 class LoginForm extends React.Component {
 	state = {
 		data: {
-			email: '',
-			password: ''
+			email: "",
+			password: ""
 		},
 		loading: false,
 		errors: {}
@@ -39,18 +39,18 @@ class LoginForm extends React.Component {
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
-			this.props
-				.submit(this.state.data)
-				.catch(err =>
-					this.setState({ errors: err.response.data.errors, loading: false })
-				);
+			this.props.submit(this.state.data).catch(err =>
+				this.setState({
+					errors: err.response.data.errors,
+					loading: false
+				})
+			);
 		}
 	};
 
 	onSubmitResetPasswordRequest = () => {
 		const errors = {};
-		if (!isEmail(this.state.data.email))
-			errors.email = 'Invalid email';
+		if (!isEmail(this.state.data.email)) errors.email = "Invalid email";
 
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
@@ -60,8 +60,8 @@ class LoginForm extends React.Component {
 
 	validate = data => {
 		const errors = {};
-		if (!isEmail(data.email)) errors.email = 'Invalid email';
-		if (!data.password) errors.password = 'Password cannot be blank';
+		if (!isEmail(data.email)) errors.email = "Invalid email";
+		if (!data.password) errors.password = "Password cannot be blank";
 		return errors;
 	};
 
@@ -74,20 +74,26 @@ class LoginForm extends React.Component {
 				onSubmit={this.onSubmit}
 				loading={loading}
 			>
+				<h1 className="form-h1">
+					<FormattedMessage
+						id="pages.LoginPage.welcomeBack"
+						defaultMessage="Hey, Welcome back!"
+					/>
+				</h1>
 				{errors.global && (
 					<Message negative>
-						<Message.Header>Oops, something went wrong!</Message.Header>
+						<Message.Header>
+							Oops, something went wrong!
+						</Message.Header>
 						<p>{errors.global}</p>
 					</Message>
 				)}
-
-				<Form.Field error={!!errors.email}>
-					<label htmlFor="email">
-						<FormattedMessage
-							id="forms.email"
-							defaultMessage="Email"
-						/>
-					</label>
+				<br />
+				<Form.Field
+					error={!!errors.email}
+					className="form-div"
+					style={{ transitionDelay: "0.2s" }}
+				>
 					<input
 						type="email"
 						id="email"
@@ -95,17 +101,21 @@ class LoginForm extends React.Component {
 						placeholder=" "
 						value={data.email}
 						onChange={this.onChange}
+						required
 					/>
-					{errors.email && <InlineError text={errors.email} />}
-				</Form.Field>
-
-				<Form.Field error={!!errors.password}>
-					<label htmlFor="password">
+					<label htmlFor="email">
 						<FormattedMessage
-							id="forms.password"
-							defaultMessage="Password"
+							id="forms.email"
+							defaultMessage="Email"
 						/>
 					</label>
+					{errors.email && <InlineError text={errors.email} />}
+				</Form.Field>
+				<Form.Field
+					error={!!errors.password}
+					className="form-div"
+					style={{ transitionDelay: "0.4s" }}
+				>
 					<input
 						type="password"
 						id="password"
@@ -113,20 +123,46 @@ class LoginForm extends React.Component {
 						placeholder=" "
 						value={data.password}
 						onChange={this.onChange}
+						required
 					/>
+					<label htmlFor="password">
+						<FormattedMessage
+							id="forms.password"
+							defaultMessage="Password"
+						/>
+					</label>
 					{errors.password && <InlineError text={errors.password} />}
+					<a
+						className="forgot-pw"
+						onClick={this.onSubmitResetPasswordRequest}
+					>
+						<FormattedMessage
+							id="forms.forgotPw"
+							defaultMessage="Forgot your Password?"
+						/>
+					</a>
 				</Form.Field>
+				<div className="form-div" style={{ transitionDelay: "0.6s" }}>
+					<button className="login-btn">
+						<FormattedMessage
+							id="forms.login"
+							defaultMessage="Login"
+						/>
+					</button>
 
-        <Header className='a-link' as='h5' color='violet' onClick={this.onSubmitResetPasswordRequest}>
-          Forgot Password?
-        </Header>
-
-				<Button fluid color='violet'>
-					<FormattedMessage
-						id="forms.login"
-						defaultMessage="Login"
-					/>
-				</Button>
+					<span className="register">
+						<FormattedMessage
+							id="pages.LoginPage.needAnAccount"
+							defaultMessage="Need an account?"
+						/>{" "}
+						<Link to="/register">
+							<FormattedMessage
+								id="pages.LoginPage.register"
+								defaultMessage="Register"
+							/>
+						</Link>
+					</span>
+				</div>
 			</Form>
 		);
 	}

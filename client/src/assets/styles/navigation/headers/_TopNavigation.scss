@@ -4,6 +4,13 @@ $black: #000;
 $primary: #6435c9;
 $transitionTime: 500ms;
 
+@media screen and (max-width: 480px) {
+	.menu-span.text {
+		visibility: hidden !important;
+		display: none !important;
+	}
+}
+
 .top-navigation {
 	padding: 2em 2.5em;
 
@@ -22,6 +29,8 @@ $transitionTime: 500ms;
 
 	.menu-span.text {
 		margin-left: 0.85em;
+		visibility: visible;
+		display: inline;
 	}
 
 	.menu-btn {

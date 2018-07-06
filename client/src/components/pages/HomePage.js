@@ -1,28 +1,54 @@
 import React from "react";
-import { Header, Button } from "semantic-ui-react";
+import { Header, Icon } from "semantic-ui-react";
 
 import TopNavigation from "../navigation/headers/TopNavigation";
 
-const HomePage = () => (
-	<div className="home-page">
-		<TopNavigation />
+class HomePage extends React.Component {
+	constructor(props) {
+		super(props);
 
-		<div className="some-stars" />
-		<div className="stars" />
-		<div className="moar-stars" />
+		this.state = {
+			toggled: false
+		};
 
-		<Header as="h1" className="content-title" size="huge">
-			HoloSpace
-			<Header.Subheader>The final chat teir</Header.Subheader>
-		</Header>
+		this.toggleSocial = this.toggleSocial.bind(this);
+	}
 
-		<Button.Group vertical className="social-icons">
-			<Button color="facebook" icon="facebook f" />
-			<Button color="instagram" icon="instagram" />
-			<Button color="yellow" icon="snapchat ghost" />
-			<Button color="twitter" icon="twitter" />
-		</Button.Group>
-	</div>
-);
+	toggleSocial() {
+		this.setState({ toggled: !this.state.toggled });
+	}
+
+	render() {
+		return (
+			<div className="home-page">
+				<TopNavigation />
+
+				<div className="some-stars" />
+				<div className="stars" />
+				<div className="moar-stars" />
+
+				<Header as="h1" className="content-title" size="huge">
+					HoloSpace
+					<Header.Subheader>The final chat teir</Header.Subheader>
+				</Header>
+
+				<div className={`social-icons toggled--${this.state.toggled}`}>
+					<div className="share-btn" onClick={this.toggleSocial}>
+						<Icon name="share alternate" />
+					</div>
+					<div className="social-btns">
+						<Icon name="behance" />
+						<Icon name="facebook f" />
+						<Icon name="github alternate" />
+						<Icon name="google plus" />
+						<Icon name="twitch" />
+						<Icon name="twitter" />
+						<Icon name="youtube play" />
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
 
 export default HomePage;

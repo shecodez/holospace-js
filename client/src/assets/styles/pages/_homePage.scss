@@ -9,6 +9,13 @@
 }
 
 $white: #a2aab2;
+$behance: #1769ff;
+$facebook: #3b5998;
+$github: #6cc644;
+$googleplus: #db4437;
+$twitch: #6441a5;
+$twitter: #1da1f2;
+$youtube: #ff0000;
 
 $shadows-small: multiple-box-shadow(700);
 $shadows-medium: multiple-box-shadow(200);
@@ -99,12 +106,84 @@ $shadows-large: multiple-box-shadow(100);
 
 	.social-icons {
 		position: fixed;
-		top: 50%;
+		top: 55%;
 		transform: translateY(-50%);
 		right: 0;
 		z-index: 9;
-		button {
-			border-radius: 0 !important;
+		overflow: hidden;
+		transition: 0.3s ease;
+		transition-delay: 1s;
+		&.toggled--true {
+			cursor: pointer;
+			top: 50%;
+			transition-delay: 0s;
+
+			.social-btns i {
+				right: 0;
+			}
+		}
+
+		.share-btn {
+			color: #000;
+			background: #fff;
+			width: 42px;
+			height: 42px;
+			position: relative;
+			cursor: pointer;
+			i:before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			&:hover {
+				background: darken(#fff, 5%);
+			}
+		}
+
+		.social-btns i {
+			display: block;
+			color: #fff;
+			width: 42px;
+			height: 42px;
+			position: relative;
+			right: -48px;
+			transition: 0.3s ease;
+			transition-delay: 0s;
+			&:before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			&:nth-child(1) {
+				background: $behance;
+				transition-delay: 0.2s;
+			}
+			&:nth-child(2) {
+				background: $facebook;
+				transition-delay: 0.3s;
+			}
+			&:nth-child(3) {
+				background: $github;
+				transition-delay: 0.4s;
+			}
+			&:nth-child(4) {
+				background: $googleplus;
+				transition-delay: 0.5s;
+			}
+			&:nth-child(5) {
+				background: $twitch;
+				transition-delay: 0.6s;
+			}
+			&:nth-child(6) {
+				background: $twitter;
+				transition-delay: 0.7s;
+			}
+			&:nth-child(7) {
+				background: $youtube;
+				transition-delay: 0.8s;
+			}
 		}
 	}
 }
