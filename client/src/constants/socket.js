@@ -15,18 +15,20 @@ export const messageTypes = [
 	"clients:update",
 
 	"channel:join",
-	"channel:left",
 	"channel:switch",
-
+	"channel:left",
+	
 	"voip:send",
 	"voip:recv",
 
 	"player:init",
 	"player:data",
 	"player:joined",
-	"move:player",
 	"client:disconnected",
+	"move:player",
+	"turn:player",	
 	"position:update",
+	"rotation:update",
 	"player:exit"
 ].reduce((accum, msg) => {
 	accum[msg] = msg;

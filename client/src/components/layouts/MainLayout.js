@@ -33,7 +33,7 @@ class MainLayout extends React.Component {
 			prevc2state: props.profile || props.holospace ? true : false,
 			prevc4state: props.direct || props.holospace ? true : false
 		};
-		this.socket = io("http://localhost:3000");
+		this.socket = io(); // "http://localhost:3000"
 	}
 
 	componentWillMount() {
