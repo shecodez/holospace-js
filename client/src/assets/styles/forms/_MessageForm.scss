@@ -1,6 +1,13 @@
+//@import "./node_modules/emoji-picker-react/dist/universal/style.scss";
+
 .message-form {
 	i.icon {
 		cursor: pointer;
 		margin: 0 !important;
+	}
+	.emoji-picker {
+		position: absolute;
+		right: 0;
+		bottom: 62px;
 	}
 }

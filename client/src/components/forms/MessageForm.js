@@ -7,9 +7,22 @@ import {
 	// FormattedMessage
 } from "react-intl";
 import { Input, Icon, Label } from "semantic-ui-react";
+import EmojiPicker from "emoji-picker-react";
+import "emoji-picker-react/dist/universal/style.scss";
+import JSEMOJI from "emoji-js";
 
 // components
 import InlineError from "../alerts/InlineError";
+
+// emoji set up
+const jsemoji = new JSEMOJI();
+// set the style to emojione (default - apple)
+jsemoji.img_set = "emojione";
+// set the storage location for all emojis
+jsemoji.img_sets.emojione.path =
+	"https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/";
+// force text output mode
+jsemoji.text_mode = true;
 
 const msgType = defineMessages({
 	message: {
@@ -30,7 +43,8 @@ class MessageForm extends React.Component {
 		},
 		loading: false,
 		errors: {},
-		isTyping: false
+		isTyping: false,
+		showEmojiMenu: false
 	};
 
 	componentWillUnmount() {
@@ -61,6 +75,21 @@ class MessageForm extends React.Component {
 			this.props.submit(this.state.data);
 		}
 		this.setState({ data: { body: "" } });
+	};
+
+	toggleEmojiMenu = () => {
+		this.setState({ showEmojiMenu: !this.state.showEmojiMenu });
+	};
+
+	handleEmojiClick = (code, emoji) => {
+		let emojiImg = jsemoji.replace_colons(`:${emoji.name}:`);
+
+		this.setState(prevState => ({
+			data: {
+				...prevState.data,
+				body: this.state.data.body + emojiImg
+			}
+		}));
 	};
 
 	sendTyping = () => {
@@ -127,9 +156,12 @@ class MessageForm extends React.Component {
 							}}
 						/>
 
-						<Label basic>
+						<Label basic onClick={this.toggleEmojiMenu}>
 							<Icon name="smile" />
 						</Label>
+						{this.state.showEmojiMenu && (
+							<EmojiPicker onEmojiClick={this.handleEmojiClick} />
+						)}
 					</Input>
 				) : (
 					<Input

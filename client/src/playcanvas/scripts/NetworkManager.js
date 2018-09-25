@@ -39,7 +39,7 @@ export const NetworkManagerScript = (channel, socket) => {
 	};
 
 	Network.prototype.join = function() {
-		Network.socket.emit("player:init", channel._id);
+		Network.socket.emit("holo:init", channel._id);
 	};
 
 	Network.prototype.initPlayers = function(data) {
@@ -55,7 +55,7 @@ export const NetworkManagerScript = (channel, socket) => {
 		}
 
 		// For every player already connected, spawn that player.
-		for (var id in this.players) {
+		for (let id in this.players) {
 			if (id !== Network.id) {
 				// console.log("initPlayer: ", holosmith);
 				this.players[id].entity = this.holoSpace.spawnHolosmith(
@@ -107,7 +107,7 @@ export const NetworkManagerScript = (channel, socket) => {
 	};
 
 	Network.prototype.exit = function() {
-		for (var id in this.players) {
+		for (let id in this.players) {
 			if (id !== Network.id) {
 				this.removePlayer(id);
 			}

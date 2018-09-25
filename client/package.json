@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "0.17.1",
+    "emoji-js": "^3.4.1",
+    "emoji-picker-react": "^2.1.1",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "node-sass-chokidar": "^0.0.3",

@@ -11,8 +11,9 @@ export default function memberships(state = [], action = {}) {
 
 		case MEMBER_UPDATED:
 			return state.map(item => {
-				if (item.email === action.member.email) return action.member;
-				return item; // {...item, action.member}
+				if (item.email === action.member.email)
+					return Object.assign({}, item, action.member);
+				return item;
 			});
 
 		case MEMBERSHIP_CREATED:

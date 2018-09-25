@@ -27,15 +27,17 @@ class HomePage extends React.Component {
 				<div className="stars" />
 				<div className="moar-stars" />
 
-				<Header as="h1" className="content-title" size="huge">
-					HoloSpace
-					<Header.Subheader>The final chat teir</Header.Subheader>
-				</Header>
+				<div id="title-0001">
+					<Header as="h1" size="huge">
+						<div className="h1-text">HoloSpace</div>
+						<Header.Subheader>The final chat teir</Header.Subheader>
+					</Header>
+				</div>
 
 				<div className={`social-icons toggled--${this.state.toggled}`}>
-					<div className="share-btn" onClick={this.toggleSocial}>
+					<button className="share-btn" onClick={this.toggleSocial}>
 						<Icon name="share alternate" />
-					</div>
+					</button>
 					<div className="social-btns">
 						<Icon name="behance" />
 						<Icon name="facebook f" />

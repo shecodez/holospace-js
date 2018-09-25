@@ -7,16 +7,10 @@ exports = module.exports = function(io) {
 		this.id = socket.id;
 		this.holoTag = socket.holoTag || socket.id;
 		this.icon = socket.icon;
-		// this.channel = socket.channel || "Unknown";
-	}
-
-	function Player(socket) {
-		this.id = socket.id;
-		this.holoTag = socket.holoTag || socket.id;
+		this.channel = socket.channel || "Unknown";
 		this.position = [0, 0, 0];
 		this.rotation = [0, 0, 0];
 		this.entity = null;
-		// this.channel = socket.channel || "Unknown";
 	}
 
 	io.on("connection", socket => {
@@ -24,11 +18,6 @@ exports = module.exports = function(io) {
 
 		socket.on("disconnect", () => {
 			console.log(`${socket.holoTag} client disconnected: ${socket.id}`);
-
-			removeClient(socket);
-
-			// delete players[socket.id];
-			if (socket.channel) delete clients[socket.channel][socket.id];
 
 			// Sends everyone except the connecting player data about the disconnected player.
 			socket.broadcast.emit("client:disconnected", socket.id);
@@ -39,9 +28,9 @@ exports = module.exports = function(io) {
 				`${socket.holoTag} disconnected`
 			);
 
-			if (socket.channel) socket.leave(socket.channel);
+			removeClient(socket);
 
-			setUserOnline(socket.holoTag, false);
+			if (socket.holoTag) setUserOnline(socket.holoTag, false);
 		});
 
 		socket.on("user:init", data => {
@@ -49,8 +38,13 @@ exports = module.exports = function(io) {
 
 			socket.icon = data.icon;
 			socket.holoTag = data.holoTag;
-			// socket.position = { x: data.position.x, y: data.position.y, z: data.position.z };
-			// socket.rotation = { x: data.rotation.x, y: data.rotation.y, z: data.rotation.z };
+		});
+
+		socket.on("user:online", user => {
+			setUserOnline(user.holoTag, true);
+		});
+		socket.on("user:logout", user => {
+			setUserOnline(user.holoTag, false);
 		});
 
 		//--------------------------------------------------------------------
@@ -69,20 +63,12 @@ exports = module.exports = function(io) {
 		//--------------------------------------------------------------------
 		// Manage HoloSpace
 		//--------------------------------------------------------------------
-		socket.on("player:init", function(channel) {
-			console.log(`${socket.holoTag} init holo channel: ${channel}`);
+		socket.on("holo:init", channel => {
+			console.log(`${socket.holoTag} joining holo channel: ${channel}`);
 
-			const newPlayer = new Player(socket);
-			// players[socket.id] = newPlayer;
-
-			socket.channel = channel || "DeepSpace";
+			socket.channel = channel || "HoloSpace";
+			const newPlayer = addClient(socket);
 			socket.join(channel);
-			newPlayer.channel = socket.channel;
-
-			clients[socket.channel] = clients[socket.channel] || {};
-			clients[socket.channel][socket.id] =
-				clients[socket.channel][socket.id] || {};
-			clients[socket.channel][socket.id] = { ...newPlayer };
 
 			// Send the connecting player her unique ID,
 			// and data about the other players already connected.
@@ -120,16 +106,13 @@ exports = module.exports = function(io) {
 			socket.broadcast.emit("turn:player", data);
 		});
 
-		socket.on("player:exit", function(data) {
-			console.log(
-				`${socket.id} exiting holospace channel: ${socket.channel}`
-			);
+		socket.on("player:exit", function(id) {
+			console.log(`${socket.id} exiting holo channel: ${socket.channel}`);
 
-			// delete players[data];
-			delete clients[socket.channel][data];
+			if (socket.channel) delete clients[socket.channel][id];
 
-			// Sends everyone except the connecting player data about the disconnected player.
-			socket.broadcast.emit("client:disconnected", data);
+			// Sends everyone except the connecting player the disconnected player's id.
+			socket.broadcast.emit("client:disconnected", id);
 		});
 
 		//--------------------------------------------------------------------
@@ -139,7 +122,9 @@ exports = module.exports = function(io) {
 			/* if (clients[channel].length > 99)
 				socket.emit('channel:full', channel); */
 
-			console.log(`${socket.holoTag} joined channel: ${channel}`);
+			console.log(
+				`${socket.holoTag} (${socket.id}) joined channel: ${channel}`
+			);
 
 			socket.channel = channel; // socket.server = channel.server_id;
 			addClient(socket);
@@ -160,7 +145,6 @@ exports = module.exports = function(io) {
 					.emit("user:left", `${socket.holoTag} left your channel`);
 
 				removeClient(socket);
-				socket.leave(socket.channel);
 			}
 			console.log(`${socket.holoTag} switched channel: ${newChannel}`);
 
@@ -184,8 +168,6 @@ exports = module.exports = function(io) {
 				socket.broadcast
 					.to(socket.channel)
 					.emit("user:left", `${socket.holoTag} left your channel`);
-
-				socket.leave(channel);
 
 				io.sockets.emit("clients:update", clients);
 			}
@@ -216,10 +198,15 @@ exports = module.exports = function(io) {
 
 		// setUserOnline(socket.holoTag, true);
 		console.log("add", JSON.stringify(clients, null, "\t"));
+
+		return newClient;
 	};
 
 	const removeClient = socket => {
-		if (socket.channel) delete clients[socket.channel][socket.id];
+		if (socket.channel) {
+			delete clients[socket.channel][socket.id];
+			socket.leave(socket.channel);
+		}
 		console.log("remove", JSON.stringify(clients, null, "\t"));
 	};
 
@@ -240,14 +227,8 @@ exports = module.exports = function(io) {
 				.then(user => {
 					io.sockets.emit("user:update", {
 						user: {
-							icon: user.icon,
 							email: user.email,
-							username: user.username,
-							pin: user.pin,
-							online: user.online,
-							status: user.status,
-							confirmed: user.confirmed,
-							joined: user.createdAt
+							online: user.online
 						}
 					});
 					console.log(`${holoTag}: online--${online}`);
