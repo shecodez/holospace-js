@@ -1,10 +1,11 @@
 # HoloSpace
+## ⚠️ This project has moved to https://github.com/shecodez/holospace and will be on hiatus until NUXT 3 (https://nuxtjs.org/).
 
 ### the final 'chat'tier
 
 ### Live Demo
 
-The application is hosted on Heroku. Check out the live demo at https://holospace.herokuapp.com
+The application is hosted on Heroku. Check out the live demo at ~~https://holospace.herokuapp.com~~ with the change to mongodb on heroku it doesnt work anymore.
 
 ## My Thoughts
 
